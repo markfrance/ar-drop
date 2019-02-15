@@ -1,0 +1,50 @@
+[
+    {
+        "tokenName": "AlphaTokens", 
+        "value": 10,
+        "firstPrize":10,
+        "secondPrize":8,
+        "thirdPrize":3,
+        "startTime":999999,
+        "entryRequirement":1,
+        "freeParticipants": 500,
+        "paidParticipants": 500,
+        "entryFee": 200,
+        "image": "./public/images/AlphaToken.png"
+    },
+    {
+        "tokenName": "Beta Coins", 
+        "value": 100,
+        "image": "./public/images/BetaCoin.png"
+    },
+    {
+        "tokenName": "Crypto Coins", 
+        "value": 7,
+        "image": "./public/images/CryptoCoin.png"
+    },
+    {
+        "tokenName": "Fictitious Coins", 
+        "value": 2,
+        "image": "./public/images/Fictitious.png"
+    },
+    {
+        "tokenName": "Sample Coins", 
+        "value": 100,
+        "image": "./public/images/SampleCoin.png"
+    },
+    {
+        "tokenName": "Test Coins", 
+        "value": 100,
+        "image": "./public/images/TestCoin.png"
+    },
+    {
+        "tokenName": "Trial Tokens", 
+        "value": 100,
+        "image": "./public/images/TrialToken.png"
+    },
+    {
+        "tokenName": "Xample Tokens", 
+        "value": 100,
+        "image": "./public/images/XampleToken.png"
+    }
+]
