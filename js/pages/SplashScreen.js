@@ -1,3 +1,4 @@
+//Test page, replace with splash
 import React, { Component } from 'react';
 import {View, Image, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import {StackNavigator, NavigationComponent} from 'react-navigation'

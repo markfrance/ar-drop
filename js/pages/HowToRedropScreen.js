@@ -17,9 +17,9 @@ export default class HowToRedropScreen extends Component {
             <Image source={require("../../public/images/HowToRedrop2.png")}
             style={localStyles.splashImage}/>
             <TouchableHighlight style={localStyles.okButton} 
-            onPress={this._getExperienceButtonOnPress(AR_NAVIGATOR_TYPE)}
+            onPress={this.props.navigation.navigate('ARView')}
             >
-            <Image source={require("./public/images/ar_d_ok_icon.png")} 
+            <Image source={require("../../public/images/ar_d_ok_icon.png")} 
             style={localStyles.okButton} />
         </TouchableHighlight>
           </View>

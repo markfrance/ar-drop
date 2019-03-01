@@ -3,12 +3,17 @@ package com.ardrop;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
+import com.sensors.RNSensorsPackage;
 import com.airbnb.android.react.maps.MapsPackage;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.sensors.RNSensorsPackage;
 import com.facebook.react.ReactNativeHost;
+import com.airbnb.android.react.maps.MapsPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
+
+import com.viromedia.bridge.ReactViroPackage;
 import com.facebook.soloader.SoLoader;
 
 import java.util.Arrays;
@@ -26,9 +31,13 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNGestureHandlerPackage(),
             new VectorIconsPackage(),
-            new MapsPackage()
+            new RNSensorsPackage(),
+            new MapsPackage(),
+            new RNGestureHandlerPackage(),
+          new ReactViroPackage(ReactViroPackage.ViroPlatform.valueOf(BuildConfig.VR_PLATFORM)),
+          new MapsPackage(),
+          new RNSensorsPackage()
       );
     }
 

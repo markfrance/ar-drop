@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import {
 	View, 
@@ -42,7 +41,6 @@ export default class AirdropListItem extends Component {
            
   </TouchableHighlight>);
 	}
-
 
   _renderJoined() {
     if(this.state.joined) {

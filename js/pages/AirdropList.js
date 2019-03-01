@@ -8,6 +8,7 @@ import {
 	Modal
 } from 'react-native';
 
+import AirdropListItem from './components/AirdropListItem.js';
 import AirdropData from '../../data/airdropinfo.json';
 
 export default class AirdropList extends Component {

@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
-import {View, Image, StyleSheet, TouchableHighlight} from 'react-native';
+import {View, Image, StyleSheet, TouchableHighlight,  NativeEventEmitter,
+  DeviceEventEmitter} from 'react-native';
+import {
+  ViroARSceneNavigator
+} from 'react-viro';
+
+import ReactNativeHeading from '@zsajjad/react-native-heading';
+import Geolocation from 'react-native-geolocation-service';
+import { Gyroscope } from "react-native-sensors";
+
 
 var InitialARScene = require('../ARScene');
 
 var sharedProps = {
-  apiKey:"284CD604-39DB-4A9C-B094-F1CAFC65CAB4"
+  apiKey:"284CD604-39DB-4A9C-B094-F1CAFC65CAB4",
+   
 }
 
 export default class ARViewScreen extends Component {
@@ -14,8 +24,78 @@ export default class ARViewScreen extends Component {
 
     this.state = {
       sharedProps : sharedProps,
+      bitcoinPointX:0,
+      bitcoinPointZ:0,
+      latitude:0,
+      longitude:0,
+      headingIsSupported:false,
+      headingDirection:0,
+      currentLocationX:0,
+      currentLocationZ:0,
+      meters:0,
+      deviceRotationX:0
     }
+
+    this._latLongToMerc = this._latLongToMerc.bind(this);
+    this._transformPointToAR = this._transformPointToAR.bind(this);
+    this._calculateDistance = this._calculateDistance.bind(this);
+    this._startGyroscope = this._startGyroscope.bind(this);
+    this._startGeolocation = this._startGeolocation.bind(this);
+
   	}
+
+  componentDidMount() {
+    this._startGeolocation();
+    this._startGyroscope();
+
+  }
+
+  _startGyroscope() {
+    new Gyroscope({
+      updateInterval: 50
+    })
+      .then(observable => {
+        observable.subscribe(({ x }) => {
+          this.setState(state => ({
+            deviceRotationX: x
+          }));
+        });
+      })
+      .catch(error => {
+        console.log("The sensor is not available");
+      });
+  }
+
+  startGeolocation() {
+     Geolocation.watchPosition(
+      (position) => {
+        var lat = position.coords.latitude;
+        var lon = position.coords.longitude;
+        var location = this._transformPointToAR(lat, lon);
+
+        var distanceInMeters = this._calculateDistance(lat, lon, 52.692791, -2.738000);
+
+        this.setState({
+          meters: distanceInMeters,
+          latitude: lat,
+          longitude: lon,
+          string: String(position.coords.latitude),
+          currentLocationX: location.x,
+          currentLocationZ: location.z
+        });
+      },
+      (error) => this.setState({ 
+          error: error.message 
+      }),
+      { 
+        enableHighAccuracy: true, 
+        timeout: 2000, 
+        maximumAge: 2000, 
+        distanceFilter: 1 
+      },
+    )
+  }
+
 
 	render() {
 	return (
@@ -28,7 +108,9 @@ export default class ARViewScreen extends Component {
         </View>
 
         <ViroARSceneNavigator {...this.state.sharedProps}
-        initialScene={{scene: InitialARScene}}  />
+        initialScene={{scene: InitialARScene}}
+        viroAppProps={{locationZ:-1}}
+        worldAlignment="GravityAndHeading"  />
 
         <View style={{height:60,
           backgroundColor:'#f86e00' }}>
@@ -39,7 +121,7 @@ export default class ARViewScreen extends Component {
           <Image source={require("../../public/images/ar_d_back_icon.png")}
           style={localStyles.smallIcon} />
           </TouchableHighlight >
-          <TouchableHighlight onPress={tthis.props.navigation.navigate('Airdrop')}
+          <TouchableHighlight onPress={this.props.navigation.navigate('Airdrop')}
             style={localStyles.cameraButton} >
           <Image source={require("../../public/images/ar_d_camera_icon.png")}
           style={localStyles.smallIcon} />
@@ -56,6 +138,46 @@ export default class ARViewScreen extends Component {
 
   _stopVideoRecording() {
      this.props.sceneNavigator.stopVideoRecording();
+  }
+
+  _latLongToMerc(lat_deg, lon_deg) {
+     var lon_rad = (lon_deg / 180.0 * Math.PI)
+     var lat_rad = (lat_deg / 180.0 * Math.PI)
+     var sm_a = 6378137.0
+     var xmeters  = sm_a * lon_rad
+     var ymeters = sm_a * Math.log((Math.sin(lat_rad) + 1) / Math.cos(lat_rad))
+     return ({x:xmeters, y:ymeters});
+  }
+
+  _transformPointToAR(lat, long) {
+    var objPoint = this._latLongToMerc(lat, long);
+    var devicePoint = this._latLongToMerc(this.state.latitude, this.state.longitude);
+    // latitude maps to the z axis in AR
+    // longitude maps to the x axis in AR
+    var objFinalPosZ = objPoint.y - devicePoint.y;
+    var objFinalPosX = objPoint.x - devicePoint.x;
+    //flip the z, as -z(is in front of us which is north, +z is behind(south).
+    return ({x:objFinalPosX, z:-objFinalPosZ});
+  }
+
+  _calculateDistance(lat1,lon1,lat2,lon2) {
+    if ((lat1 == lat2) && (lon1 == lon2)) {
+      return 0;
+    }
+    else {
+      var radlat1 = Math.PI * lat1/180;
+      var radlat2 = Math.PI * lat2/180;
+      var theta = lon1-lon2;
+      var radtheta = Math.PI * theta/180;
+      var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+      if (dist > 1) {
+        dist = 1;
+      }
+      dist = Math.acos(dist);
+      dist = dist * 180/Math.PI;
+      dist = dist * 60 * 1.1515 * 1.609344 * 1000;
+      return dist;
+    }
   }
 }
 

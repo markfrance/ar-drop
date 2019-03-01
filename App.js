@@ -13,7 +13,6 @@ import {
 
 import { ViroARSceneNavigator } from 'react-viro';
 import { List, ListItem } from "react-native-elements";
-import Swiper from 'react-native-swiper';
 
 import SplashScreen from './js/pages/SplashScreen.js';
 import HowToFirstScreen from './js/pages/HowToFirstScreen.js';
@@ -22,8 +21,8 @@ import HowToRedropScreen from './js/pages/HowToRedropScreen.js';
 import ARViewScreen from './js/pages/ARViewScreen.js';
 import MapViewScreen from './js/pages/MapViewScreen.js';
 
-import { createStackNavigator, createAppContainer } from 'react-navigation'; 
-
+//import { createStackNavigator, createAppContainer } from 'react-navigation'; 
+/*
 const RootStack = createStackNavigator(
   {
     Splash: SplashScreen,
@@ -37,7 +36,7 @@ const RootStack = createStackNavigator(
     initialRouteName: 'Splash'
   }
 );
-
+*/
 const AppContainer = createAppContainer(RootStack);
 
 export default class App extends Component {
@@ -46,7 +45,7 @@ export default class App extends Component {
   }
 
   render() {
-     return <AppContainer />;
+     return <MapViewScreen />;
   }
 
 }

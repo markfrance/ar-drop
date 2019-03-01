@@ -1,4 +1,12 @@
-
+import React, { Component } from 'react';
+import {
+  View, 
+  Image, 
+  Text,
+  StyleSheet, 
+  TouchableHighlight,
+  Modal
+} from 'react-native';
 
 export default class AirdropModal extends Component {
 	
