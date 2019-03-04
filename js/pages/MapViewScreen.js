@@ -1,28 +1,109 @@
 import React, { Component } from 'react';
 import {View, Image, Text, StyleSheet, TouchableHighlight} from 'react-native';
 
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+
+import Geolocation from 'react-native-geolocation-service';
 
 export default class MapViewScreen extends Component {
 	
-
   constructor() {
     super();
 
+    this._startGeolocation();
+
     this.state = {
-      sharedProps : sharedProps,
       bitcoinLat : 0,
       bitcoinLong : 0,
       currentLatitude : 0,
-      currentLongitude : 0
+      currentLongitude : 0,
+      meters : 0,
+      timer : 5000
     }
+    
     this._randomiseLocation = this._randomiseLocation.bind(this);
-    this._pointAtDistance = this._pointAtDistance.bind(this);
+    this._startGeolocation = this._startGeolocation.bind(this);
+    this._randomPoint = this._randomPoint.bind(this);
+    this._calculateDistance = this._calculateDistance.bind(this);
+    this._msToTime = this._msToTime.bind(this);
   }
 
-  componentWillMount() {
 
-    _this._randomiseLocation();
+  componentDidMount() {
+     
+    this.interval = setInterval(
+    () => this.setState(({ timer: this.state.timer - 10 })),
+    1
+    );
+  }
+
+  componentDidUpdate(){
+    if(this.state.timer < 0){ 
+      this.setState({timer: 0});
+      clearInterval(this.interval);
+    }
+  }
+
+   _startGeolocation() {
+    Geolocation.watchPosition(
+      (position) => {
+        var lat = position.coords.latitude;
+        var lon = position.coords.longitude;
+
+        if(this.state.bitcoinLat === 0) {
+       var newLocation = this._randomPoint(
+          lat,
+          lon,
+          300
+        );
+
+        this.state.bitcoinLat = newLocation.lat;
+        this.state.bitcoinLong = newLocation.lon;
+      
+      }
+
+    var distanceInMeters = this._calculateDistance(
+          lat, lon, 
+          this.state.bitcoinLat, this.state.bitcoinLong
+        );
+
+        this.setState({
+          meters: distanceInMeters,
+          currentLatitude: lat,
+          currentLongitude: lon
+        });
+      },
+      (error) => this.setState({ 
+          error: error.message 
+      }),
+      { 
+        enableHighAccuracy: true, 
+        timeout: 2000, 
+        maximumAge: 2000, 
+        distanceFilter: 1 
+      },
+    )
+  }
+
+
+  _calculateDistance(lat1,lon1,lat2,lon2) {
+    if ((lat1 == lat2) && (lon1 == lon2)) {
+      return 0;
+    }
+    else {
+      var radlat1 = Math.PI * lat1/180;
+      var radlat2 = Math.PI * lat2/180;
+      var theta = lon1-lon2;
+      var radtheta = Math.PI * theta/180;
+      var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+      if (dist > 1) {
+        dist = 1;
+      }
+      dist = Math.acos(dist);
+      dist = dist * 180/Math.PI;
+      dist = dist * 60 * 1.1515 * 1.609344 * 1000;
+      return dist;
+    }
   }
 
 	render() {
@@ -38,24 +119,30 @@ export default class MapViewScreen extends Component {
        <MapView
         style={{flex: 1}}
         region={{
-          latitude: {this.props.currentLatitude},
-          longitude: {this.props.currentLongitude},
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
+          latitude: this.state.currentLatitude,
+          longitude: this.state.currentLongitude,
+          latitudeDelta: 0.015,
+          longitudeDelta: 0.005
         }}
         showsUserLocation={true}
       >
-      <MapView.Marker
-            coordinate={{latitude: {this.props.bitcoinLat},
-            longitude: {this.props.bitcoinLong}}}
+      <View style={{backgroundColor:"transparent"}}>
+          <Text style={{textAlign:"center", fontSize:55, color:'#f86e00'}}> 
+          {this._msToTime(this.state.timer)} </Text>
+          
+        </View> 
+      <Marker
+            coordinate={{latitude: this.state.bitcoinLat,
+            longitude: this.state.bitcoinLong}}
+            image={require('../../public/images/ar_d_annotation.png')}
             title={"Bitcoin"}
          />
       </MapView>
 
         <View style={{height:60,
           backgroundColor:'#f86e00' }}>
-          <Text style={localStyles.bottomText}>{"CLICK TO GRAB!"}</Text>
-          <TouchableHighlight onPress={this._randomiseLocation()}
+          <Text style={localStyles.bottomText}>300 Meters</Text>
+          <TouchableHighlight onPress={() => this._randomiseLocation()}
             style={localStyles.redropButton} >
           <Image source={require("../../public/images/ar_d_camera_icon.png")}
           style={localStyles.smallIcon} />
@@ -66,51 +153,40 @@ export default class MapViewScreen extends Component {
     );
 	}
 
+   _msToTime(milli) {
+    return '0' + (milli / 1000).toFixed(2);
+  }
+
   _randomiseLocation() {
-    var newLocation = _pointAtDistance(
-    this.state.currentLatitude,
-    this.state.currentLongitude,
-    100);
+     var newLocation = this._randomPoint(
+          this.state.currentLatitude,
+          this.state.currentLongitude,
+          300
+        );
 
-    this.setState({
-      bitcoinLat = newLocation.latitude;
-      bitcoinLong = newLocation.longitude;
-    });
-  }
-
-  _pointAtDistance(latitude, longitude, distance) {
-    const result = {}
-    const coords = toRadians(inputCoords)
-    const sinLat =  Math.sin(coords.latitude)
-    const cosLat =  Math.cos(coords.latitude)
-
-    const bearing = Math.random() * (Math.PI * 2)
-    const theta = distance/6371000 //Earth radius in meters (todo)
-    const sinBearing = Math.sin(bearing)
-    const cosBearing =  Math.cos(bearing)
-    const sinTheta = Math.sin(theta)
-    const cosTheta =    Math.cos(theta)
-
-    result.latitude = Math.asin(sinLat*cosTheta+cosLat*sinTheta*cosBearing);
-    result.longitude = coords.longitude + 
-        Math.atan2( sinBearing*sinTheta*cosLat, cosTheta-sinLat*Math.sin(result.latitude )
-    );
-
-    result.longitude = ((result.longitude+(Math.PI *3))%(Math.PI * 2))-Math.PI
-
-    return toDegrees(result)
-}
-
-  _toRadians(deg) {
-    return (deg / 180.0 * Math.PI);
-  }
-
-  _pointInCircle(latitude, longitude, distance) {
-   // const rnd =  Math.random()
+        this.state.bitcoinLat = newLocation.lat;
+        this.state.bitcoinLong = newLocation.lon;
     
-  //  const randomDist = Math.sqrt(rnd) * distance
-    return pointAtDistance(latitude, longitude, randomDist)
   }
+
+ _randomPoint(lat, lng, radius) {
+  var x0 = lng;
+  var y0 = lat;
+  // Convert Radius from meters to degrees.
+  var rd = radius/111300;
+
+  var u = Math.random();
+  var v = Math.random();
+
+  var w = rd;
+  var t = 2 * Math.PI * v;
+  var x = w * Math.cos(t);
+  var y = w * Math.sin(t);
+
+  var xp = x/Math.cos(y0);
+
+  return {'lat': y+y0, 'lon': xp+x0};
+}
   
 }
 
@@ -120,6 +196,7 @@ var localStyles = StyleSheet.create({
     backgroundColor:"transparent"
   },
   mainView : {
+    marginTop: 15,
   	alignItems:'center', 
   	backgroundColor:'transparent'
   },
@@ -137,7 +214,7 @@ var localStyles = StyleSheet.create({
   },
   redropButton : {
   	position:'absolute',
-  	top:0,
+  	top:5,
   	right:0,
   	width:50, 
   	height:50
