@@ -2,20 +2,13 @@ PODS:
   - AWSCore (2.6.7)
   - AWSDynamoDB (2.6.7):
     - AWSCore (= 2.6.7)
-  - boost-for-react-native (1.63.0)
-  - DoubleConversion (1.1.5)
-  - Folly (2016.10.31.00):
-    - boost-for-react-native
-    - DoubleConversion
-    - glog
-  - glog (0.3.4)
-  - GoogleMaps (3.0.3):
-    - GoogleMaps/Maps (= 3.0.3)
-  - GoogleMaps/Base (3.0.3)
-  - GoogleMaps/Maps (3.0.3):
+  - GoogleMaps (2.7.0):
+    - GoogleMaps/Maps (= 2.7.0)
+  - GoogleMaps/Base (2.7.0)
+  - GoogleMaps/Maps (2.7.0):
     - GoogleMaps/Base
-  - GooglePlaces (3.0.3):
-    - GoogleMaps/Base (= 3.0.3)
+  - GooglePlaces (2.7.0):
+    - GoogleMaps/Base (= 2.7.0)
   - GoogleToolboxForMac/Defines (2.1.0)
   - GoogleToolboxForMac/Logger (2.1.0):
     - GoogleToolboxForMac/Defines (= 2.1.0)
@@ -24,68 +17,22 @@ PODS:
   - GVRSDK (1.120.0):
     - GoogleToolboxForMac/Logger (= 2.1.0)
     - GTMSessionFetcher/Core (= 1.1.6)
-  - React (0.57.7):
-    - React/Core (= 0.57.7)
-  - React/Core (0.57.7):
-    - yoga (= 0.57.7.React)
-  - React/CxxBridge (0.57.7):
-    - Folly (= 2016.10.31.00)
-    - React/Core
-    - React/cxxreact
-  - React/cxxreact (0.57.7):
-    - boost-for-react-native (= 1.63.0)
-    - Folly (= 2016.10.31.00)
-    - React/jschelpers
-    - React/jsinspector
-  - React/DevSupport (0.57.7):
-    - React/Core
-    - React/RCTWebSocket
-  - React/fishhook (0.57.7)
-  - React/jschelpers (0.57.7):
-    - Folly (= 2016.10.31.00)
-    - React/PrivateDatabase
-  - React/jsinspector (0.57.7)
-  - React/PrivateDatabase (0.57.7)
-  - React/RCTBlob (0.57.7):
-    - React/Core
-  - React/RCTLinkingIOS (0.57.7):
-    - React/Core
-  - React/RCTWebSocket (0.57.7):
-    - React/Core
-    - React/fishhook
-    - React/RCTBlob
-  - RNGestureHandler (1.0.16):
-    - React
-  - RNVectorIcons (6.3.0):
-    - React
   - ViroKit (1.0):
     - AWSDynamoDB (= 2.6.7)
     - GVRAudioSDK (= 1.120.0)
     - GVRSDK (= 1.120.0)
   - ViroReact (1.0)
-  - yoga (0.57.7.React)
 
 DEPENDENCIES:
-  - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - GoogleMaps
   - GooglePlaces
-  - React/Core (from `../node_modules/react-native`)
-  - React/CxxBridge (from `../node_modules/react-native`)
-  - React/DevSupport (from `../node_modules/react-native`)
-  - React/RCTLinkingIOS (from `../node_modules/react-native`)
-  - RNGestureHandler (from `../node_modules/react-native-gesture-handler/`)
-  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - ViroKit (from `../node_modules/react-viro/ios/dist/ViroRenderer/`)
   - ViroReact (from `../node_modules/react-viro/ios/`)
-  - yoga (from `../node_modules/react-native/ReactCommon/yoga/yoga.podspec`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AWSCore
     - AWSDynamoDB
-    - boost-for-react-native
-    - DoubleConversion
-    - glog
     - GoogleMaps
     - GooglePlaces
     - GoogleToolboxForMac
@@ -94,41 +41,23 @@ SPEC REPOS:
     - GVRSDK
 
 EXTERNAL SOURCES:
-  Folly:
-    :podspec: "../node_modules/react-native/third-party-podspecs/Folly.podspec"
-  React:
-    :path: "../node_modules/react-native"
-  RNGestureHandler:
-    :path: "../node_modules/react-native-gesture-handler/"
-  RNVectorIcons:
-    :path: "../node_modules/react-native-vector-icons"
   ViroKit:
     :path: "../node_modules/react-viro/ios/dist/ViroRenderer/"
   ViroReact:
     :path: "../node_modules/react-viro/ios/"
-  yoga:
-    :path: "../node_modules/react-native/ReactCommon/yoga/yoga.podspec"
 
 SPEC CHECKSUMS:
   AWSCore: a5ff5fb202342b922eb9036af9ecc3bc28a032eb
   AWSDynamoDB: ea3631a84c0c4a19ef4cb4ec32d3348d3ae9d47c
-  boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
-  DoubleConversion: e22e0762848812a87afd67ffda3998d9ef29170c
-  Folly: c89ac2d5c6ab169cd7397ef27485c44f35f742c7
-  glog: 1de0bb937dccdc981596d3b5825ebfb765017ded
-  GoogleMaps: fd5c9fa58871781b9fb94d4936f19c69fe60ce32
-  GooglePlaces: f09e76993c9c3ee4af8f4f7f535bb94d6aa3b649
+  GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
+  GooglePlaces: 3d06e6c99654545b4738ce49648745779c25f2ef
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
   GTMSessionFetcher: 6aacd0ab48ddf0c3633ab2642d792abfcad1b08a
   GVRAudioSDK: 302f0a8f190d855868ea07f246ce4f9b44c392ae
   GVRSDK: 0cb9d0ce06a84d698e61e3db9509766022dcf815
-  React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
-  RNGestureHandler: afde2addc517e85cc97a25bfe119acbee779a7ce
-  RNVectorIcons: 8c52e1e8da1153613fdef44748e865c25556cb9c
   ViroKit: b59a8004b4a180fe255356b9d0388173dff0fbdf
   ViroReact: 5520f26ac4654e361786c82da3b29ce0402c3c00
-  yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: db3dbeefcf1558fd93b080113d66fea4d512f26d
+PODFILE CHECKSUM: d4514b6c2c5f9b34e17507622c2b703b039a7303
 
 COCOAPODS: 1.5.3

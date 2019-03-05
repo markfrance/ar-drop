@@ -41,6 +41,7 @@ export default class MapViewScreen extends Component {
     if(this.state.timer < 0){ 
       this.setState({timer: 0});
       clearInterval(this.interval);
+      this.props.navigation.navigate("ARView");
     }
   }
 

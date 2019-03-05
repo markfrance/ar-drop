@@ -14,7 +14,6 @@ export default class AirdropListItem extends Component {
     	super();
 
     this.state = {
-    	item : [],
       	joined : false,
     }
   	}
@@ -22,13 +21,13 @@ export default class AirdropListItem extends Component {
 	render() {
 		return(
 			<TouchableHighlight style={localStyles.buttons}
-            onPress={this.props.navigation.navigate('Airdrop')}
+            onPress={this.props.navigation.navigate('MapView')}
              >
     <View >
       <View style={{backgroundColor:'#f86e00', height:50}}>
-        <Text style={localStyles.buttonText}> {this.state.item.value} {this.state.item.tokenName}</Text>
+        <Text style={localStyles.buttonText}> {this.props.airdropItem.value} {this.props.airdropItem.tokenName}</Text>
       </View>
-      <Image source={require(this.state.item.image)}  
+      <Image source={require(this.props.airdropItem.image)}  
       style={localStyles.buttonImage} />
      
       <Image source={require('../../../public/images/ar_d_clock_icon.png')}

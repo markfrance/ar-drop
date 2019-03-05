@@ -15,7 +15,7 @@ export default class SplashScreen extends Component {
 	render() {
 	  return (
        	<TouchableWithoutFeedback
-       	  onPress={this.props.navigation.navigate('HowToFirstScreen')} >
+       	  onPress={()=>this.props.navigation.navigate('HowToSplash') } > 
           <View style={{flex:1}}>
             <Image source={require("../../public/images/AR-DSplash.png")}
             	style={localStyles.splashImage}/>

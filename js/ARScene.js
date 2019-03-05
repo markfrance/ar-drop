@@ -11,7 +11,8 @@ import {
   ViroFlexView,
   ViroConstants,
   ViroAnimatedImage,
-  ViroParticleEmitter
+  ViroParticleEmitter,
+  ViroARCamera
 } from 'react-viro';
 
 import renderIf from './renderif';
@@ -23,20 +24,21 @@ export default class ARScene extends Component {
 
     this.state = {
      runFireworks : false,
-     showLeft :false,
+     showLeft :true,
      showRight : false
     };
 
     this._onInitialized = this._onInitialized.bind(this);
+  //  this._startHeading = this._startHeading.bind(this);
   }
 
 
   componentDidMount() {
 
-    startHeading();
+  //  this._startHeading();
   }
-
- startHeading() {
+/*
+ _startHeading() {
      ReactNativeHeading.start(1)
     .then(didStart => {
         this.setState({
@@ -55,7 +57,7 @@ componentWillUnmount() {
     ReactNativeHeading.stop();
     this.listener.removeAllListeners('headingUpdated');
   }
-
+*/
   render() {
     return (
    
@@ -66,7 +68,6 @@ componentWillUnmount() {
           source={require('../public/images/BTC-Spinning_small.gif')} 
           scale={[.5, .5, .5]} 
           position={[0, 0, -1]}
-          onClick={this._clicked}
         />
         
         {renderIf(this.state.runFireworks,
@@ -94,7 +95,7 @@ componentWillUnmount() {
         />
         )}
 
-        renderIf(this.state.showRight,
+        {renderIf(this.state.showRight,
          <ViroImage
           source={require('../public/images/ar_d_right.png')} 
           scale={[.1, .1, .1]} 
@@ -105,6 +106,7 @@ componentWillUnmount() {
 
 
     </ViroARCamera>
+
 
       </ViroARScene>
  
@@ -120,5 +122,18 @@ componentWillUnmount() {
     }
   }
 }
+
+var localStyles = StyleSheet.create({
+   arrowContainer : {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  centreArrow : {
+    width: 50,
+    height: 50
+    
+  }
+});
+
 
 module.exports = ARScene;

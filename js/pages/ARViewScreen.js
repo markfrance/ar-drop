@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-import {View, Image, StyleSheet, TouchableHighlight,  NativeEventEmitter,
+import {View, Image, Text, StyleSheet, TouchableHighlight,  NativeEventEmitter,
   DeviceEventEmitter} from 'react-native';
 import {
   ViroARSceneNavigator
 } from 'react-viro';
 
-import ReactNativeHeading from '@zsajjad/react-native-heading';
+//import ReactNativeHeading from '@zsajjad/react-native-heading';
 import Geolocation from 'react-native-geolocation-service';
 import { Gyroscope } from "react-native-sensors";
 
-
-var InitialARScene = require('../ARScene');
+var InitialARScene = require('../ARScene.js');
 
 var sharedProps = {
   apiKey:"284CD604-39DB-4A9C-B094-F1CAFC65CAB4",
@@ -40,15 +39,15 @@ export default class ARViewScreen extends Component {
     this._transformPointToAR = this._transformPointToAR.bind(this);
     this._calculateDistance = this._calculateDistance.bind(this);
     this._startGyroscope = this._startGyroscope.bind(this);
-    this._startGeolocation = this._startGeolocation.bind(this);
-
+   
   	}
 
   componentDidMount() {
-    this._startGeolocation();
-    this._startGyroscope();
+  
+   // this._startGyroscope();
 
   }
+
 
   _startGyroscope() {
     new Gyroscope({
@@ -114,14 +113,13 @@ export default class ARViewScreen extends Component {
 
         <View style={{height:60,
           backgroundColor:'#f86e00' }}>
-          <Text style={localStyles.bottomText}>{"CLICK TO GRAB!"}</Text>
-       
-          <TouchableHighlight onPress={this.props.navigation.navigate('Airdrop')}
+         
+          <TouchableHighlight onPress={() => this.props.navigation.navigate("MapView")}
             style={localStyles.backButton} >
           <Image source={require("../../public/images/ar_d_back_icon.png")}
           style={localStyles.smallIcon} />
           </TouchableHighlight >
-          <TouchableHighlight onPress={this.props.navigation.navigate('Airdrop')}
+          <TouchableHighlight onPress={() => this._startVideoRecording()}
             style={localStyles.cameraButton} >
           <Image source={require("../../public/images/ar_d_camera_icon.png")}
           style={localStyles.smallIcon} />
@@ -133,11 +131,11 @@ export default class ARViewScreen extends Component {
 	}
 
   _startVideoRecording() {
-    this.props.sceneNavigator.startVideoRecording("testVideo", true, function(e) {console.log(e)});
+   // this.props.sceneNavigator.startVideoRecording("testVideo", true, function(e) {console.log(e)});
   }
 
   _stopVideoRecording() {
-     this.props.sceneNavigator.stopVideoRecording();
+    // this.props.sceneNavigator.stopVideoRecording();
   }
 
   _latLongToMerc(lat_deg, lon_deg) {

@@ -28,7 +28,7 @@ export default class HowToFirstScreen extends Component {
             <Image source={require("../../public/images/HowToAfterSplash3.png")}
             style={localStyles.splashImage}/>
             <TouchableHighlight style={localStyles.okButton} 
-            onPress={this.props.navigation.navigate('Airdrop')}
+            onPress={() => this.props.navigation.navigate('MapView')}
             >
             <Image source={require("../../public/images/ar_d_ok_icon.png")} 
             style={localStyles.okButton} />
