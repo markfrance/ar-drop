@@ -38,7 +38,6 @@ export default class ARViewScreen extends Component {
     this._latLongToMerc = this._latLongToMerc.bind(this);
     this._transformPointToAR = this._transformPointToAR.bind(this);
     this._calculateDistance = this._calculateDistance.bind(this);
-    this._startGyroscope = this._startGyroscope.bind(this);
    
   	}
 
@@ -48,22 +47,6 @@ export default class ARViewScreen extends Component {
 
   }
 
-
-  _startGyroscope() {
-    new Gyroscope({
-      updateInterval: 50
-    })
-      .then(observable => {
-        observable.subscribe(({ x }) => {
-          this.setState(state => ({
-            deviceRotationX: x
-          }));
-        });
-      })
-      .catch(error => {
-        console.log("The sensor is not available");
-      });
-  }
 
   startGeolocation() {
      Geolocation.watchPosition(
@@ -195,15 +178,15 @@ var localStyles = StyleSheet.create({
   },
   backButton : {
   	position:'absolute',
-  	top:0, 
-  	left:0, 
+  	top:5, 
+  	left:5, 
   	width:50, 
   	height:50
   },
   cameraButton : {
   	position:'absolute',
-  	top:0,
-  	right:0,
+  	top:5,
+  	right:5,
   	width:50, 
   	height:50
   },

@@ -41,7 +41,11 @@ export default class MapViewScreen extends Component {
     if(this.state.timer < 0){ 
       this.setState({timer: 0});
       clearInterval(this.interval);
-      this.props.navigation.navigate("ARView");
+      this.props.navigation.navigate("ARView"
+        {
+          bitcoinLat: this.state.bitcoinLat,
+          bitcoinLong: this.state.bitcoinLong
+        });
     }
   }
 
@@ -111,12 +115,6 @@ export default class MapViewScreen extends Component {
 	return (
      <View style={localStyles.mainContainer} transparent={true} >
         
-        <View style={localStyles.mainView}>
-          <Image source={require("../../public/images/ARD.png")} 
-          style={localStyles.ARDLogo}/>
-   
-        </View>
-
        <MapView
         style={{flex: 1}}
         region={{
@@ -127,6 +125,11 @@ export default class MapViewScreen extends Component {
         }}
         showsUserLocation={true}
       >
+      <View style={localStyles.mainView}>
+          <Image source={require("../../public/images/ARD.png")} 
+          style={localStyles.ARDLogo}/>
+   
+        </View>
       <View style={{backgroundColor:"transparent"}}>
           <Text style={{textAlign:"center", fontSize:55, color:'#f86e00'}}> 
           {this._msToTime(this.state.timer)} </Text>
@@ -184,9 +187,9 @@ export default class MapViewScreen extends Component {
   var x = w * Math.cos(t);
   var y = w * Math.sin(t);
 
-  var xp = x/Math.cos(y0);
+  //var xp = x/Math.cos(y0);
 
-  return {'lat': y+y0, 'lon': xp+x0};
+  return {'lat': y+y0, 'lon': x+x0};
 }
   
 }

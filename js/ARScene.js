@@ -1,8 +1,5 @@
-'use strict';
-
 import React, { Component } from 'react';
-
-import {StyleSheet, View, Image} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 import {
   ViroARScene,
@@ -24,7 +21,7 @@ export default class ARScene extends Component {
 
     this.state = {
      runFireworks : false,
-     showLeft :true,
+     showLeft : false,
      showRight : false
     };
 
@@ -64,10 +61,18 @@ componentWillUnmount() {
       <ViroARScene onTrackingUpdated={this._onInitialized} 
       style={{backgroundColor:'transparent'}} >
        
+       {renderIf(false,
         <ViroAnimatedImage
           source={require('../public/images/BTC-Spinning_small.gif')} 
           scale={[.5, .5, .5]} 
           position={[0, 0, -1]}
+        />)}
+
+         <ViroImage
+          source={require('../public/images/ar_d_marker.png')} 
+          scale={[.1, .1, .1]} 
+          position={[0, 0, -1]}
+          style={localStyles.centreArrow}
         />
         
         {renderIf(this.state.runFireworks,

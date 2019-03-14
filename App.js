@@ -1,38 +1,27 @@
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  Text,
-  View,
-  Image,
-  StyleSheet,
-  PixelRatio,
-  FlatList, 
-  ActivityIndicator,
-  Modal
-} from 'react-native';
 
-import { ViroARSceneNavigator } from 'react-viro';
-
-import SplashScreen from './js/pages/SplashScreen.js';
+//import SplashScreen from './js/pages/SplashScreen.js';
 import HowToFirstScreen from './js/pages/HowToFirstScreen.js';
 //import AirdropListScreen from './js/pages/AirdropList.js'; 
 import HowToRedropScreen from './js/pages/HowToRedropScreen.js';
 import ARViewScreen from './js/pages/ARViewScreen.js';
 import MapViewScreen from './js/pages/MapViewScreen.js';
+//import ARMapTiltScreen from './js/pages/ARMapTiltScreen.js';
 
 import { createStackNavigator, createAppContainer } from 'react-navigation'; 
 
 const RootStack = createStackNavigator(
   {
-    Splash: SplashScreen,
+   // Splash: SplashScreen,
     HowToSplash: HowToFirstScreen,
     // Airdrop: AirdropListScreen,
     HowToRedrop: HowToRedropScreen,
     ARView: ARViewScreen,
+  //  Tilt: ARMapTiltScreen,
     MapView: MapViewScreen 
   },
   {
-    initialRouteName: 'HowToSplash'
+    initialRouteName: 'MapView'
   }
 );
 
