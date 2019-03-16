@@ -4,6 +4,7 @@ import {View, Image, Text, StyleSheet, TouchableHighlight} from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 
 import Geolocation from 'react-native-geolocation-service';
+import locationMath from '../locationMath.js';
 
 export default class MapViewScreen extends Component {
 	
@@ -23,8 +24,6 @@ export default class MapViewScreen extends Component {
     
     this._randomiseLocation = this._randomiseLocation.bind(this);
     this._startGeolocation = this._startGeolocation.bind(this);
-    this._randomPoint = this._randomPoint.bind(this);
-    this._calculateDistance = this._calculateDistance.bind(this);
     this._msToTime = this._msToTime.bind(this);
   }
 
@@ -41,7 +40,7 @@ export default class MapViewScreen extends Component {
     if(this.state.timer < 0){ 
       this.setState({timer: 0});
       clearInterval(this.interval);
-      this.props.navigation.navigate("ARView"
+      this.props.navigation.navigate("ARView",
         {
           bitcoinLat: this.state.bitcoinLat,
           bitcoinLong: this.state.bitcoinLong
@@ -56,7 +55,7 @@ export default class MapViewScreen extends Component {
         var lon = position.coords.longitude;
 
         if(this.state.bitcoinLat === 0) {
-       var newLocation = this._randomPoint(
+       var newLocation = locationMath.randomPoint(
           lat,
           lon,
           300
@@ -67,7 +66,7 @@ export default class MapViewScreen extends Component {
       
       }
 
-    var distanceInMeters = this._calculateDistance(
+    var distanceInMeters = locationMath.calculateDistance(
           lat, lon, 
           this.state.bitcoinLat, this.state.bitcoinLong
         );
@@ -91,25 +90,6 @@ export default class MapViewScreen extends Component {
   }
 
 
-  _calculateDistance(lat1,lon1,lat2,lon2) {
-    if ((lat1 == lat2) && (lon1 == lon2)) {
-      return 0;
-    }
-    else {
-      var radlat1 = Math.PI * lat1/180;
-      var radlat2 = Math.PI * lat2/180;
-      var theta = lon1-lon2;
-      var radtheta = Math.PI * theta/180;
-      var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-      if (dist > 1) {
-        dist = 1;
-      }
-      dist = Math.acos(dist);
-      dist = dist * 180/Math.PI;
-      dist = dist * 60 * 1.1515 * 1.609344 * 1000;
-      return dist;
-    }
-  }
 
 	render() {
 	return (
@@ -162,7 +142,7 @@ export default class MapViewScreen extends Component {
   }
 
   _randomiseLocation() {
-     var newLocation = this._randomPoint(
+     var newLocation = locationMath.randomPoint(
           this.state.currentLatitude,
           this.state.currentLongitude,
           300
@@ -172,25 +152,6 @@ export default class MapViewScreen extends Component {
         this.state.bitcoinLong = newLocation.lon;
     
   }
-
- _randomPoint(lat, lng, radius) {
-  var x0 = lng;
-  var y0 = lat;
-  // Convert Radius from meters to degrees.
-  var rd = radius/111300;
-
-  var u = Math.random();
-  var v = Math.random();
-
-  var w = rd;
-  var t = 2 * Math.PI * v;
-  var x = w * Math.cos(t);
-  var y = w * Math.sin(t);
-
-  //var xp = x/Math.cos(y0);
-
-  return {'lat': y+y0, 'lon': x+x0};
-}
   
 }
 

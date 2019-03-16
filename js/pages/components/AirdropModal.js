@@ -35,12 +35,12 @@ export default class AirdropModal extends Component {
 
               <View style={{flex:1, flexDirection:'row'}}>
                 <TouchableHighlight
-                onPress={this._setModal(HIDE_MODAL)}>
+                onPress={() => this._setModal(HIDE_MODAL)}>
                   <Image source={require("./public/images/ar_d_back_icon.png")}
                   style={{width:100, height:100}} />
                 </TouchableHighlight>
                 <TouchableHighlight
-                onPress={this._getExperienceButtonOnPress(HOW_TO_REDROP)}>
+                onPress={() => this.props.navigation.navigate("MapView")}>
                   <Image source={require("./public/images/ar_d_ok_icon.png")}
                   style={{width:100, height:100}} />
                 </TouchableHighlight>

@@ -13,6 +13,7 @@ import {
 } from 'react-viro';
 
 import renderIf from './renderif';
+import locationMath from './locationMath'
 
 export default class ARScene extends Component {
 
@@ -22,11 +23,21 @@ export default class ARScene extends Component {
     this.state = {
      runFireworks : false,
      showLeft : false,
-     showRight : false
+     showRight : false,
+     bitcoinLocation: locationMath.transformPointToAR(51.547564,0.0308595),
+      latitude:0,
+      longitude:0,
+      headingIsSupported:false,
+      headingDirection:0,
+      currentLocationX:0,
+      currentLocationZ:0,
+      meters:0,
+      deviceRotationX:0
     };
 
     this._onInitialized = this._onInitialized.bind(this);
   //  this._startHeading = this._startHeading.bind(this);
+
   }
 
 
@@ -55,6 +66,37 @@ componentWillUnmount() {
     this.listener.removeAllListeners('headingUpdated');
   }
 */
+
+startGeolocation() {
+     Geolocation.watchPosition(
+      (position) => {
+        var lat = position.coords.latitude;
+        var lon = position.coords.longitude;
+        var location = locationMath.transformPointToAR(lat, lon);
+
+        var distanceInMeters = locationMath.calculateDistance(lat, lon, 52.692791, -2.738000);
+
+        this.setState({
+          meters: distanceInMeters,
+          latitude: lat,
+          longitude: lon,
+          string: String(position.coords.latitude),
+          currentLocationX: location.x,
+          currentLocationZ: location.z
+        });
+      },
+      (error) => this.setState({ 
+          error: error.message 
+      }),
+      { 
+        enableHighAccuracy: true, 
+        timeout: 2000, 
+        maximumAge: 2000, 
+        distanceFilter: 1 
+      },
+    )
+  }
+
   render() {
     return (
    
@@ -71,7 +113,7 @@ componentWillUnmount() {
          <ViroImage
           source={require('../public/images/ar_d_marker.png')} 
           scale={[.1, .1, .1]} 
-          position={[0, 0, -1]}
+          position={[]}
           style={localStyles.centreArrow}
         />
         
@@ -126,6 +168,8 @@ componentWillUnmount() {
       // Handle loss of tracking
     }
   }
+
+
 }
 
 var localStyles = StyleSheet.create({

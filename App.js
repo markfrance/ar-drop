@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 //import SplashScreen from './js/pages/SplashScreen.js';
 import HowToFirstScreen from './js/pages/HowToFirstScreen.js';
-//import AirdropListScreen from './js/pages/AirdropList.js'; 
+import AirdropListScreen from './js/pages/AirdropList.js'; 
 import HowToRedropScreen from './js/pages/HowToRedropScreen.js';
 import ARViewScreen from './js/pages/ARViewScreen.js';
 import MapViewScreen from './js/pages/MapViewScreen.js';
@@ -14,14 +14,14 @@ const RootStack = createStackNavigator(
   {
    // Splash: SplashScreen,
     HowToSplash: HowToFirstScreen,
-    // Airdrop: AirdropListScreen,
+     Airdrop: AirdropListScreen,
     HowToRedrop: HowToRedropScreen,
     ARView: ARViewScreen,
   //  Tilt: ARMapTiltScreen,
-    MapView: MapViewScreen 
+    MapView: MapViewScreen
   },
   {
-    initialRouteName: 'MapView'
+    initialRouteName: 'Airdrop'
   }
 );
 

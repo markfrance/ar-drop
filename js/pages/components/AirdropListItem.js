@@ -19,15 +19,17 @@ export default class AirdropListItem extends Component {
   	}
 
 	render() {
-		return(
+    var imagePath = '../../../public/images/' + this.props.airdropItem.image;
+    console.log(imagePath);
+     return(
 			<TouchableHighlight style={localStyles.buttons}
-            onPress={this.props.navigation.navigate('MapView')}
+            onPress={() => this.props.navigation.navigate('MapView')}
              >
     <View >
       <View style={{backgroundColor:'#f86e00', height:50}}>
         <Text style={localStyles.buttonText}> {this.props.airdropItem.value} {this.props.airdropItem.tokenName}</Text>
       </View>
-      <Image source={require(this.props.airdropItem.image)}  
+      <Image source={require('../../../public/images/TrialToken.png')}  
       style={localStyles.buttonImage} />
      
       <Image source={require('../../../public/images/ar_d_clock_icon.png')}

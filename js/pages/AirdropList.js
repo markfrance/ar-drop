@@ -5,10 +5,12 @@ import {
 	Text,
 	StyleSheet, 
 	TouchableHighlight,
-	Modal
+	Modal,
+  FlatList
 } from 'react-native';
 
 import AirdropListItem from './components/AirdropListItem.js';
+//import AirdropModal from './components/AirdropModal.js';
 import AirdropData from '../../data/airdropinfo.json';
 
 export default class AirdropList extends Component {
@@ -17,7 +19,7 @@ export default class AirdropList extends Component {
 	    super();
 
 	    this.state = {
-	      modalStatus : true,
+	      modalStatus : false,
 	    }
   	}
 
@@ -46,12 +48,12 @@ export default class AirdropList extends Component {
 
               <View style={localStyles.row}>
                 <TouchableHighlight
-                onPress={this._setModal(false)}>
+                onPress={() => this._setModal(false)}>
                   <Image source={require("../../public/images/ar_d_back_icon.png")}
                   style={localStyles.smallIcon} />
                 </TouchableHighlight>
                 <TouchableHighlight
-                onPress={this.props.navigation.navigate('HowToRedrop')}>
+                onPress={() => this.props.navigation.navigate('HowToRedrop')}>
                   <Image source={require("../../public/images/ar_d_ok_icon.png")}
                   style={localStyles.smallIcon} />
                 </TouchableHighlight>
@@ -61,7 +63,7 @@ export default class AirdropList extends Component {
         </Modal>
       <FlatList
   data={AirdropData}
-  renderItem={({item}) => <AirdropListItem airdropItem={item} /> }
+  renderItem={({item}) => <AirdropListItem airdropItem={item} navigation={this.props.navigation}/> }
 	/>
       </View>
     );

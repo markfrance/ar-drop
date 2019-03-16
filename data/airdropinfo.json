@@ -10,41 +10,97 @@
         "freeParticipants": 500,
         "paidParticipants": 500,
         "entryFee": 200,
-        "image": "./public/images/AlphaToken.png"
+        "image": "AlphaToken.png"
     },
     {
         "tokenName": "Beta Coins", 
         "value": 100,
-        "image": "./public/images/BetaCoin.png"
+        "firstPrize":10,
+        "secondPrize":8,
+        "thirdPrize":3,
+        "startTime":999999,
+        "entryRequirement":1,
+        "freeParticipants": 500,
+        "paidParticipants": 500,
+        "entryFee": 200,
+        "image": "BetaCoin.png"
     },
     {
         "tokenName": "Crypto Coins", 
         "value": 7,
-        "image": "./public/images/CryptoCoin.png"
+        "firstPrize":10,
+        "secondPrize":8,
+        "thirdPrize":3,
+        "startTime":999999,
+        "entryRequirement":1,
+        "freeParticipants": 500,
+        "paidParticipants": 500,
+        "entryFee": 200,
+        "image": "CryptoCoin.png"
     },
     {
         "tokenName": "Fictitious Coins", 
         "value": 2,
-        "image": "./public/images/Fictitious.png"
+        "firstPrize":10,
+        "secondPrize":8,
+        "thirdPrize":3,
+        "startTime":999999,
+        "entryRequirement":1,
+        "freeParticipants": 500,
+        "paidParticipants": 500,
+        "entryFee": 200,
+        "image": "Fictitious.png"
     },
     {
         "tokenName": "Sample Coins", 
         "value": 100,
-        "image": "./public/images/SampleCoin.png"
+        "firstPrize":10,
+        "secondPrize":8,
+        "thirdPrize":3,
+        "startTime":999999,
+        "entryRequirement":1,
+        "freeParticipants": 500,
+        "paidParticipants": 500,
+        "entryFee": 200,
+        "image": "SampleCoin.png"
     },
     {
         "tokenName": "Test Coins", 
         "value": 100,
-        "image": "./public/images/TestCoin.png"
+        "firstPrize":10,
+        "secondPrize":8,
+        "thirdPrize":3,
+        "startTime":999999,
+        "entryRequirement":1,
+        "freeParticipants": 500,
+        "paidParticipants": 500,
+        "entryFee": 200,
+        "image": "TestCoin.png"
     },
     {
         "tokenName": "Trial Tokens", 
         "value": 100,
-        "image": "./public/images/TrialToken.png"
+        "firstPrize":10,
+        "secondPrize":8,
+        "thirdPrize":3,
+        "startTime":999999,
+        "entryRequirement":1,
+        "freeParticipants": 500,
+        "paidParticipants": 500,
+        "entryFee": 200,
+        "image": "TrialToken.png"
     },
     {
         "tokenName": "Xample Tokens", 
         "value": 100,
-        "image": "./public/images/XampleToken.png"
+        "firstPrize":10,
+        "secondPrize":8,
+        "thirdPrize":3,
+        "startTime":999999,
+        "entryRequirement":1,
+        "freeParticipants": 500,
+        "paidParticipants": 500,
+        "entryFee": 200,
+        "image": "XampleToken.png"
     }
 ]
