@@ -23,7 +23,7 @@ export default class AirdropListItem extends Component {
     console.log(imagePath);
      return(
 			<TouchableHighlight style={localStyles.buttons}
-            onPress={() => this.props.navigation.navigate('MapView')}
+            onPress={() => this.props.navigation.navigate('Tilt')}
              >
     <View >
       <View style={{backgroundColor:'#f86e00', height:50}}>

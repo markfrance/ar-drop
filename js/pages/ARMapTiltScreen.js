@@ -1,65 +1,64 @@
 import React, { Component } from 'react';
+import {View, Text} from 'react-native';
 
-import ARViewScreen from './js/pages/ARViewScreen.js';
-import MapViewScreen from './js/pages/MapViewScreen.js';
-import renderIf from './renderif';
-import { Gyroscope } from "react-native-sensors";
-
+import ARViewScreen from './ARViewScreen.js';
+import MapViewScreen from './MapViewScreen.js';
+import MapViewNoRedrop from './MapViewNoRedrop.js';
+import renderIf from '../renderif.js';
+import { gyroscope } from "react-native-sensors";
 
 export default class ARMapTiltScreen extends Component {
 
   constructor() {
     super();
-
+    
     this.state = {
      showMap : false,
-     deviceRotationX : 0
+     deviceRotationX : 0,
+     subscription: null
     }
-    
-    this._startGyroscope = this._startGyroscope.bind(this);
+
+     this._startGyroscope = this._startGyroscope.bind(this);
+
+     this._startGyroscope();
+
   }
 
-   componentDidMount() {
-    this._startGyroscope();
+
+
+  componentWillUnmount() {
+    this.state.subscription.unsubscribe();
   }
 
    componentDidUpdate(){
-   		if(this.state.deviceRotationX > 280 
-   			|| this.state.deviceRotationX < 25)
+   		if(this.state.deviceRotationX < -1)
    		{
-   			this.setState({
-   				showMap: true
-   			})
+        this.state.showMap = true;
    		} else {
-   			this.setState({
-   				showMap: false
-   			})
+   			this.state.showMap = false;
    		}
    }
 
-  _startGyroscope() {
-    new Gyroscope({
-      updateInterval: 50
-    })
-      .then(observable => {
-        observable.subscribe(({ x }) => {
-          this.setState(state => ({
-            deviceRotationX: x
-          }));
+   _startGyroscope() {
+    const subscription = gyroscope.subscribe(({ x }) => {
+           this.setState(state => ({
+        deviceRotationX: x + state.deviceRotationX
+      }));
         });
-      })
-      .catch(error => {
-        console.log("The sensor is not available");
-      });
-  }
 
-  	render() {
+    this.state.subscription = subscription;
+   }
+
+  render() {
 	return (
+    <View style={{flex:1}}>
+    <Text>{this.state.deviceRotationX}</Text>
 		{renderIf(this.state.showMap,
-			<MapViewScreen/>)}
+			<MapViewNoRedrop navigation={this.props.navigation}/>)}
 
 		{renderIf(!this.state.showMap,
-			<ARViewScreen/>)}
+			<ARViewScreen navigation={this.props.navigation}/>)}
+    </View>
 	)}
 
 }

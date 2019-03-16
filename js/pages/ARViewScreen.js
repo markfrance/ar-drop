@@ -24,9 +24,7 @@ export default class ARViewScreen extends Component {
     this.state = {
       sharedProps : sharedProps
     }
-
-    
-  	}
+  }
 
   componentDidMount() {
   
@@ -60,7 +58,7 @@ export default class ARViewScreen extends Component {
           <Image source={require("../../public/images/ar_d_back_icon.png")}
           style={localStyles.smallIcon} />
           </TouchableHighlight >
-          <Text> 300 Meters </Text>
+          <Text style={localStyles.bottomText}> 300 Meters </Text>
           <TouchableHighlight onPress={() => this._startVideoRecording()}
             style={localStyles.cameraButton} >
           <Image source={require("../../public/images/ar_d_camera_icon.png")}
