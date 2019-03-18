@@ -11,14 +11,10 @@ export default class MapViewNoRedrop extends Component {
   constructor() {
     super();
 
-    this._startGeolocation();
-
     this.state = {
-      bitcoinLat : 0,
-      bitcoinLong : 0,
       currentLatitude : 0,
       currentLongitude : 0,
-      meters : 0,
+      meters : 0
     }
     
   this._startGeolocation = this._startGeolocation.bind(this);
@@ -33,25 +29,8 @@ export default class MapViewNoRedrop extends Component {
         var lat = position.coords.latitude;
         var lon = position.coords.longitude;
 
-        if(this.state.bitcoinLat === 0) {
-       var newLocation = locationMath.randomPoint(
-          lat,
-          lon,
-          300
-        );
-
-        this.state.bitcoinLat = newLocation.lat;
-        this.state.bitcoinLong = newLocation.lon;
-      
-      }
-
-    var distanceInMeters = locationMath.calculateDistance(
-          lat, lon, 
-          this.state.bitcoinLat, this.state.bitcoinLong
-        );
-
+  
         this.setState({
-          meters: distanceInMeters,
           currentLatitude: lat,
           currentLongitude: lon
         });
@@ -100,7 +79,7 @@ export default class MapViewNoRedrop extends Component {
 
         <View style={{height:60,
           backgroundColor:'#f86e00' }}>
-          <Text style={localStyles.bottomText}>300 Meters</Text>
+          <Text style={localStyles.bottomText}>{this.props.meters.toFixed(0)} Meters</Text>
            </View>
       </View>
 

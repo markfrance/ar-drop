@@ -17,103 +17,70 @@ import locationMath from './locationMath'
 
 export default class ARScene extends Component {
 
-  constructor() {
+  constructor(props) {
     super();
 
     this.state = {
      runFireworks : false,
      showLeft : false,
      showRight : false,
-     bitcoinLocation: locationMath.transformPointToAR(51.547564,0.0308595),
-      latitude:0,
-      longitude:0,
-      headingIsSupported:false,
-      headingDirection:0,
-      currentLocationX:0,
-      currentLocationZ:0,
-      meters:0,
-      deviceRotationX:0
+     bitcoinX: 0,
+     bitcoinZ: 0,
+     markerScale: 0.1
     };
 
-    this._onInitialized = this._onInitialized.bind(this);
-  //  this._startHeading = this._startHeading.bind(this);
+    this._processCameraPosition = this._processCameraPosition.bind(this);
 
-  }
+    var bitcoinLocation = locationMath.transformPointToAR(
+        props.arSceneNavigator.viroAppProps.lat,
+        props.arSceneNavigator.viroAppProps.long,
+        props.arSceneNavigator.viroAppProps.currentLatitude, 
+        props.arSceneNavigator.viroAppProps.currentLongitude);
 
-
-  componentDidMount() {
-
-  //  this._startHeading();
-  }
-/*
- _startHeading() {
-     ReactNativeHeading.start(1)
-    .then(didStart => {
-        this.setState({
-            headingIsSupported: didStart,
-        })
-    })
     
-    DeviceEventEmitter.addListener('headingUpdated', data => {
-      this.setState({
-            headingDirection: data.heading,
-        })
-    });
+   this.state.bitcoinX = bitcoinLocation.x;
+    this.state.bitcoinZ = bitcoinLocation.z;
   }
 
-componentWillUnmount() {
-    ReactNativeHeading.stop();
-    this.listener.removeAllListeners('headingUpdated');
-  }
-*/
 
-startGeolocation() {
-     Geolocation.watchPosition(
-      (position) => {
-        var lat = position.coords.latitude;
-        var lon = position.coords.longitude;
-        var location = locationMath.transformPointToAR(lat, lon);
+  _processCameraPosition(cameraPosition) {
+    //Scale marker
+    var distance = locationMath.distanceBetweenTwoPoints
+    (cameraPosition.position, 
+      [this.state.bitcoinX, 0, this.state.bitcoinZ ]);
 
-        var distanceInMeters = locationMath.calculateDistance(lat, lon, 52.692791, -2.738000);
+    this.setState(state => {
+      markerScale: state.markerScale * distance
+    })
 
-        this.setState({
-          meters: distanceInMeters,
-          latitude: lat,
-          longitude: lon,
-          string: String(position.coords.latitude),
-          currentLocationX: location.x,
-          currentLocationZ: location.z
-        });
-      },
-      (error) => this.setState({ 
-          error: error.message 
-      }),
-      { 
-        enableHighAccuracy: true, 
-        timeout: 2000, 
-        maximumAge: 2000, 
-        distanceFilter: 1 
-      },
-    )
+    //Determine if marker is in field of view and show arrows
+    if(cameraPosition.forward.x > (this.state.bitcoinX + 5))
+      this.setState({showLeft: true});
+    else if(cameraPosition.forward.x < (this.state.bitcoinX - 5))
+      this.setState({showRight: true});
+    else
+      this.setState({showLeft: false, showRight: false});
+   
   }
 
   render() {
     return (
    
-      <ViroARScene onTrackingUpdated={this._onInitialized} 
-      style={{backgroundColor:'transparent'}} >
+      <ViroARScene
+      style={{backgroundColor:'transparent'}}
+      onCameraTransformUpdate={this._processCameraPosition} >
        
        {renderIf(false,
         <ViroAnimatedImage
           source={require('../public/images/BTC-Spinning_small.gif')} 
           scale={[.5, .5, .5]} 
-          position={[0, 0, -1]}
+          position={[this.state.bitcoinX, 0, this.state.bitcoinZ]}
         />)}
 
          <ViroImage
           source={require('../public/images/ar_d_marker.png')} 
-          scale={[.1, .1, .1]} 
-          position={[]}
+          scale={[this.state.markerScale, .1, this.state.markerScale]} 
+          position={[this.state.bitcoinX, 0, this.state.bitcoinZ]}
           style={localStyles.centreArrow}
         />
         
@@ -159,14 +126,6 @@ startGeolocation() {
  
     );
     
-  }
-
-  _onInitialized(state, reason) {
-    if (state == ViroConstants.TRACKING_NORMAL) {
-      //Test
-    } else if (state == ViroConstants.TRACKING_NONE) {
-      // Handle loss of tracking
-    }
   }
 
 

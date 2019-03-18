@@ -48,6 +48,14 @@ export default class locationMath {
     }
   }
 
+  //calculates world space distance between two 3d vectors
+  static distanceBetweenTwoPoints(point1, point2) {
+    
+    return Math.sqrt((Math.pow(point1.x - point2.x,2)) 
+      + (Math.pow(point1.y - point2.y, 2))
+      + (Math.pow(point1.z - point2.z, 2)))
+  }
+
   //Generates random point a certain distance away (radius in meters)
   //from lat lon location 
   static randomPoint(lat, lon, radius) {

@@ -14,6 +14,10 @@ var InitialARScene = require('../ARScene.js');
 
 var sharedProps = {
   apiKey:"284CD604-39DB-4A9C-B094-F1CAFC65CAB4",
+  lat:0,
+  long:0,
+  currentLatitude:0,
+  currentLongitude:0
 }
 
 export default class ARViewScreen extends Component {
@@ -22,20 +26,20 @@ export default class ARViewScreen extends Component {
     	super();
 
     this.state = {
-      sharedProps : sharedProps
+      sharedProps : sharedProps,
     }
   }
 
   componentDidMount() {
-  
+    sharedProps.lat = this.props.bitcoinLat; 
+    sharedProps.long = this.props.bitcoinLong;
+    sharedProps.currentLatitude = this.props.currentLatitude;
+    sharedProps.currentLongitude =this.props.currentLongitude;
 
+    this.setState({sharedProps});
   }
-
 	render() {
-    var bitcoinLat = this.props.navigation.getParam('bitcoinLat',52.692791);
-    var bitcoinLong = this.props.navigation.getParam('bitcoinLong'-2.738000);
 
-    //var distance = locationMath
 	return (
       <View style={localStyles.viroContainer} transparent={true} >
         
@@ -47,7 +51,8 @@ export default class ARViewScreen extends Component {
 
         <ViroARSceneNavigator {...this.state.sharedProps}
         initialScene={{scene: InitialARScene}}
-        viroAppProps={{lat:bitcoinLat, long:bitcoinLong}}
+        viroAppProps={{lat:this.props.bitcoinLat, long:this.props.bitcoinLong,
+          currentLatitude:this.props.currentLatitude, currentLongitude:this.props.currentLongitude}}
         worldAlignment="GravityAndHeading"  />
 
         <View style={{height:60,
@@ -58,7 +63,7 @@ export default class ARViewScreen extends Component {
           <Image source={require("../../public/images/ar_d_back_icon.png")}
           style={localStyles.smallIcon} />
           </TouchableHighlight >
-          <Text style={localStyles.bottomText}> 300 Meters </Text>
+          <Text style={localStyles.bottomText}> {this.props.meters.toFixed(0)} Meters </Text>
           <TouchableHighlight onPress={() => this._startVideoRecording()}
             style={localStyles.cameraButton} >
           <Image source={require("../../public/images/ar_d_camera_icon.png")}

@@ -10,7 +10,7 @@ export default class MapViewScreen extends Component {
 	
   constructor() {
     super();
-
+    
     this._startGeolocation();
 
     this.state = {
@@ -88,9 +88,6 @@ export default class MapViewScreen extends Component {
       },
     )
   }
-
-
-
 	render() {
 	return (
      <View style={localStyles.mainContainer} transparent={true} >

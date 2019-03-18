@@ -21,7 +21,7 @@ const RootStack = createStackNavigator(
     MapView: MapViewScreen
   },
   {
-    initialRouteName: 'Tilt'
+    initialRouteName: 'MapView'
   }
 );
 
