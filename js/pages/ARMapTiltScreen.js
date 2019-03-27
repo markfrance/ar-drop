@@ -5,7 +5,7 @@ import ARViewScreen from './ARViewScreen.js';
 import MapViewScreen from './MapViewScreen.js';
 import MapViewNoRedrop from './MapViewNoRedrop.js';
 import renderIf from '../renderif.js';
-import { gyroscope } from "react-native-sensors";
+import { gyroscope, accelerometer, magnetometer } from "react-native-sensors";
 import Geolocation from 'react-native-geolocation-service';
 import locationMath from '../locationMath.js';
 
@@ -52,9 +52,9 @@ export default class ARMapTiltScreen extends Component {
    }
 
    _startGyroscope() {
-    const subscription = gyroscope.subscribe(({ x }) => {
+    const subscription = magnetometer.subscribe(({ x }) => {
            this.setState(state => ({
-        deviceRotationX: x + state.deviceRotationX
+        deviceRotationX: x
       }));
         });
 

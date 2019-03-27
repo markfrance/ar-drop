@@ -7,21 +7,25 @@ import HowToRedropScreen from './js/pages/HowToRedropScreen.js';
 import ARViewScreen from './js/pages/ARViewScreen.js';
 import MapViewScreen from './js/pages/MapViewScreen.js';
 import ARMapTiltScreen from './js/pages/ARMapTiltScreen.js';
+import PortalGame from './js/pages/PortalGame.js';
+//import ParachuteGame from './js/pages/ParachuteGame.js';
 
 import { createStackNavigator, createAppContainer } from 'react-navigation'; 
 
 const RootStack = createStackNavigator(
   {
-   // Splash: SplashScreen,
+    // Splash: SplashScreen,
     HowToSplash: HowToFirstScreen,
-     Airdrop: AirdropListScreen,
+    Airdrop: AirdropListScreen,
     HowToRedrop: HowToRedropScreen,
     ARView: ARViewScreen,
     Tilt: ARMapTiltScreen,
-    MapView: MapViewScreen
+    MapView: MapViewScreen,
+    Portal: PortalGame
+    // Parachute: ParachuteGame
   },
   {
-    initialRouteName: 'MapView'
+    initialRouteName: 'Portal'
   }
 );
 

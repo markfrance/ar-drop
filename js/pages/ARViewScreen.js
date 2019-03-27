@@ -10,7 +10,7 @@ import locationMath from '../locationMath.js';
 import Geolocation from 'react-native-geolocation-service';
 import { Gyroscope } from "react-native-sensors";
 
-var InitialARScene = require('../ARScene.js');
+var InitialARScene = require('../arScenes/ARScene.js');
 
 var sharedProps = {
   apiKey:"284CD604-39DB-4A9C-B094-F1CAFC65CAB4",
