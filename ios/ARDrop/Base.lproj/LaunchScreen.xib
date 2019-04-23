@@ -15,10 +15,9 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Image" translatesAutoresizingMaskIntoConstraints="NO" id="fXs-bI-iVz">
-                    <rect key="frame" x="70" y="0.0" width="338" height="480"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                    <edgeInsets key="layoutMargins" top="8" left="30" bottom="8" right="30"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="vertical_divider.png" translatesAutoresizingMaskIntoConstraints="NO" id="5VK-Qg-J8v">
+                    <rect key="frame" x="51" y="0.0" width="375" height="480"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -28,6 +27,6 @@
         </view>
     </objects>
     <resources>
-        <image name="Image" width="540" height="960"/>
+        <image name="vertical_divider.png" width="1" height="62"/>
     </resources>
 </document>

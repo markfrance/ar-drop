@@ -22,8 +22,8 @@ var sharedProps = {
 
 export default class ARViewScreen extends Component {
 	
-	constructor() {
-    	super();
+	constructor(props) {
+    	super(props);
 
     this.state = {
       sharedProps : sharedProps,
@@ -50,9 +50,8 @@ export default class ARViewScreen extends Component {
         </View>
 
         <ViroARSceneNavigator {...this.state.sharedProps}
-        initialScene={{scene: InitialARScene}}
-        viroAppProps={{lat:this.props.bitcoinLat, long:this.props.bitcoinLong,
-          currentLatitude:this.props.currentLatitude, currentLongitude:this.props.currentLongitude}}
+        initialScene={{scene: InitialARScene, passProps:{lat:this.props.bitcoinLat, long:this.props.bitcoinLong,
+          currentLatitude:this.props.currentLatitude, currentLongitude:this.props.currentLongitude}}}
         worldAlignment="GravityAndHeading"  />
 
         <View style={{height:60,

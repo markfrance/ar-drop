@@ -1,46 +1,56 @@
 [
     {
-        "tokenName": "AlphaTokens", 
+        "tokenName": "Clash", 
         "value": 10,
+        "type": "parachute",
         "firstPrize":10,
         "secondPrize":8,
         "thirdPrize":3,
-        "startTime":999999,
+        "startTime":999,
         "entryRequirement":1,
         "freeParticipants": 500,
         "paidParticipants": 500,
         "entryFee": 200,
-        "image": "AlphaToken.png"
+        "image": "AR-Drop-ARD-Airdrop-List-Image.png",
+        "percentAmount":50,
+        "angle":360
     },
     {
-        "tokenName": "Beta Coins", 
+        "tokenName": "Bitcoins", 
         "value": 100,
+        "type": "geo",
         "firstPrize":10,
         "secondPrize":8,
         "thirdPrize":3,
-        "startTime":999999,
+        "startTime":54363,
         "entryRequirement":1,
         "freeParticipants": 500,
         "paidParticipants": 500,
         "entryFee": 200,
-        "image": "BetaCoin.png"
+        "image": "AR-Drop-Bitcoin-Airdrop-List-Image.png",
+        "percentAmount":10,
+        "angle":360
     },
     {
-        "tokenName": "Crypto Coins", 
+        "tokenName": "Ethereum", 
         "value": 7,
+        "type": "parachute",
         "firstPrize":10,
         "secondPrize":8,
         "thirdPrize":3,
-        "startTime":999999,
+        "startTime":100,
         "entryRequirement":1,
         "freeParticipants": 500,
         "paidParticipants": 500,
         "entryFee": 200,
-        "image": "CryptoCoin.png"
+        "image": "AR-Drop-Ethereum-Airdrop-List-Image.png",
+        "percentAmount":25,
+        "angle":360
     },
     {
-        "tokenName": "Fictitious Coins", 
+        "tokenName": "Bitcoin Cash", 
         "value": 2,
+        "type": "portal",
         "firstPrize":10,
         "secondPrize":8,
         "thirdPrize":3,
@@ -49,11 +59,14 @@
         "freeParticipants": 500,
         "paidParticipants": 500,
         "entryFee": 200,
-        "image": "Fictitious.png"
+        "image": "AR-Drop-Bitcoin-Cash-Airdrop-List-Image.png",
+        "percentAmount":50,
+        "angle":360
     },
     {
         "tokenName": "Sample Coins", 
         "value": 100,
+        "type": "parachute",
         "firstPrize":10,
         "secondPrize":8,
         "thirdPrize":3,
@@ -62,11 +75,14 @@
         "freeParticipants": 500,
         "paidParticipants": 500,
         "entryFee": 200,
-        "image": "SampleCoin.png"
+        "image": "SampleCoin.png",
+        "percentAmount":50,
+        "angle":360
     },
     {
         "tokenName": "Test Coins", 
         "value": 100,
+        "type": "parachute",
         "firstPrize":10,
         "secondPrize":8,
         "thirdPrize":3,
@@ -75,11 +91,14 @@
         "freeParticipants": 500,
         "paidParticipants": 500,
         "entryFee": 200,
-        "image": "TestCoin.png"
+        "image": "TestCoin.png",
+        "percentAmount":50,
+        "angle":360
     },
     {
         "tokenName": "Trial Tokens", 
         "value": 100,
+        "type": "parachute",
         "firstPrize":10,
         "secondPrize":8,
         "thirdPrize":3,
@@ -88,11 +107,14 @@
         "freeParticipants": 500,
         "paidParticipants": 500,
         "entryFee": 200,
-        "image": "TrialToken.png"
+        "image": "TrialToken.png",
+        "percentAmount":5,
+        "angle":360
     },
     {
         "tokenName": "Xample Tokens", 
         "value": 100,
+        "type": "parachute",
         "firstPrize":10,
         "secondPrize":8,
         "thirdPrize":3,
@@ -101,6 +123,8 @@
         "freeParticipants": 500,
         "paidParticipants": 500,
         "entryFee": 200,
-        "image": "XampleToken.png"
+        "image": "XampleToken.png",
+        "percentAmount":50,
+        "angle":360
     }
 ]

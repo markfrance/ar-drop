@@ -15,24 +15,26 @@ export default class HowToFirstScreen extends Component {
   render() {
     return (
 
-      <Swiper loop={false} showsPagination={true} index={0}>
+      <Swiper loop={false} showsPagination={true} index={0}
+      dot={<View style={{backgroundColor: 'rgba(255,255,255,.3)', width: 13, height: 13, borderRadius: 7, marginLeft: 7, marginRight: 7}} />}
+          activeDot={<View style={{backgroundColor: '#ffa028', width: 13, height: 13, borderRadius: 7, marginLeft: 7, marginRight: 7}} />}
+         >
            <View style={{flex:1}}>
-            <Image source={require("../../public/images/HowToAfterSplash1.png")}
+            <Image source={require("../../public/images/CryptoClashHowTo1.png")}
             style={localStyles.splashImage}/>
           </View>
           <View style={{flex:1}}>
-            <Image source={require("../../public/images/HowToAfterSplash2.png")}
+            <Image source={require("../../public/images/CryptoClashHowTo2.png")}
             style={localStyles.splashImage}/>
           </View>
           <View style={{flex:1}}>
-            <Image source={require("../../public/images/HowToAfterSplash3.png")}
-            style={localStyles.splashImage}/>
-            <TouchableHighlight style={localStyles.okButton} 
-            onPress={() => this.props.navigation.navigate('MapView')}
+          <TouchableHighlight style={{flex:1}}
+            onPress={() => this.props.navigation.navigate('Airdrop')}
             >
-            <Image source={require("../../public/images/ar_d_ok_icon.png")} 
-            style={localStyles.okButton} />
-        </TouchableHighlight>
+            <Image source={require("../../public/images/CryptoClashHowTo3.png")}
+            style={localStyles.splashImage}/>
+            
+            </TouchableHighlight>
           </View>
         </Swiper>
     );
@@ -43,7 +45,7 @@ var localStyles = StyleSheet.create({
 
 	splashImage : {
     flex:1, 
-    width:400,
+    width:'auto',
     resizeMode:'contain'
   },
   	okButton : {

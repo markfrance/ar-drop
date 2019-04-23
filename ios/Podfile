@@ -35,6 +35,10 @@ target 'arDrop' do
   pod 'ViroKit', :path => '../node_modules/react-viro/ios/dist/ViroRenderer/'
   pod 'GoogleMaps'
   pod 'GooglePlaces'
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+
+  pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
+
 end
 
 

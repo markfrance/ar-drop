@@ -18,7 +18,7 @@ import locationMath from '../locationMath'
 export default class ARScene extends Component {
 
   constructor(props) {
-    super();
+    super(props);
 
     this.state = {
      runFireworks : false,
@@ -32,10 +32,10 @@ export default class ARScene extends Component {
     this._processCameraPosition = this._processCameraPosition.bind(this);
 
     var bitcoinLocation = locationMath.transformPointToAR(
-        props.arSceneNavigator.viroAppProps.lat,
-        props.arSceneNavigator.viroAppProps.long,
-        props.arSceneNavigator.viroAppProps.currentLatitude, 
-        props.arSceneNavigator.viroAppProps.currentLongitude);
+        this.props.sceneNavigator.viroAppProps.lat,
+        this.props.sceneNavigator.viroAppProps.long,
+        this.props.sceneNavigator.viroAppProps.currentLatitude, 
+        this.props.sceneNavigator.viroAppProps.currentLongitude);
 
     
    this.state.bitcoinX = bitcoinLocation.x;
@@ -91,7 +91,7 @@ export default class ARScene extends Component {
           run={this.state.runFireworks}
           
           image={{
-            source:require('../../public/images/Icons/icon_twitter.png'),                 
+            source:require('../../public/images/particle_fire.png'),                 
             height:0.1,
             width:0.1,
           }}

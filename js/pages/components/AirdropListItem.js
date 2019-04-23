@@ -8,34 +8,59 @@ import {
 	Modal
 } from 'react-native';
 
+import LinearGradient from 'react-native-linear-gradient';
+
 export default class AirdropListItem extends Component {
 
 	constructor() {
     	super();
 
     this.state = {
-      	joined : false,
+      	joined : true,
+        timer : 999
     }
   	}
 
+  componentDidMount() {
+     
+    this.interval = setInterval(
+    () => this.setState(({ timer: this.state.timer - 1 })),
+    1000
+    );
+  }
+
+  componentDidUpdate(){
+    if(this.state.timer < 0){ 
+      this.setState({timer: 0});
+      clearInterval(this.interval);
+      //Start game
+    }
+  }
+
+
 	render() {
     var imagePath = '../../../public/images/' + this.props.airdropItem.image;
-    console.log(imagePath);
+      var startTime = new Date(this.state.timer * 1000).toISOString().substr(11, 8);
+   
      return(
 			<TouchableHighlight style={localStyles.buttons}
-            onPress={() => this.props.navigation.navigate('Tilt')}
+            onPress={() => this.props.navigation.navigate('Parachute')}
              >
-    <View >
-      <View style={{backgroundColor:'#f86e00', height:50}}>
-        <Text style={localStyles.buttonText}> {this.props.airdropItem.value} {this.props.airdropItem.tokenName}</Text>
-      </View>
-      <Image source={require('../../../public/images/TrialToken.png')}  
+      <View >
+
+       <Text style={localStyles.buttonText}> {this.props.airdropItem.value} {this.props.airdropItem.tokenName}</Text>
+    
+      <Image source={require('../../../public/images/AR-Drop-Bitcoin-Airdrop-List-Image.png')}  
       style={localStyles.buttonImage} />
      
-      <Image source={require('../../../public/images/ar_d_clock_icon.png')}
+      <Image source={require('../../../public/images/Icons/GameTimerIcon.png')}
       style={localStyles.clockIcon} />
-      <Text style={localStyles.airdropTimer}>0h33m32s</Text> 
-      <Image source={require('../../../public/images/ar_d_info_icon.png')}
+      <Text style={localStyles.airdropTimer}>{startTime}</Text> 
+      {this._renderGameIcon()}
+      <Image source={require('../../../public/images/Icons/EmptyIcon.png')}
+      style={localStyles.percentIcon} />
+      <Text style={localStyles.percentAmount}> {this.props.airdropItem.percentAmount}%</Text>
+      <Image source={require('../../../public/images/Icons/InfoButtonIcon.png')}
       style={localStyles.infoIcon} /> 
        {this._renderJoined()}
     </View>
@@ -46,20 +71,41 @@ export default class AirdropListItem extends Component {
   _renderJoined() {
     if(this.state.joined) {
       return(
-        <Image source={require('../../../public/images/ar_d_camera_icon.png')}
+        <Image source={require('../../../public/images/checkered-flag.png')}
       style={localStyles.joinedFlag} />
       
       );
     }
   }
+
+  _renderGameIcon() {
+    var gameType = this.props.airdropItem.type;
+    if(gameType === "parachute") {
+      return (<Image source={require('../../../public/images/Icons/ParachuteIcon.png')}
+      style={localStyles.gameIcon} />);
+    }
+    else if(gameType === "geo") {
+      return (<Image source={require('../../../public/images/Icons/GeoGameIcon.png')}
+      style={localStyles.gameIcon} />);
+    }
+    else if(gameType == "portal") {
+      return (<Image source={require('../../../public/images/Icons/PortalGameIcon.png')}
+      style={localStyles.gameIcon} />);
+    }
+    else {
+      return (<Image source={require('../../../public/images/Icons/EmptyIcon.png')}
+      style={localStyles.gameIcon} />);
+    }
+
+  }
 }
 
 var localStyles = StyleSheet.create({
   airdropTimer: {
-    fontSize: 10,
+    fontSize: 12,
     position:'absolute', 
-    top:55,
-    left:30
+    top:60,
+    left:35
   },
   buttonText: {
     marginTop:10,
@@ -83,23 +129,53 @@ var localStyles = StyleSheet.create({
   },
   clockIcon : {
   	position:'absolute', 
-  	top:50,
-  	left:0,
+  	top:55,
+  	left:5,
   	width:25, 
   	height:25
   },
+  gameIcon : {
+    position:'absolute', 
+    top:85,
+    left:5,
+    width:25, 
+    height:25
+  },
+  percentAmount : {
+    position:'absolute', 
+    fontSize: 8,
+    top: 122,
+    left: 7
+  },
+  percentIcon : {
+    position:'absolute', 
+    top:115,
+    left:5,
+    width:25, 
+    height:25
+  },
+  header: {
+    backgroundColor:'#f86e00', 
+    height:50
+  },
   infoIcon : {
   	position:'absolute', 
-  	top:50,
-  	right:0,
+  	top:55,
+  	right:5,
   	width:25, 
   	height:25
   },
   joinedFlag : {
   	position:'absolute', 
-  	top:170,
-  	right:0,
+  	top:160,
+  	right:5,
   	width:30, 
   	height:30
+  },
+  linearGradient: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    textAlign:'center'
   }
 });

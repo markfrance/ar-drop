@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import {View, Image, Text, StyleSheet, TouchableHighlight,  NativeEventEmitter,
+import {View, Image, Text, StyleSheet, 
+  StatusBar, TouchableHighlight,  NativeEventEmitter,
   DeviceEventEmitter} from 'react-native';
 import {
   ViroARSceneNavigator
 } from 'react-viro';
 
-var InitialARScene = require('../arScenes/ParachuteScene.js');
+var ParachuteARScene = require('../arScenes/ParachuteScene.js');
 
 var sharedProps = {
   apiKey:"284CD604-39DB-4A9C-B094-F1CAFC65CAB4",
@@ -17,47 +18,42 @@ export default class ParachuteGame extends Component {
       super();
 
     this.state = {
-      sharedProps : sharedProps,
+      sharedProps : sharedProps
     }
   }
 
-  
+   
+
   render() {
 
   return (
       <View style={localStyles.viroContainer} transparent={true} >
-        
-        <View style={localStyles.mainView}>
-          <Image source={require("../../public/images/ARD.png")} 
-          style={localStyles.ARDLogo}/>
-   
-        </View>
+      <StatusBar hidden={true} />
+
 
         <ViroARSceneNavigator {...this.state.sharedProps}
-        initialScene={{scene: InitialARScene}}
-        viroAppProps={{lat:this.props.bitcoinLat, long:this.props.bitcoinLong,
-          currentLatitude:this.props.currentLatitude, currentLongitude:this.props.currentLongitude}}
-        worldAlignment="GravityAndHeading"  />
+        initialScene={{scene: ParachuteARScene}}
+         worldAlignment="GravityAndHeading"  
+         style={localStyles.viroContainer} />
 
-        <View style={{height:60,
-          backgroundColor:'#f86e00' }}>
-         
-          <TouchableHighlight onPress={() => this.props.navigation.navigate("MapView")}
-            style={localStyles.backButton} >
-          <Image source={require("../../public/images/ar_d_back_icon.png")}
-          style={localStyles.smallIcon} />
-          </TouchableHighlight >
-          <Text style={localStyles.bottomText}> {this.props.meters.toFixed(0)} Meters </Text>
-          <TouchableHighlight onPress={() => this._startVideoRecording()}
-            style={localStyles.cameraButton} >
-          <Image source={require("../../public/images/ar_d_camera_icon.png")}
-          style={localStyles.smallIcon} />
-          </TouchableHighlight >
-          
-           </View>
+         {this._renderHUD()}
       </View>
     );
   }
+
+  _renderHUD() {
+    return(
+    <TouchableHighlight underlayColor="transparent">
+      <View style={localStyles.bottomHud}>
+       <Image source={require('../../public/images/CryptoCreditWave.png')}
+        style={localStyles.wave}/>
+        <Image source={require('../../public/images/CryptoClash-App-Icon-Android.png')}
+        style={localStyles.cryptoLogo}/>
+        <Text style={localStyles.score}> 0 </Text>
+      </View>
+    </TouchableHighlight>)
+  }
+
 
   _startVideoRecording() {
    // this.props.sceneNavigator.startVideoRecording("testVideo", true, function(e) {console.log(e)});
@@ -70,8 +66,7 @@ export default class ParachuteGame extends Component {
 
 var localStyles = StyleSheet.create({
   viroContainer :{
-    flex : 1,
-    backgroundColor:"transparent"
+    flex : 1
   },
   mainView : {
     alignItems:'center', 
@@ -107,5 +102,27 @@ var localStyles = StyleSheet.create({
   smallIcon : {
     width:50,
     height:50
+  },
+  bottomHud: {
+    height:150
+  },
+  wave : {
+   width:'100%',
+   height:150
+  },
+  cryptoLogo : {
+    position: 'absolute',
+    width: 80,
+    height: 80,
+    right:30,
+    top:15
+  },
+  score : {
+    position: 'absolute',
+    right: 48,
+    top: 95,
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: '#ffa028'
   }
 });

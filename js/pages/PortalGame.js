@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
-import {View, Image, Text, StyleSheet, TouchableHighlight,  NativeEventEmitter,
-  DeviceEventEmitter} from 'react-native';
 import {
-  ViroARSceneNavigator
-} from 'react-viro';
+  View, 
+  Alert,
+  Image, 
+  Text, 
+  StyleSheet, 
+  TouchableHighlight,  
+  NativeEventEmitter,
+  DeviceEventEmitter
+} from 'react-native';
+
+import FireworkEmitter from '../FireworkEmitter.js';
+import { ViroARSceneNavigator } from 'react-viro';
 
 var InitialARScene = require('../arScenes/PortalScene.js');
 
@@ -17,16 +25,40 @@ export default class PortalGame extends Component {
       super(props);
 
     this.state = {
-      remainingCoins: 10,
       isRecording: false,
+      remainingCoins: 10,
+      enableThermal: false,
       sharedProps : sharedProps,
     }
 
     this._setARNavigatorRef = this._setARNavigatorRef.bind(this);
+    this._displayAlert = this._displayAlert.bind(this);
+    this._updateStatusText = this._updateStatusText.bind(this);
+    this._collectCoin = this._collectCoin.bind(this);
+    this._getStatusText = this._getStatusText.bind(this);
   }
 
   _setARNavigatorRef(ARNavigator){
     this._arNavigator = ARNavigator;
+  }
+
+  _updateStatusText(text) {
+    this.setState({
+      statusText: text
+    });
+  }
+
+  _collectCoin() {
+    this.setState({
+      remainingCoins: this.state.remainingCoins--
+    })
+  }
+
+  _getStatusText() {
+    if(this.state.remainingCoins === 0)
+      return "WINNER";
+    else
+      return this.state.remainingCoins + "Remaining";
   }
   
   render() {
@@ -39,12 +71,14 @@ export default class PortalGame extends Component {
           style={localStyles.ARDLogo}/>
    
         </View>
-
+         
         <ViroARSceneNavigator {...this.state.sharedProps}
         initialScene={{scene: InitialARScene}} 
         ref={this._setARNavigatorRef} 
+        viroAppProps={{enableThermal: this.state.enableThermal,
+          collectCoin: this._collectCoin}}
          worldAlignment="GravityAndHeading"  />
-
+       
         <View style={{height:60,
           backgroundColor:'#f86e00' }}>
          
@@ -53,8 +87,10 @@ export default class PortalGame extends Component {
             <Image source={require("../../public/images/ar_d_back_icon.png")}
           style={localStyles.smallIcon} />
           </TouchableHighlight >
-          <Text style={localStyles.bottomText}> {this.state.remainingCoins} Remaining </Text>
-          <TouchableHighlight onPress={() => this._toggleVideoRecording()}
+          <Text style={localStyles.bottomText}> {this._getStatusText()}</Text>
+          <TouchableHighlight onPress={() => this.setState({
+            enableThermal: !this.state.enableThermal
+          })}
             style={localStyles.cameraButton} >
             <Image source={require("../../public/images/ar_d_camera_icon.png")}
           style={localStyles.smallIcon} />
@@ -65,13 +101,27 @@ export default class PortalGame extends Component {
     );
   }
 
+
+  _displayAlert(title, message) {
+  Alert.alert(
+    title,
+    message,
+    [
+      {text: 'OK', onPress: () => this.props.navigation.navigate("Portal")},
+    ],
+    { cancelable: false }
+  )
+}
+
   _toggleVideoRecording() {
   
     if(this.state.isRecording) {
       this._arNavigator.sceneNavigator.stopVideoRecording();
     } else {
       this._arNavigator.sceneNavigator.startVideoRecording(
-      "testVideo", true, function(e) {console.log(e)});
+      "testVideo", true, function(e) {
+        this._displayAlert("Set video permissions", e);
+      });
     }
 
     this.setState({

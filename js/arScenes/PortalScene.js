@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import {StyleSheet} from 'react-native';
 
+import FireworkEmitter from '../FireworkEmitter.js';
+
 import {
   ViroSceneNavigator,
   ViroAnimatedImage,
@@ -16,7 +18,8 @@ import {
   ViroPortalScene,
   Viro3DObject,
   ViroMaterials,
-  ViroPolygon
+  ViroPolygon,
+  ViroNode
 } from 'react-viro';
 
 export default class PortalScene extends Component {
@@ -29,6 +32,7 @@ export default class PortalScene extends Component {
     };
 
     this._renderCoins = this._renderCoins.bind(this);
+    this._getPostProcessingEffects = this._getPostProcessingEffects.bind(this);
   }
 
   _renderCoins(amount) {
@@ -36,34 +40,45 @@ export default class PortalScene extends Component {
 
     for(let i=0; i<amount; i++) {
 
-      let refName = "coin" + i;
-
       coinModels.push(
-       <ViroAnimatedImage
-          source={require('../../public/images/BTC-Spinning_small.gif')} 
-          scale={[.5, .5, .5]} 
-          ref={refName}
-          position={[Math.floor(Math.random() * 100) - 50, 
-            0,
-            Math.floor(Math.random() * 100) - 50]}
-        />);
+         <ViroAnimatedImage
+            source={require('../../public/images/BTC-Spinning_small.gif')} 
+            scale={[.5, .5, .5]} 
+            ref={"coin" + i}
+            position={[(Math.random() * 10) - 5, 
+              0,
+              (Math.random() * 10) - 5]}
+            onClick={()=>{this.props.sceneNavigator.viroAppProps.collectCoin()}}
+          />
+          );
     }
     return coinModels;
+  }
+
+  _getPostProcessingEffects() {
+    if(this.props.sceneNavigator.viroAppProps.enableThermal)
+      return "thermalvision";
+    else
+      return "";
   }
 
   render() {
     let coinModels = this._renderCoins(10);
 
     return (
-      <ViroARScene anchorDetectionTypes={['PlanesHorizontal']}>
+      <ViroARScene anchorDetectionTypes={['PlanesHorizontal']}
+      postProcessEffects={[this._getPostProcessingEffects()]}
+      dragType="FixedToWorld" onDrag={()=>{}} >
         <ViroAmbientLight color="#ffffff" intensity={200}/>
+       
         <ViroARPlaneSelector minHeight={.1} minWidth={.1}
             alignment="HorizontalUpward"
             onPlaneSelected={()=>{this.setState({pauseUpdates : true})}}
             pauseUpdates={this.state.pauseUpdates}>
           <ViroPortalScene passable={true} dragType="FixedDistance" onDrag={()=>{}}>
-            <ViroPortal position={[0, .5, 0]} 
-            scale={[.4, .4, .4]} rotation={[0,180, 0]} >
+            <ViroPortal position={[0, 0, 0]} 
+            scale={[.5, .5, .5]} rotation={[0,0, 0]}
+            dragType="FixedToWorld" onDrag={()=>{}}  >
               <Viro3DObject source={require('../../public/models/portal_ship/portal_ship.vrx')}
                 resources={[require('../../public/models/portal_ship/portal_ship_diffuse.png'),
                             require('../../public/models/portal_ship/portal_ship_normal.png'),
@@ -73,11 +88,12 @@ export default class PortalScene extends Component {
 
             <Viro360Video source={require("../../public/videos/space_v2_1k.mp4")}
             paused={false} loop={true} />
-            {coinModels}
+             {coinModels}
              <ViroPolygon rotation={[-90, 0, 0]}
              position={[0,-10,0]}
              vertices={[[-1000,0], [0,1000], [1000,0], [0, -1000]]}
-             materials={"floor"}/>
+             materials={"floor"}
+             dragType="FixedToWorld" onDrag={()=>{}} />
           </ViroPortalScene>
         </ViroARPlaneSelector>
       </ViroARScene>
