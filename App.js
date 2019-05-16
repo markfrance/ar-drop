@@ -56,7 +56,7 @@ const RootStack = createSwitchNavigator(
     Parachute: ParachuteGame
   },
   {
-    initialRouteName: 'HowToSplash'
+    initialRouteName: 'Parachute'
   }
 );
 

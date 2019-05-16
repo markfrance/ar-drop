@@ -5,6 +5,7 @@ import {View, Image, Text, StyleSheet,
 import {
   ViroARSceneNavigator
 } from 'react-viro';
+import {Timer, Stopwatch } from 'react-native-stopwatch-timer';
 
 var ParachuteARScene = require('../arScenes/ParachuteScene.js');
 
@@ -18,18 +19,53 @@ export default class ParachuteGame extends Component {
       super();
 
     this.state = {
-      sharedProps : sharedProps
+      sharedProps : sharedProps,
+      score: 0,
+      stopwatchStart: false,
+      stopwatchReset: false
     }
+
+    this._msToTime = this._msToTime.bind(this);
+    this._updateScore = this._updateScore.bind(this);
+    this._startStopwatch = this._startStopwatch.bind(this);
+    this._stopStopwatch = this._stopStopwatch.bind(this);
+    this._resetStopwatch = this._resetStopwatch.bind(this);
+   
   }
 
-   
+  componentDidMount() {
+    this._startStopwatch();
+  }
+
+  
+  _msToTime(duration) {
+    var time = new Date(duration);
+    return time.getMinutes() + ':' +
+      time.getSeconds() + ':' +
+      time.getMilliseconds();
+  }
+
+  _updateScore(value){
+    this.setState({score: this.state.score + value});
+  }
+
+  _startStopwatch() {
+    this.setState({stopwatchStart: true, stopwatchReset: false});
+  }
+
+  _stopStopwatch() {
+    this.setState({stopwatchStart: false, stopwatchReset: false});
+  }
+
+  _resetStopwatch() {
+    this.setState({stopwatchStart: false, stopwatchReset: true});
+  }
 
   render() {
 
   return (
       <View style={localStyles.viroContainer} transparent={true} >
       <StatusBar hidden={true} />
-
 
         <ViroARSceneNavigator {...this.state.sharedProps}
         initialScene={{scene: ParachuteARScene}}
@@ -43,15 +79,17 @@ export default class ParachuteGame extends Component {
 
   _renderHUD() {
     return(
-    <TouchableHighlight underlayColor="transparent">
       <View style={localStyles.bottomHud}>
-       <Image source={require('../../public/images/CryptoCreditWave.png')}
+      <Stopwatch laps msecs start={this.state.stopwatchStart}
+          reset={this.state.stopwatchReset}
+          options={options}
+          getTime={this._msToTime} />
+       <Image source={require('../../public/images/CryptoClash-Wave.png')}
         style={localStyles.wave}/>
         <Image source={require('../../public/images/CryptoClash-App-Icon-Android.png')}
         style={localStyles.cryptoLogo}/>
         <Text style={localStyles.score}> 0 </Text>
-      </View>
-    </TouchableHighlight>)
+      </View>)
   }
 
 
@@ -63,6 +101,20 @@ export default class ParachuteGame extends Component {
     // this.props.sceneNavigator.stopVideoRecording();
   }
 }
+
+
+const options = {
+  container: {
+    position: 'absolute',
+    top: 10,
+    padding: 5,
+    width: 240,
+  },
+  text: {
+    fontSize: 36,
+    color: '#ffa028'
+  }
+};
 
 var localStyles = StyleSheet.create({
   viroContainer :{
@@ -104,9 +156,11 @@ var localStyles = StyleSheet.create({
     height:50
   },
   bottomHud: {
+    backgroundColor:'transparent',
     height:150
   },
   wave : {
+    backgroundColor:'transparent',
    width:'100%',
    height:150
   },
@@ -124,5 +178,13 @@ var localStyles = StyleSheet.create({
     fontSize: 36,
     fontWeight: 'bold',
     color: '#ffa028'
+  },
+  timer: {
+    position: 'absolute',
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: '#ffa028',
+    top: 10,
+    left: 10
   }
 });

@@ -1,0 +1,21 @@
+Game logic notes
+- speed is related to value of box. higher value, faster speed.
+- speed is halved and parachute appears once reaches certain Y value.
+- if bomb is clicked, value is deducted and another parachute is generated with same value after a delay.
+- Show value of parachute once clicked
+- replace with 3d models
+- First focus on 10 clash parachutes
+- Create basic end game screen (leaderboard)
+-
+
+
+{renderIf(this.state.currentState == parachuteState.bombExplosion, 
+  				<ViroImage source={require('../../../public/images/AR-DropEthereumParachute.png')}
+         		transformBehaviors={['billboard']}
+         		position={[this.state.xPos, 
+              				this.state.yPos,
+              				this.state.zPos]}
+      			/>)}
+      		{renderIf(this.state.currentState == parachuteState.coinExplosion, 
+  				_this._renderCoinExplosion())}
+      		

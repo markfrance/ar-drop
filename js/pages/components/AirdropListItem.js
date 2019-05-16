@@ -8,8 +8,6 @@ import {
 	Modal
 } from 'react-native';
 
-import LinearGradient from 'react-native-linear-gradient';
-
 export default class AirdropListItem extends Component {
 
 	constructor() {
@@ -19,7 +17,7 @@ export default class AirdropListItem extends Component {
       	joined : true,
         timer : 999
     }
-  	}
+  }
 
   componentDidMount() {
      
@@ -50,7 +48,7 @@ export default class AirdropListItem extends Component {
 
        <Text style={localStyles.buttonText}> {this.props.airdropItem.value} {this.props.airdropItem.tokenName}</Text>
     
-      <Image source={require('../../../public/images/AR-Drop-Bitcoin-Airdrop-List-Image.png')}  
+      <Image source={require('../../../public/images/CryptoClash-List-Clash-Token.png')}  
       style={localStyles.buttonImage} />
      
       <Image source={require('../../../public/images/Icons/GameTimerIcon.png')}

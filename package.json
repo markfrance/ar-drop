@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "jslint": "^0.12.1",
-    "react": "16.6.1",
-    "react-native": "0.57.7",
+    "react": "16.8.3",
+    "react-native": "^0.59.3",
     "react-native-geolocation-service": "^2.0.0",
     "react-native-gesture-handler": "^1.1.0",
     "react-native-linear-gradient": "react-native-community/react-native-linear-gradient",
@@ -18,20 +18,23 @@
     "react-native-maps": "^0.23.0",
     "react-native-reanimated": "^1.0.0",
     "react-native-sensors": "^5.1.7",
+    "react-native-stopwatch-timer": "0.0.20",
     "react-native-swiper": "^1.5.14",
     "react-navigation": "^3.3.2",
     "react-navigation-tabs": "^2.1.1",
     "react-redux": "^6.0.1",
-    "react-viro": "2.13.0",
+    "react-viro": "2.14.0",
     "redux": "^4.0.1"
   },
   "devDependencies": {
-    "babel-jest": "24.1.0",
+    "@babel/core": "^7.4.3",
+    "@babel/runtime": "^7.4.3",
+    "babel-jest": "^24.7.1",
     "eslint": "^5.15.1",
     "eslint-plugin-react": "^7.12.4",
-    "jest": "24.1.0",
-    "metro-react-native-babel-preset": "0.52.0",
-    "react-test-renderer": "16.6.1"
+    "jest": "24.7.1",
+    "metro-react-native-babel-preset": "0.53.1",
+    "react-test-renderer": "16.8.3"
   },
   "jest": {
     "preset": "react-native"

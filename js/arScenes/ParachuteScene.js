@@ -36,17 +36,23 @@ export default class ParachuteScene extends Component {
 
     this.state = {
       yPos: 10,
-      speed: 10
+      speed: 10,
+      score: 0,
+      degrees: 360
     };
 
    // this._parachuteClick = this._parachuteClick.bind(this);
 
    //
   }
-
   
   _renderParachutes(amount) {
     let parachutes = [];
+    let zLimit = 5;
+
+    if(this.state.degrees === 180) {
+      zLimit = 10;
+    }
 
     for(let i=0; i<amount; i++) {
 
@@ -54,8 +60,7 @@ export default class ParachuteScene extends Component {
 
         <Parachute
           xPos={(Math.random() * 10) - 5}
-          yPos={5}
-          zPoz={(Math.random() * 10) - 5}
+          zPos={(Math.random() * 10) - 5}
       />
          
           );
