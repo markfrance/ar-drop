@@ -14,8 +14,9 @@ import {
   ViroNode
 } from 'react-viro';
 
-
 import renderIf from '../../renderif';
+import CoinExplosion from './CoinExplosion.js';
+import BombExplosion from './BombExplosion.js';
 
 const parachuteState = {
 		parachute: 1,
@@ -30,20 +31,25 @@ export default class Parachute extends Component {
       super(props);
 
 	    this.state = {
-	      yPos: 10,
+	      yPos: 20,
 	      parachuteOpened: false,
 	      value: 0,
-	      speed: 1,
-	      isBomb: false,
+	      speed: 0.5,
 	      currentState: parachuteState.parachute
 	    };
 
 	    this._clickParachute = this._clickParachute.bind(this);
 	    this._startFalling = this._startFalling.bind(this);
+      this._renderParachute = this._renderParachute.bind(this);
+      this._bombExplode = this._bombExplode.bind(this);
+      this._coinExplode = this._coinExplode.bind(this);
+      this._renderCoinExplosion = this._renderCoinExplosion.bind(this);
+      this._renderBombExplosion = this._renderBombExplosion.bind(this);
+
   	}
 
   	componentDidMount() {
-	    this._startFalling();
+	   // this._startFalling();
   	}
 
   	_startFalling() {
@@ -56,25 +62,25 @@ export default class Parachute extends Component {
   	componentDidUpdate() {
   		
   		//Open parachute and slow down speed
-  		if(this.state.yPos < -5 && this.state.parachuteOpened == false) {
+  		if(this.state.yPos === -5 && this.state.parachuteOpened == false) {
   		  this.setState({
   		  	parachuteOpened: true, 
   		  	speed: this.state.speed / 2
   		  })
   		}
+  		
 
   		//Parachute hits ground
-	    if(this.state.yPos < -1) {
-	      this.setState({currentState: parachuteState.bombExplosion});      
+	    if(this.state.yPos === -5) {
+	      this.setState({
+	      	yPos: 20,
+	      	parachuteOpened:false,
+	      	speed: this.props.initialSpeed});      
 	      //Stop falling
 	      clearInterval(this.interval);
 	      //Restart falling after animation
 	      setTimeout(() => this._startFalling(), 3000);
 	    }
-  	}
-
-  	_respawn() {
-
   	}
 
   	_bombExplode() {
@@ -85,7 +91,7 @@ export default class Parachute extends Component {
 
   	_coinExplode() {
   		this.setState({currentState: parachuteState.coinExplosion });
-  		
+  		this.props.updateScore(1);
   		this._collectedAfterAnimation(3000);
   	}
 
@@ -97,53 +103,88 @@ export default class Parachute extends Component {
   	}
 
   	_clickParachute() {
-  		if(this.state.isBomb) {
+  		if(this.props.isBomb) {
   			this._bombExplode();
   		} else {
   			this._coinExplode();
   		}
-
-  		this.setState({currentState: parachuteState.collected});
   	}
 
-  	/*_renderValueText(value) {
+  	_renderValueText(value) {
   		return(
   			<ViroText
-  			 text=value />
+          text={value}
+          color="#ff0000"
+          width={2} height={2}
+          style={{fontFamily:"Arial", fontSize:20, fontStyle:"italic", color:"#0000FF"}}
+          position={[0,0,0]}
+        />
   			)
-  	}*/
+  	}
 
-  	/*_renderCoinExplosion() {
-  		return();
-  	}*/
+  	_renderCoinExplosion() {
+  		return(
+        <CoinExplosion />
+      );
+  	}
+
+    _renderBombExplosion() {
+      return(
+        <BombExplosion />
+      );
+    }
+
+    _renderParachute() {
+      return(
+        <Viro3DObject
+          source={require('../../../public/models/Parachute_clash_flipped_OBJ.obj')}
+          resources={[require('../../../public/models/Parachute_clash_flipped_OBJ.mtl'),
+          require('../../../public/models/b_difuse.png'),
+          require('../../../public/models/box_gradient_2.png'),
+          require('../../../public/models/boxgradient_1.png'),
+          require('../../../public/models/clash_opacity.png'),
+          require('../../../public/models/parachute_gradient_1.png'),
+          require('../../../public/models/string_gradient_1.png'),
+          require('../../../public/models/clash_difuse.jpg')]}
+          highAccuracyEvents={true}
+          position={[0,0,0]}
+          scale={[0.05, 0.05, 0.05]}
+          rotation={[0, 0, 0]}
+          type="OBJ"
+          onClick={() => this._clickParachute()}
+          physicsBody={{
+            type:'static',
+            velocity:[0,1,0]
+            }}
+            />
+      )
+    }
 
   	render() {
   		return(
   			
-  <ViroNode
-  position={[this.props.xPos, 5, this.props.zPos]}>
-   <ViroAmbientLight color="#ffffff" intensity={200}/>
-        
-  <ViroText
-    text="Hello World"
-    color="#ff0000"
-    width={2} height={2}
-    style={{fontFamily:"Arial", fontSize:20, fontStyle:"italic", color:"#0000FF"}}
-    position={[0,0,0]}
- />
+        <ViroNode
+        position={[this.props.xPos, this.state.yPos, this.props.zPos]}>
+         <ViroAmbientLight color="#ffffff"/>
+             
+          {renderIf(
+            this.state.currentState === parachuteState.parachute,
+            this._renderParachute()
+          )}
 
-<Viro3DObject
-    source={require('../../../public/models/Parachute_clash_flipped_OBJ.obj')}
-    highAccuracyEvents={true}
-    position={[0,0,0]}
-    scale={[1, 1, 1]}
-    rotation={[0, 0, 0]}
-    type="OBJ"
-    transformBehaviors={["billboard"]}/>
+          {renderIf(
+            this.state.currentState === parachuteState.bombExplosion,
+            this._renderBombExplosion()
+          )}
 
-    </ViroNode>
-    
-      		);
+          {renderIf(
+            this.state.currentState === parachuteState.coinExplosion,
+            this._renderCoinExplosion()
+          )}
+          
+        </ViroNode>
+          
+      );
   	}
 }
 

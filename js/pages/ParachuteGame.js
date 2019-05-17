@@ -156,11 +156,12 @@ var localStyles = StyleSheet.create({
     height:50
   },
   bottomHud: {
-    backgroundColor:'transparent',
+    backgroundColor:'blue',
     height:150
   },
   wave : {
-    backgroundColor:'transparent',
+   backgroundColor:'transparent',
+   flex:1,
    width:'100%',
    height:150
   },

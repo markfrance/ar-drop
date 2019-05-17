@@ -41,9 +41,14 @@ export default class ParachuteScene extends Component {
       degrees: 360
     };
 
-   // this._parachuteClick = this._parachuteClick.bind(this);
-
+   this._updateScore = this._updateScore.bind(this);
    //
+  }
+
+  _updateScore(value) {
+    this.setState({
+      score: this.state.score + value
+    });
   }
   
   _renderParachutes(amount) {
@@ -56,11 +61,15 @@ export default class ParachuteScene extends Component {
 
     for(let i=0; i<amount; i++) {
 
+      let angle = Math.random()*Math.PI*2;
       parachutes.push(
 
         <Parachute
-          xPos={(Math.random() * 10) - 5}
-          zPos={(Math.random() * 10) - 5}
+          xPos={Math.cos(angle)*8}
+          zPos={Math.sin(angle)*8}
+          initialSpeed={1}
+          isBomb={false}
+          updateScore={this._updateScore}
       />
          
           );
@@ -72,41 +81,12 @@ export default class ParachuteScene extends Component {
     let parachutes = this._renderParachutes(10);
 
     return (
-      <ViroARScene
-      dragType="FixedToWorld" >
+      <ViroARScene>
         <ViroAmbientLight color="#ffffff" intensity={200}/>
         <ViroDirectionalLight
           color="#ffffff"
           direction={[0, -1, 0]}
         />
-
-        
-        {renderIf(false,
-
-
-        <ViroCamera position={[0,0,0]} active={true}>
-        <ViroImage
-            source={require('../../public/images/CryptoCreditWave.png')} 
-            scale={[1, 0.3, 1]} 
-            position={[0, -0.5, -1]}
-            renderingOrder={-1}
-            ignoreEventHandling={true}
-          /> 
-           <ViroImage
-            source={require('../../public/images/ar_d_left.png')} 
-            scale={[.01, .01, .01]} 
-            position={[2.5, -3.5, -10]}
-            style={localStyles.cryptoLogo}
-            renderingOrder={1}
-
-          /> 
-          
-          <ViroText style={localStyles.score} 
-          scale={[1, 1, 1]} 
-            position={[0.5, 0, -1]}
-            text="0"/> 
-        </ViroCamera>
-        )}
 
         {parachutes}
       </ViroARScene>
