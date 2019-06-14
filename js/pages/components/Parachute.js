@@ -33,9 +33,9 @@ export default class Parachute extends Component {
 	    this.state = {
 	      yPos: 20,
 	      parachuteOpened: false,
-	      value: 0,
 	      speed: 0.5,
-	      currentState: parachuteState.parachute
+	      currentState: parachuteState.parachute,
+        pauseParachuteSound: true
 	    };
 
 	    this._clickParachute = this._clickParachute.bind(this);
@@ -45,11 +45,11 @@ export default class Parachute extends Component {
       this._coinExplode = this._coinExplode.bind(this);
       this._renderCoinExplosion = this._renderCoinExplosion.bind(this);
       this._renderBombExplosion = this._renderBombExplosion.bind(this);
-
+      this._onFinishSound = this._onFinishSound.bind(this);
   	}
 
   	componentDidMount() {
-	   // this._startFalling();
+	    this._startFalling();
   	}
 
   	_startFalling() {
@@ -62,16 +62,17 @@ export default class Parachute extends Component {
   	componentDidUpdate() {
   		
   		//Open parachute and slow down speed
-  		if(this.state.yPos === -5 && this.state.parachuteOpened == false) {
+  		if(this.state.yPos === 5 && this.state.parachuteOpened == false) {
   		  this.setState({
   		  	parachuteOpened: true, 
-  		  	speed: this.state.speed / 2
+  		  	speed: this.state.speed / 2,
+          pauseParachuteSound: false
   		  })
   		}
   		
 
   		//Parachute hits ground
-	    if(this.state.yPos === -5) {
+	    if(this.state.yPos <= -5) {
 	      this.setState({
 	      	yPos: 20,
 	      	parachuteOpened:false,
@@ -85,13 +86,13 @@ export default class Parachute extends Component {
 
   	_bombExplode() {
   		this.setState({currentState: parachuteState.bombExplosion });
-
+      this.props.updateScore(-this.props.value);
   		this._collectedAfterAnimation(3000);
   	}
 
   	_coinExplode() {
   		this.setState({currentState: parachuteState.coinExplosion });
-  		this.props.updateScore(1);
+  		this.props.updateScore(this.props.value);
   		this._collectedAfterAnimation(3000);
   	}
 
@@ -103,6 +104,12 @@ export default class Parachute extends Component {
   	}
 
   	_clickParachute() {
+
+      if(this.state.yPos > 10)
+        return;
+
+      clearInterval(this.interval);
+       
   		if(this.props.isBomb) {
   			this._bombExplode();
   		} else {
@@ -137,6 +144,27 @@ export default class Parachute extends Component {
     _renderParachute() {
       return(
         <Viro3DObject
+          source={require('../../../public/models/clash_parent.vrx')}
+          resources={[require('../../../public/models/b_difuse.png'),
+          require('../../../public/models/box_gradient_2.png'),
+          require('../../../public/models/boxgradient_1.png'),
+          require('../../../public/models/clash_opacity.png'),
+          require('../../../public/models/parachute_gradient_1.png'),
+          require('../../../public/models/string_gradient_1.png'),
+          require('../../../public/models/clash_difuse.jpg'),
+          require('../../../public/models/stripes_orange.jpg')]}
+          highAccuracyEvents={true}
+          position={[0,0,0]}
+          scale={[1, 1, 1]}
+          rotation={[0, 0, 0]}
+          type="VRX"
+          onClick={() => this._clickParachute()}
+            />);
+    }
+
+    _renderParachuteBomb() {
+      return(
+       <Viro3DObject
           source={require('../../../public/models/Parachute_clash_flipped_OBJ.obj')}
           resources={[require('../../../public/models/Parachute_clash_flipped_OBJ.mtl'),
           require('../../../public/models/b_difuse.png'),
@@ -152,12 +180,13 @@ export default class Parachute extends Component {
           rotation={[0, 0, 0]}
           type="OBJ"
           onClick={() => this._clickParachute()}
-          physicsBody={{
-            type:'static',
-            velocity:[0,1,0]
-            }}
-            />
-      )
+            />)
+    }
+
+    _onFinishSound() {
+      this.setState({
+        pauseParachuteSound: true
+      });
     }
 
   	render() {
@@ -166,10 +195,22 @@ export default class Parachute extends Component {
         <ViroNode
         position={[this.props.xPos, this.state.yPos, this.props.zPos]}>
          <ViroAmbientLight color="#ffffff"/>
-             
-          {renderIf(
+
+         <ViroSound paused={false}
+           muted={false}
+           source={require('../../../public/sounds/coins.mp3'}
+           loop={true}
+           volume={1.0}
+           onFinish={this.onFinishSound}/>
+          
+          {renderIf(this.props.isBomb === false &&
             this.state.currentState === parachuteState.parachute,
             this._renderParachute()
+          )}
+
+          {renderIf(this.props.isBomb === true &&
+            this.state.currentState === parachuteState.parachute,
+            this._renderParachuteBomb()
           )}
 
           {renderIf(

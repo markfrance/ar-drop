@@ -38,20 +38,31 @@ export default class ParachuteScene extends Component {
       yPos: 10,
       speed: 10,
       score: 0,
-      degrees: 360
+      degrees: 360,
+      created: false,
+      parachutes:[]
     };
 
    this._updateScore = this._updateScore.bind(this);
+   this._createParachutes = this._createParachutes.bind(this);
    //
   }
 
-  _updateScore(value) {
+
+  componentDidMount() {
+    let parachuteItems = this._createParachutes(10);
+
     this.setState({
-      score: this.state.score + value
+      parachutes: parachuteItems
     });
   }
+
+
+  _updateScore(value) {
+    this.props.sceneNavigator.viroAppProps.updateScore(value);
+  }
   
-  _renderParachutes(amount) {
+  _createParachutes(amount) {
     let parachutes = [];
     let zLimit = 5;
 
@@ -62,23 +73,36 @@ export default class ParachuteScene extends Component {
     for(let i=0; i<amount; i++) {
 
       let angle = Math.random()*Math.PI*2;
+      let speed = Math.random() + 0.1;
       parachutes.push(
 
         <Parachute
           xPos={Math.cos(angle)*8}
           zPos={Math.sin(angle)*8}
-          initialSpeed={1}
+          initialSpeed={speed}
           isBomb={false}
+          value={1}
           updateScore={this._updateScore}
       />
          
           );
     }
+
+    let bombAngle = Math.random()*Math.PI*2;
+    parachutes.push(
+    <Parachute
+          xPos={Math.cos(bombAngle)*8}
+          zPos={Math.sin(bombAngle)*8}
+          initialSpeed={0.5}
+          isBomb={true}
+          value={1}
+          updateScore={this._updateScore}
+      />)
     return parachutes;
   }
 
   render() {
-    let parachutes = this._renderParachutes(10);
+    
 
     return (
       <ViroARScene>
@@ -88,7 +112,7 @@ export default class ParachuteScene extends Component {
           direction={[0, -1, 0]}
         />
 
-        {parachutes}
+        {this.state.parachutes}
       </ViroARScene>
     );
   }

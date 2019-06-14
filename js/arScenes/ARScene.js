@@ -13,7 +13,7 @@ import {
 } from 'react-viro';
 
 import renderIf from '../renderif';
-import locationMath from '../locationMath'
+import locationMath from '../locationMath';
 
 export default class ARScene extends Component {
 
@@ -38,7 +38,7 @@ export default class ARScene extends Component {
         this.props.sceneNavigator.viroAppProps.currentLongitude);
 
     
-   this.state.bitcoinX = bitcoinLocation.x;
+    this.state.bitcoinX = bitcoinLocation.x;
     this.state.bitcoinZ = bitcoinLocation.z;
   }
 

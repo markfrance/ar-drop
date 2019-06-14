@@ -37,6 +37,13 @@ export default class ParachuteGame extends Component {
     this._startStopwatch();
   }
 
+  componentDidUpdate() {
+    if(this.state.score == 9) {
+      this._stopStopwatch();
+      setTimeout(() => this.props.navigation.navigate('Airdrop'),
+        2000);
+    }
+  }
   
   _msToTime(duration) {
     var time = new Date(duration);
@@ -46,7 +53,13 @@ export default class ParachuteGame extends Component {
   }
 
   _updateScore(value){
+    if(this.state.score + value <= 0) {
+      this.setState({score: 0});
+    } else {
+
     this.setState({score: this.state.score + value});
+    }
+
   }
 
   _startStopwatch() {
@@ -70,7 +83,8 @@ export default class ParachuteGame extends Component {
         <ViroARSceneNavigator {...this.state.sharedProps}
         initialScene={{scene: ParachuteARScene}}
          worldAlignment="GravityAndHeading"  
-         style={localStyles.viroContainer} />
+         style={localStyles.viroContainer} 
+         viroAppProps={{updateScore:this._updateScore}}/>
 
          {this._renderHUD()}
       </View>
@@ -88,7 +102,7 @@ export default class ParachuteGame extends Component {
         style={localStyles.wave}/>
         <Image source={require('../../public/images/CryptoClash-App-Icon-Android.png')}
         style={localStyles.cryptoLogo}/>
-        <Text style={localStyles.score}> 0 </Text>
+        <Text style={localStyles.score}> {this.state.score} </Text>
       </View>)
   }
 
@@ -156,7 +170,7 @@ var localStyles = StyleSheet.create({
     height:50
   },
   bottomHud: {
-    backgroundColor:'blue',
+    backgroundColor:'black',
     height:150
   },
   wave : {

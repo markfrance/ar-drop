@@ -10,6 +10,7 @@ import ARMapTiltScreen from './js/pages/ARMapTiltScreen.js';
 //import PortalGame from './js/pages/PortalGame.js';
 import ParachuteGame from './js/pages/ParachuteGame.js';
 import WalletScreen from './js/pages/Wallet.js';
+import LeaderboardScreen from './js/pages/Leaderboard.js';
 
 import { createStackNavigator, 
   createMaterialTopTabNavigator,
@@ -53,10 +54,11 @@ const RootStack = createSwitchNavigator(
     Tilt: ARMapTiltScreen,
     MapView: MapViewScreen,
    // Portal: PortalGame,
-    Parachute: ParachuteGame
+    Parachute: ParachuteGame,
+    Leaderboard: LeaderboardScreen
   },
   {
-    initialRouteName: 'Parachute'
+    initialRouteName: 'Airdrop'
   }
 );
 

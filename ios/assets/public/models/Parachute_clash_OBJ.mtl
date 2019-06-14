@@ -1,0 +1,81 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 01.04.2019 20:54:14
+
+newmtl Material__3691
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.2314 0.2314 0.2314
+	Kd 0.2314 0.2314 0.2314
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl Material__3689
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka D:\3D Projects\RedFriday\01_parachute\textures\box_gradient_2.png
+	map_Kd D:\3D Projects\RedFriday\01_parachute\textures\box_gradient_2.png
+
+newmtl Material__3688
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka D:\3D Projects\RedFriday\01_parachute\textures\parachute_gradient_1.png
+	map_Kd D:\3D Projects\RedFriday\01_parachute\textures\parachute_gradient_1.png
+
+newmtl Material__3692
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl Material__48
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka D:\3D Projects\RedFriday\01_parachute\textures\clash_difuse.jpg
+	map_Kd D:\3D Projects\RedFriday\01_parachute\textures\clash_difuse.jpg
+	map_d D:\3D Projects\RedFriday\01_parachute\textures\clash_opacity.png
+
+newmtl Material__3693
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 0.7059 0.3255
+	Kd 1.0000 0.7059 0.3255
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
