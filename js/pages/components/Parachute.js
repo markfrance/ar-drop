@@ -11,7 +11,8 @@ import {
   ViroMaterials,
   ViroPolygon,
   ViroSpinner,
-  ViroNode
+  ViroNode,
+  ViroSound
 } from 'react-viro';
 
 import renderIf from '../../renderif';
@@ -53,6 +54,10 @@ export default class Parachute extends Component {
   	}
 
   	_startFalling() {
+      this.setState({
+        currentState: parachuteState.parachute
+      });
+
   		this.interval = setInterval(
 	    () => this.setState({ yPos: this.state.yPos-this.state.speed }),
 	    100
@@ -62,21 +67,24 @@ export default class Parachute extends Component {
   	componentDidUpdate() {
   		
   		//Open parachute and slow down speed
-  		if(this.state.yPos === 5 && this.state.parachuteOpened == false) {
+  		if(this.state.yPos >= 5 && 
+      this.state.yPos <= 6 && 
+      this.state.parachuteOpened == false) {
   		  this.setState({
   		  	parachuteOpened: true, 
-  		  	speed: this.state.speed / 2,
+  		  	speed: this.state.speed * 2,
           pauseParachuteSound: false
   		  })
   		}
   		
-
   		//Parachute hits ground
-	    if(this.state.yPos <= -5) {
+	    if(this.state.yPos <= -15) {
 	      this.setState({
 	      	yPos: 20,
 	      	parachuteOpened:false,
-	      	speed: this.props.initialSpeed});      
+	      	speed: this.props.initialSpeed});
+         // this.props.updateScore(-this.props.value);
+      
 	      //Stop falling
 	      clearInterval(this.interval);
 	      //Restart falling after animation
@@ -105,6 +113,7 @@ export default class Parachute extends Component {
 
   	_clickParachute() {
 
+      //Can only click parachute when near
       if(this.state.yPos > 10)
         return;
 
@@ -153,9 +162,9 @@ export default class Parachute extends Component {
           require('../../../public/models/string_gradient_1.png'),
           require('../../../public/models/clash_difuse.jpg'),
           require('../../../public/models/stripes_orange.jpg')]}
-          highAccuracyEvents={true}
+          highAccuracyEvents={false}
           position={[0,0,0]}
-          scale={[1, 1, 1]}
+          scale={[3, 3, 3]}
           rotation={[0, 0, 0]}
           type="VRX"
           onClick={() => this._clickParachute()}
@@ -165,20 +174,19 @@ export default class Parachute extends Component {
     _renderParachuteBomb() {
       return(
        <Viro3DObject
-          source={require('../../../public/models/Parachute_clash_flipped_OBJ.obj')}
-          resources={[require('../../../public/models/Parachute_clash_flipped_OBJ.mtl'),
-          require('../../../public/models/b_difuse.png'),
+          source={require('../../../public/models/clash_parent.vrx')}
+          resources={[require('../../../public/models/b_difuse.png'),
           require('../../../public/models/box_gradient_2.png'),
           require('../../../public/models/boxgradient_1.png'),
           require('../../../public/models/clash_opacity.png'),
           require('../../../public/models/parachute_gradient_1.png'),
           require('../../../public/models/string_gradient_1.png'),
           require('../../../public/models/clash_difuse.jpg')]}
-          highAccuracyEvents={true}
+          highAccuracyEvents={false}
           position={[0,0,0]}
-          scale={[0.05, 0.05, 0.05]}
+          scale={[3, 3, 3]}
           rotation={[0, 0, 0]}
-          type="OBJ"
+          type="VRX"
           onClick={() => this._clickParachute()}
             />)
     }
@@ -198,8 +206,8 @@ export default class Parachute extends Component {
 
          <ViroSound paused={false}
            muted={false}
-           source={require('../../../public/sounds/coins.mp3'}
-           loop={true}
+           source={require('../../../public/sounds/parachuteopening.mp3')}
+           loop={false}
            volume={1.0}
            onFinish={this.onFinishSound}/>
           

@@ -1,6 +1,6 @@
 [
     {
-        "tokenName": "Clash", 
+        "tokenName": "Upcoming", 
         "value": 10,
         "type": "parachute",
         "firstPrize":10,
@@ -13,7 +13,8 @@
         "entryFee": 200,
         "image": "AR-Drop-ARD-Airdrop-List-Image.png",
         "percentAmount":50,
-        "angle":360
+        "angle":360,
+        "joined": true
     },
     {
         "tokenName": "Bitcoins", 
@@ -29,7 +30,8 @@
         "entryFee": 200,
         "image": "AR-Drop-Bitcoin-Airdrop-List-Image.png",
         "percentAmount":10,
-        "angle":360
+        "angle":360,
+        "joined": false
     },
     {
         "tokenName": "Ethereum", 
@@ -45,7 +47,8 @@
         "entryFee": 200,
         "image": "AR-Drop-Ethereum-Airdrop-List-Image.png",
         "percentAmount":25,
-        "angle":360
+        "angle":360,
+        "joined": false
     },
     {
         "tokenName": "Bitcoin Cash", 
@@ -61,7 +64,8 @@
         "entryFee": 200,
         "image": "AR-Drop-Bitcoin-Cash-Airdrop-List-Image.png",
         "percentAmount":50,
-        "angle":360
+        "angle":360,
+        "joined": true
     },
     {
         "tokenName": "Sample Coins", 
@@ -77,7 +81,8 @@
         "entryFee": 200,
         "image": "SampleCoin.png",
         "percentAmount":50,
-        "angle":360
+        "angle":360,
+        "joined": false
     },
     {
         "tokenName": "Test Coins", 
@@ -93,7 +98,8 @@
         "entryFee": 200,
         "image": "TestCoin.png",
         "percentAmount":50,
-        "angle":360
+        "angle":360,
+        "joined": true
     },
     {
         "tokenName": "Trial Tokens", 
@@ -109,7 +115,8 @@
         "entryFee": 200,
         "image": "TrialToken.png",
         "percentAmount":5,
-        "angle":360
+        "angle":360,
+        "joined": false
     },
     {
         "tokenName": "Xample Tokens", 
@@ -125,6 +132,7 @@
         "entryFee": 200,
         "image": "XampleToken.png",
         "percentAmount":50,
-        "angle":360
+        "angle":360,
+        "joined": false
     }
 ]

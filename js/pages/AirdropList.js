@@ -9,9 +9,13 @@ import {
   FlatList
 } from 'react-native';
 
+import {ButtonGroup} from 'react-native-elements';
+
 import AirdropListItem from './components/AirdropListItem.js';
 //import AirdropModal from './components/AirdropModal.js';
-import AirdropData from '../../data/airdropinfo.json';
+import UpcomingClashes from '../../data/upcomingclashes.json';
+import ActiveClashes from '../../data/activeclashes.json';
+import EndedClashes from '../../data/endedclashes.json';
 
 export default class AirdropList extends Component {
 	
@@ -20,55 +24,56 @@ export default class AirdropList extends Component {
 
 	    this.state = {
 	      modalStatus : false,
+        clashData : UpcomingClashes,
+        selectedIndex : 0
 	    }
+
+      this._updateIndex = this._updateIndex.bind(this);
   	}
 
+  _updateIndex(selectedIndex) {
+
+    if(selectedIndex == 0) {
+      //TODO: Replace with API calls
+      clashList = UpcomingClashes;
+    }
+    if(selectedIndex == 1) {
+      clashList = ActiveClashes;
+    }
+    if(selectedIndex == 2) {
+      clashList = EndedClashes;
+    }
+
+    this.setState({
+      selectedIndex: selectedIndex,
+      clashData : clashList
+    });
+  }
+
+
 	render() {
+    const buttons = ['Upcoming', 'Active', 'Ended'];
     return (
-      <View>
-      <Modal
-          animationType="slide"
-          transparent={true}
-          visible={this.state.modalStatus}
-          >
-          <View style={localStyles.modal}>
-          
-              <Text style={localStyles.headerText}>PRIZE: 1BTC</Text>
-              <Text style={localStyles.headerText}>VALUE: $3500</Text>
-              <Text style={localStyles.headerText}>ENTRY: 1%</Text>
-
-              <Text style={localStyles.modalText}>Joining this contest is free for 
-              the first 500 entries but your
-              wallet must hold a minimum 
-              of 1% of the prize in ARD
-              in order to participate</Text>
-
-              <Text style={localStyles.headerText}>AIRDROP STARTS IN</Text>
-              <Text style={localStyles.modalTimer}>00h 33m 21s</Text>
-
-              <View style={localStyles.row}>
-                <TouchableHighlight
-                onPress={() => this._setModal(false)}>
-                  <Image source={require("../../public/images/ar_d_back_icon.png")}
-                  style={localStyles.smallIcon} />
-                </TouchableHighlight>
-                <TouchableHighlight
-                onPress={() => this.props.navigation.navigate('HowToRedrop')}>
-                  <Image source={require("../../public/images/ar_d_ok_icon.png")}
-                  style={localStyles.smallIcon} />
-                </TouchableHighlight>
-              </View>
-              <Text style={localStyles.modalText}>Airdrop Hunters 0/1000</Text>
-          </View>
-        </Modal>
-      <FlatList
-  data={AirdropData}
-  renderItem={({item}) => <AirdropListItem airdropItem={item} navigation={this.props.navigation}/> }
-	/>
+      <View style={localStyles.mainView}>
+        <ButtonGroup
+          onPress={this._updateIndex}
+          selectedIndex={this.state.selectedIndex}
+          buttons={buttons}
+          containerStyle={{height:30,borderWidth:0, backgroundColor:'#3b3b3b', color:'#f86e00'}}
+          selectedButtonStyle={{borderColor:'#f86e00', backgroundColor:'#3b3b3b'}}
+          />
+        <FlatList
+          data={this.state.clashData}
+          renderItem={({item}) => 
+            <AirdropListItem 
+              airdropItem={item} 
+              navigation={this.props.navigation}
+            />}
+	      />
       </View>
-    );
-   }
-
+      );
+  }
+    
    _setModal(modalStatus) {
     return () => {
       this.setState({
@@ -76,13 +81,15 @@ export default class AirdropList extends Component {
       })
     }
   }
-
 }
 
 var localStyles = StyleSheet.create({
   viroContainer :{
     flex : 1,
     backgroundColor:"transparent"
+  },
+  mainView: {
+    backgroundColor:'#3b3b3b'
   },
   headerText: {
     color:'#f86e00',
@@ -131,6 +138,11 @@ var localStyles = StyleSheet.create({
   row : {
   	flex:1, 
   	flexDirection:'row'
+  },
+  topButton : {
+    flex: 1, 
+    alignSelf: 'stretch',
+    textAlign: 'center'
   }
 });
 

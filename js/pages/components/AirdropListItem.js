@@ -20,7 +20,6 @@ export default class AirdropListItem extends Component {
   }
 
   componentDidMount() {
-     
     this.interval = setInterval(
     () => this.setState(({ timer: this.state.timer - 1 })),
     1000
@@ -40,38 +39,35 @@ export default class AirdropListItem extends Component {
     var imagePath = '../../../public/images/' + this.props.airdropItem.image;
       var startTime = new Date(this.state.timer * 1000).toISOString().substr(11, 8);
    
-     return(
+    return(
 			<TouchableHighlight style={localStyles.buttons}
             onPress={() => this.props.navigation.navigate('Parachute')}
              >
-      <View >
+        <View >
 
-       <Text style={localStyles.buttonText}> {this.props.airdropItem.value} {this.props.airdropItem.tokenName}</Text>
+          <Text style={localStyles.buttonText}> {this.props.airdropItem.value} {this.props.airdropItem.tokenName}</Text>
     
-      <Image source={require('../../../public/images/CryptoClash-List-Clash-Token.png')}  
-      style={localStyles.buttonImage} />
-     
-      <Image source={require('../../../public/images/Icons/GameTimerIcon.png')}
-      style={localStyles.clockIcon} />
-      <Text style={localStyles.airdropTimer}>{startTime}</Text> 
-      {this._renderGameIcon()}
-      <Image source={require('../../../public/images/Icons/EmptyIcon.png')}
-      style={localStyles.percentIcon} />
-      <Text style={localStyles.percentAmount}> {this.props.airdropItem.percentAmount}%</Text>
-      <Image source={require('../../../public/images/Icons/InfoButtonIcon.png')}
-      style={localStyles.infoIcon} /> 
-       {this._renderJoined()}
-    </View>
+          <Image source={require('../../../public/images/CryptoClash-List-Clash-Token.png')}  
+          style={localStyles.buttonImage} />
+          <Image source={require('../../../public/images/Icons/GameTimerIcon.png')}
+          style={localStyles.clockIcon} />
+          <Text style={localStyles.airdropTimer}>{startTime}</Text> 
+          {this._renderGameIcon()}
+          <Image source={require('../../../public/images/Icons/EmptyIcon.png')}
+          style={localStyles.percentIcon} />
+          <Text style={localStyles.percentAmount}> {this.props.airdropItem.percentAmount}%</Text>
+          {this._renderJoined()}
+        </View>
            
-  </TouchableHighlight>);
+      </TouchableHighlight>
+    );
 	}
 
   _renderJoined() {
-    if(this.state.joined) {
+    if(this.props.airdropItem.joined) {
       return(
-        <Image source={require('../../../public/images/checkered-flag.png')}
+        <Image source={require('../../../public/images/CryptoClash-Joined-Sash.png')}
       style={localStyles.joinedFlag} />
-      
       );
     }
   }
@@ -94,7 +90,6 @@ export default class AirdropListItem extends Component {
       return (<Image source={require('../../../public/images/Icons/EmptyIcon.png')}
       style={localStyles.gameIcon} />);
     }
-
   }
 }
 
@@ -103,7 +98,8 @@ var localStyles = StyleSheet.create({
     fontSize: 12,
     position:'absolute', 
     top:60,
-    left:35
+    color:'#fff',
+    right:45
   },
   buttonText: {
     marginTop:10,
@@ -127,14 +123,14 @@ var localStyles = StyleSheet.create({
   },
   clockIcon : {
   	position:'absolute', 
-  	top:55,
-  	left:5,
-  	width:25, 
-  	height:25
+    top:55,
+    right:5,
+    width:25, 
+    height:25
   },
   gameIcon : {
     position:'absolute', 
-    top:85,
+    top:55,
     left:5,
     width:25, 
     height:25
@@ -142,12 +138,12 @@ var localStyles = StyleSheet.create({
   percentAmount : {
     position:'absolute', 
     fontSize: 8,
-    top: 122,
+    top: 92,
     left: 7
   },
   percentIcon : {
     position:'absolute', 
-    top:115,
+    top:85,
     left:5,
     width:25, 
     height:25
@@ -165,10 +161,10 @@ var localStyles = StyleSheet.create({
   },
   joinedFlag : {
   	position:'absolute', 
-  	top:160,
-  	right:5,
-  	width:30, 
-  	height:30
+  	top:95,
+  	right:1,
+  	width:100, 
+  	height:100
   },
   linearGradient: {
     flex: 1,

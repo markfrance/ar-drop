@@ -1,0 +1,180 @@
+[
+	{
+		"gameID": 1245,
+		"type": "Parachute360",
+		"settings" : {
+			"maxParachutesOnScreen": 5,
+			"parachutes" : [
+				{
+					"position" : {
+						"x": 7.32,
+						"y": 10,
+						"z": 8.23
+					},
+					"value": 0.02,
+					"speed": 0.3,
+					"isBomb": false
+				},
+				{
+					"position" : {
+						"x": 1.32,
+						"y": 10,
+						"z": 8.34
+					},
+					"value": 0.2,
+					"speed": 0.4,
+					"isBomb": false
+				},
+				{
+					"position" : {
+						"x": 0.26,
+						"y": 10,
+						"z": 8.24
+					},
+					"value": 0.5,
+					"speed": 0.8,
+					"isBomb": false
+				},
+				{
+					"position" : {
+						"x": 5.11,
+						"y": 10,
+						"z": 6.04
+					},
+					"value": 0.004,
+					"speed": 0.2,
+					"isBomb": true
+				},
+				{
+					"position" : {
+						"x": 7.32,
+						"y": 10,
+						"z": 8.23
+					},
+					"value": 0.02,
+					"speed": 0.3,
+					"isBomb": false
+				},
+				{
+					"position" : {
+						"x": 1.32,
+						"y": 10,
+						"z": 8.34
+					},
+					"value": 0.2,
+					"speed": 0.4,
+					"isBomb": false
+				},
+				{
+					"position" : {
+						"x": 0.26,
+						"y": 10,
+						"z": 8.24
+					},
+					"value": 0.5,
+					"speed": 0.8,
+					"isBomb": false
+				},
+				{
+					"position" : {
+						"x": 5.11,
+						"y": 10,
+						"z": 6.04
+					},
+					"value": 0.004,
+					"speed": 0.2,
+					"isBomb": true
+				}
+			]
+		}
+	},
+	{
+		"gameID": 1246,
+		"type": "Parachute180",
+		"settings" : {
+			"maxParachutesOnScreen": 4,
+			"parachutes" : [
+				{
+					"position" : {
+						"x": 7.32,
+						"y": 10,
+						"z": 8.23
+					},
+					"value": 0.02,
+					"speed": 0.3,
+					"isBomb": false
+				},
+				{
+					"position" : {
+						"x": 1.32,
+						"y": 10,
+						"z": 8.34
+					},
+					"value": 0.2,
+					"speed": 0.4,
+					"isBomb": false
+				},
+				{
+					"position" : {
+						"x": 0.26,
+						"y": 10,
+						"z": 8.24
+					},
+					"value": 0.5,
+					"speed": 0.8,
+					"isBomb": false
+				},
+				{
+					"position" : {
+						"x": 5.11,
+						"y": 10,
+						"z": 6.04
+					},
+					"value": 0.004,
+					"speed": 0.2,
+					"isBomb": true
+				},
+				{
+					"position" : {
+						"x": 7.32,
+						"y": 10,
+						"z": 8.23
+					},
+					"value": 0.02,
+					"speed": 0.3,
+					"isBomb": false
+				},
+				{
+					"position" : {
+						"x": 1.32,
+						"y": 10,
+						"z": 8.34
+					},
+					"value": 0.2,
+					"speed": 0.4,
+					"isBomb": false
+				},
+				{
+					"position" : {
+						"x": 0.26,
+						"y": 10,
+						"z": 8.24
+					},
+					"value": 0.5,
+					"speed": 0.8,
+					"isBomb": false
+				},
+				{
+					"position" : {
+						"x": 5.11,
+						"y": 10,
+						"z": 6.04
+					},
+					"value": 0.004,
+					"speed": 0.2,
+					"isBomb": true
+				}
+			]
+		}
+	}
+]

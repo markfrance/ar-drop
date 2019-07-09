@@ -17,33 +17,47 @@ export default class LeaderboardListItem extends Component {
     }
   }
 
-  
-
 	render() {
     
      return(
 			<TouchableHighlight
             onPress={() => this.props.navigation.navigate('Airdrop')}
              >
-      <View >
+      <View style={this.props.leaderboardItem.isHighlighted == true ? localStyles.highlightedRow : localStyles.row}>
 
-      <Text style={localStyles.rowText}>{this.props.leaderboardItem.player} </Text>
+        <Text style={localStyles.rowText}>{this.props.leaderboardItem.player} </Text>
 
-      <Text style={localStyles.rowText}>{this.props.leaderboardItem.time} </Text>
+        <Text style={localStyles.rowText}>{this.props.leaderboardItem.time} </Text>
 
-      <Text style={localStyles.rowText}>{this.props.leaderboardItem.attempts} </Text>
+        <Text style={localStyles.rowText}>{this.props.leaderboardItem.attempts} </Text>
 
-      <Text style={localStyles.rowText}>{this.props.leaderboardItem.prize} </Text>
+        <Text style={localStyles.rowText}>{this.props.leaderboardItem.prize} </Text>
+        
       </View>
            
   </TouchableHighlight>);
 	}
-
- 
 }
 
 var localStyles = StyleSheet.create({
+  row: {
+    flex: 1, 
+    alignSelf: 'stretch', 
+    flexDirection: 'row',
+    margin:5
+  },
+  highlightedRow : {
+    flex: 1, 
+    alignSelf: 'stretch', 
+    flexDirection: 'row',
+    margin:5,
+    backgroundColor: '#ffa028'
+  },
   rowText : {
-    width:60
+    height:25,
+    flex: 1, 
+    alignSelf: 'stretch',
+    textAlign: 'center',
+    color: '#fff'
   }
 });

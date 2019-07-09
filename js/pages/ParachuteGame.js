@@ -38,9 +38,11 @@ export default class ParachuteGame extends Component {
   }
 
   componentDidUpdate() {
-    if(this.state.score == 9) {
+    let hasEnded = false
+    if(this.state.score == 9 && !hasEnded) {
+      hasEnded = true;
       this._stopStopwatch();
-      setTimeout(() => this.props.navigation.navigate('Airdrop'),
+      setTimeout(() => this.props.navigation.navigate('Leaderboard'),
         2000);
     }
   }
@@ -82,7 +84,6 @@ export default class ParachuteGame extends Component {
 
         <ViroARSceneNavigator {...this.state.sharedProps}
         initialScene={{scene: ParachuteARScene}}
-         worldAlignment="GravityAndHeading"  
          style={localStyles.viroContainer} 
          viroAppProps={{updateScore:this._updateScore}}/>
 
@@ -94,7 +95,7 @@ export default class ParachuteGame extends Component {
   _renderHUD() {
     return(
       <View style={localStyles.bottomHud}>
-      <Stopwatch laps msecs start={this.state.stopwatchStart}
+      <Stopwatch msecs start={this.state.stopwatchStart}
           reset={this.state.stopwatchReset}
           options={options}
           getTime={this._msToTime} />

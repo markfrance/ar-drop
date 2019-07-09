@@ -44,61 +44,72 @@ export default class ParachuteScene extends Component {
     };
 
    this._updateScore = this._updateScore.bind(this);
+   this._createAllParachutes = this._createAllParachutes.bind(this);
    this._createParachutes = this._createParachutes.bind(this);
-   //
   }
 
-
   componentDidMount() {
-    let parachuteItems = this._createParachutes(10);
+    let parachuteItems = this._createParachutes(10, 10);
 
     this.setState({
       parachutes: parachuteItems
     });
   }
 
-
   _updateScore(value) {
     this.props.sceneNavigator.viroAppProps.updateScore(value);
   }
   
-  _createParachutes(amount) {
+  /* Creates all parachutes that will be used throughout the game 
+   * @param amount Total number of parachutes.
+   * @param totalValue Value of total prize for the game
+   * @param bombRatio e.g. if bombRatio is 10.
+   * 1 in 10 parachutes should be bombs
+  */
+  _createAllParachutes(amount, totalValue, bombRatio) {
+    //let startAngle = 0;
     let parachutes = [];
-    let zLimit = 5;
+  
+    let bombAmount = Math.floor(amount / bombRatio);
+    let parachuteAmount = amount - bombAmount;
 
-    if(this.state.degrees === 180) {
-      zLimit = 10;
-    }
+    let bombValue = Math.floor(totalValue / bombRatio);
+    
+    parachutes.push(
+      this._createParachutes(parachuteAmount, totalValue, false));
+    parachutes.push(
+      this._createParachutes(bombAmount, bombValue, true));
+      
+    return parachutes;
+  }
 
+  _createParachutes(amount, totalValue, isBomb) {
+
+    const MIN_SPEED = 0.1;
+
+    let parachuteValue = totalValue / amount;
+    let items = [];
     for(let i=0; i<amount; i++) {
 
       let angle = Math.random()*Math.PI*2;
-      let speed = Math.random() + 0.1;
-      parachutes.push(
 
-        <Parachute
-          xPos={Math.cos(angle)*8}
-          zPos={Math.sin(angle)*8}
-          initialSpeed={speed}
-          isBomb={false}
-          value={1}
-          updateScore={this._updateScore}
-      />
-         
-          );
+      //180 degree mode
+      if(this.state.degrees === 180) {
+        angle = Math.random()*Math.PI;
+       }
+
+      let speed = Math.random() + MIN_SPEED;
+
+      items.push({
+        xPos:Math.cos(angle)*8,
+        zPos:Math.sin(angle)*8,
+        initialSpeed:speed,
+        isBomb: isBomb,
+        value: parachuteValue
+      });
+
+      return items;
     }
-
-    let bombAngle = Math.random()*Math.PI*2;
-    parachutes.push(
-    <Parachute
-          xPos={Math.cos(bombAngle)*8}
-          zPos={Math.sin(bombAngle)*8}
-          initialSpeed={0.5}
-          isBomb={true}
-          value={1}
-          updateScore={this._updateScore}
-      />)
-    return parachutes;
   }
 
   render() {
@@ -106,7 +117,7 @@ export default class ParachuteScene extends Component {
 
     return (
       <ViroARScene>
-        <ViroAmbientLight color="#ffffff" intensity={200}/>
+        <ViroAmbientLight color="#ffffff" intensity={100}/>
         <ViroDirectionalLight
           color="#ffffff"
           direction={[0, -1, 0]}

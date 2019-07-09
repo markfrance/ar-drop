@@ -16,7 +16,7 @@ import { createStackNavigator,
   createMaterialTopTabNavigator,
   createBottomTabNavigator,
   createAppContainer,
-  createSwitchNavigator } from 'react-navigation'; 
+  createSwitchNavigator } from 'react-navigation';
 
 const TabNavigator = createMaterialTopTabNavigator({
   AirdropScreen: {
@@ -25,7 +25,7 @@ const TabNavigator = createMaterialTopTabNavigator({
   },
   WalletScreen: {
     screen: WalletScreen,
-    navigationOptions: {title: "WALLET"}
+    navigationOptions: {title: "CRYPTO"}
   }
 },
 {
@@ -39,7 +39,8 @@ const TabNavigator = createMaterialTopTabNavigator({
     fontSize: 14,
   },
   style: {
-    backgroundColor: '#fff'
+    backgroundColor: '#3b3b3b',
+    marginTop: 20
   }
 }}
 );
@@ -58,10 +59,9 @@ const RootStack = createSwitchNavigator(
     Leaderboard: LeaderboardScreen
   },
   {
-    initialRouteName: 'Airdrop'
+    initialRouteName: 'Leaderboard'
   }
 );
-
 
 const AppNavigator = createSwitchNavigator({
   Main: RootStack,
@@ -78,7 +78,6 @@ export default class App extends Component {
   render() {
      return <AppContainer />;
   }
-
 }
 
 module.exports = App;

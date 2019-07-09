@@ -1,0 +1,50 @@
+[
+    {
+        "gameID": 1543,
+        "type": "parachute360",
+        "prizes":
+            [{
+                "order": 1,
+                "asset": "clash",
+                "value": 100000
+            },
+            {
+                "order": 2,
+                "asset": "clash",
+                "value": 10000
+            },
+            {
+                "order": 3,
+                "asset": "clash",
+                "value": 1000
+            }],
+        "entryRequirement":0,
+        "multipleEntries": true,
+        "startTime":1560515014,
+        "endTime": 1560525013
+    },
+    {
+        "gameID": 1544,
+        "type": "parachute180",
+        "prizes":
+            [{
+                "order": 1,
+                "asset": "ETH",
+                "value": 10
+            },
+            {
+                "order": 2,
+                "asset": "ETH",
+                "value": 5
+            },
+            {
+                "order": 3,
+                "asset": "ETH",
+                "value": 0.2
+            }],
+        "entryRequirement":50,
+        "multipleEntries": false,
+        "startTime":1560515014,
+        "endTime": 1560525013
+    }
+]

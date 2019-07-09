@@ -38,12 +38,14 @@ export default class BombExplosion extends Component {
               spawnBehavior={{
                 particleLifetime:[4000,4000],
                 emissionRatePerSecond:[150, 200], 
+                emissionBurst:[
+                {time:0, min:300, max:350, cycles:1}],
                 spawnVolume:{
                   shape:"sphere", 
                   params:[20, 1, 20], 
                   spawnOnSurface:false
                 },
-                maxParticles:800
+                maxParticles:700
               }}
 
               particleAppearance={{
@@ -72,11 +74,13 @@ export default class BombExplosion extends Component {
                     {endValue:[0,0,0], interval:[4000,5000]}
                   ]
                 },
+
               }}
               
               particlePhysics={{
-                velocity:{
-                initialRange:[[-2,-.5,0], [2,-3.5,0]]}
+                explosiveImpulse:{impulse:0.12 * 8,
+                  position:[0,0,0],
+                  decelerationPeriod:1.0}
               }}
             />
 
