@@ -17,6 +17,11 @@ import UpcomingClashes from '../../data/upcomingclashes.json';
 import ActiveClashes from '../../data/activeclashes.json';
 import EndedClashes from '../../data/endedclashes.json';
 
+ const UpcomingButton = () => <Text style={localStyles.buttonText}>Upcoming</Text>;
+  const ActiveButton = () => <Text style={localStyles.buttonText}>Active</Text>;
+  const EndedButton = () => <Text style={localStyles.buttonText}>Ended</Text>;
+
+
 export default class AirdropList extends Component {
 	
 	constructor() {
@@ -51,16 +56,22 @@ export default class AirdropList extends Component {
   }
 
 
+ 
 	render() {
-    const buttons = ['Upcoming', 'Active', 'Ended'];
+    const buttons = [{ element: UpcomingButton }, 
+    { element: ActiveButton }, 
+    { element: EndedButton }]
+  
     return (
       <View style={localStyles.mainView}>
         <ButtonGroup
           onPress={this._updateIndex}
           selectedIndex={this.state.selectedIndex}
           buttons={buttons}
-          containerStyle={{height:30,borderWidth:0, backgroundColor:'#3b3b3b', color:'#f86e00'}}
-          selectedButtonStyle={{borderColor:'#f86e00', backgroundColor:'#3b3b3b'}}
+          buttonStyle={{borderWidth:0}}
+          innerBorderStyle={{width:0}}
+          containerStyle={{height:30,borderWidth:0, backgroundColor:'#3b3b3b'}}
+          selectedButtonStyle={{borderBottomWidth:2, borderRightWidth:0, borderLeftWidth:0, borderBottomColor:'#f86e00',backgroundColor:'#3b3b3b'}}
           />
         <FlatList
           data={this.state.clashData}
@@ -143,6 +154,10 @@ var localStyles = StyleSheet.create({
     flex: 1, 
     alignSelf: 'stretch',
     textAlign: 'center'
+  },
+  buttonText: {
+    color:'#f86e00',
+    borderWidth: 0
   }
 });
 

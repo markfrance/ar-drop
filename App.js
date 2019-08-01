@@ -21,27 +21,34 @@ import { createStackNavigator,
 const TabNavigator = createMaterialTopTabNavigator({
   AirdropScreen: {
     screen: AirdropListScreen,
-    navigationOptions: {title: "CLASHES"}
+    navigationOptions: {
+      title: "CLASHES"}
   },
   WalletScreen: {
     screen: WalletScreen,
-    navigationOptions: {title: "CRYPTO"}
+    navigationOptions: {title: "CRYPTO",
+ }
   }
 },
 {
+
   tabBarOptions: {
     activeBackgroundColor: '#3b3b3b',
-    inactiveBackgroundColor: '#ffffff',
     activeTintColor: '#ffa028',
     inactiveTintColor: '#f86e00',
-
+    borderBottomWidth:0,
+    borderWidth:0,
   labelStyle: {
-    fontSize: 14,
+    fontSize: 16,
   },
   style: {
     backgroundColor: '#3b3b3b',
     marginTop: 20
+  },
+   indicatorStyle: {
+      backgroundColor: '#ffa028',
   }
+ 
 }}
 );
 

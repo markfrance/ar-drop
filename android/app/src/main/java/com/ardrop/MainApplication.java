@@ -3,6 +3,8 @@ package com.ardrop;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.sensors.RNSensorsPackage;
 import com.swmansion.reanimated.ReanimatedPackage;
 import com.airbnb.android.react.maps.MapsPackage;
@@ -34,6 +36,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new VectorIconsPackage(),
+            new ReactNativePushNotificationPackage(),
             new RNSensorsPackage(),
             new ReanimatedPackage(),
             new MapsPackage(),

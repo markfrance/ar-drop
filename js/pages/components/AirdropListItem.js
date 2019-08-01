@@ -10,12 +10,12 @@ import {
 
 export default class AirdropListItem extends Component {
 
-	constructor() {
-    	super();
+	constructor(props) {
+    	super(props);
 
     this.state = {
       	joined : true,
-        timer : 999
+        timer : props.airdropItem.startTime
     }
   }
 
@@ -34,6 +34,9 @@ export default class AirdropListItem extends Component {
     }
   }
 
+  navigateToPregameScreen() {
+
+  }
 
 	render() {
     var imagePath = '../../../public/images/' + this.props.airdropItem.image;

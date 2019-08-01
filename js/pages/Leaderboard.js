@@ -3,6 +3,7 @@ import {
 	View, 
 	Image, 
 	Text,
+  Animated,
 	StyleSheet, 
 	TouchableHighlight,
 	Modal,
@@ -11,6 +12,7 @@ import {
 
 import LeaderboardListItem from './components/LeaderboardListItem.js';
 import LeaderboardData from '../../data/leaderboard.json';
+import { BezierCurve } from './components/BezierCurve';
 
 export default class Leaderboard extends Component {
 	
@@ -37,32 +39,8 @@ export default class Leaderboard extends Component {
           navigation={this.props.navigation}/> }
         />
         <View style={localStyles.waveFooter}>
+          <BezierCurve scrollAmount={new Animated.Value(0)} />
         
-          <Image 
-            source={require("../../public/images/CryptoClash-Leaderboard-Wave.png")}
-            style={localStyles.waveImage} />
-          <Text style={localStyles.yourPosition}> Your Position </Text>
-          <Text style={localStyles.positionText}> 3rd </Text>
-
-          <TouchableHighlight style={localStyles.playAgain}
-            onPress={() => this.props.navigation.navigate('Airdrop')}
-             >
-             <Image source={require("../../public/images/CryptoClash-Leaderboard-Play-Again-Button.png")}
-              style={localStyles.playAgainButton}
-               />
-              
-          
-          </TouchableHighlight>
-           <TouchableHighlight
-           style={localStyles.backArrow} 
-            onPress={() => this.props.navigation.navigate('Airdrop')}
-             >
-             <Image source={require("../../public/images/CryptoClash-Back-Arrow.png")}
-              style={localStyles.backArrowButton} />
-          
-          </TouchableHighlight>
-
-
         </View>
       
       </View>
@@ -72,7 +50,8 @@ export default class Leaderboard extends Component {
 
 var localStyles = StyleSheet.create({
   leaderboard: {
-    backgroundColor: '#3b3b3b'
+    backgroundColor: '#3b3b3b',
+    fontFamily:'Medel'
   },
   headerText: {
     fontSize: 30,
@@ -85,7 +64,8 @@ var localStyles = StyleSheet.create({
     position:'absolute',
     height: 150,
     width:400,
-    bottom:145
+    bottom:145,
+    zIndex:1
   },
   row: {
     flex: 1, 

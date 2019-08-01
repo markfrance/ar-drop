@@ -154,6 +154,8 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-vector-icons')
+    implementation project(':react-native-push-notification')
     compile project(':react-native-sensors')
     compile project(':react-native-reanimated')
     compile project(':react-native-maps')

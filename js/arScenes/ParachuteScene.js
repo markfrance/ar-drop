@@ -100,21 +100,30 @@ export default class ParachuteScene extends Component {
 
       let speed = Math.random() + MIN_SPEED;
 
-      items.push({
+      items.push(<Parachute
+        xPos={Math.cos(angle)*8}
+        zPos={Math.sin(angle)*8}
+        initialSpeed={speed}
+        isBomb={isBomb}
+        value={parachuteValue}
+      />);
+
+      return items;
+
+      /*
+      {
         xPos:Math.cos(angle)*8,
         zPos:Math.sin(angle)*8,
         initialSpeed:speed,
         isBomb: isBomb,
         value: parachuteValue
-      });
-
-      return items;
+      }
+      */
     }
   }
 
   render() {
     
-
     return (
       <ViroARScene>
         <ViroAmbientLight color="#ffffff" intensity={100}/>
