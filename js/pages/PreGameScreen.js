@@ -15,9 +15,16 @@ export default class PreGameScreen extends Component {
 	    super();
 
 	    this.state = {
-	    	
+
 	    }
 
   	}
+
+  	render() {
+  		return(
+  			<View>
+  				<Text> Pre game screen </Text>
+  			</View>);
+  		}
 
   }

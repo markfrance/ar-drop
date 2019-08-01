@@ -41,6 +41,8 @@ target 'arDrop' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
 end
 
 
