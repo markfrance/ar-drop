@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
-import {View, Image, Text, StyleSheet, 
-  StatusBar, TouchableHighlight,  NativeEventEmitter,
+import {View, 
+  Image, 
+  Text, 
+  StyleSheet, 
+  StatusBar, 
+  TouchableHighlight,  
+  Animated,
+  NativeEventEmitter,
   DeviceEventEmitter} from 'react-native';
-import {
-  ViroARSceneNavigator
-} from 'react-viro';
+import {ViroARSceneNavigator} from 'react-viro';
 import {Timer, Stopwatch } from 'react-native-stopwatch-timer';
+
+import { BezierCurve } from './components/BezierCurve';
 
 var ParachuteARScene = require('../arScenes/ParachuteScene.js');
 
@@ -51,7 +57,7 @@ export default class ParachuteGame extends Component {
     var time = new Date(duration);
     return time.getMinutes() + ':' +
       time.getSeconds() + ':' +
-      time.getMilliseconds();
+      time.getMilliseconds().toFixed(2);
   }
 
   _updateScore(value){
@@ -99,11 +105,17 @@ export default class ParachuteGame extends Component {
           reset={this.state.stopwatchReset}
           options={options}
           getTime={this._msToTime} />
-       <Image source={require('../../public/images/CryptoClash-Wave.png')}
-        style={localStyles.wave}/>
+       <BezierCurve scrollAmount={new Animated.Value(0)} />
+        
         <Image source={require('../../public/images/CryptoClash-App-Icon-Android.png')}
         style={localStyles.cryptoLogo}/>
         <Text style={localStyles.score}> {this.state.score} </Text>
+        <TouchableHighlight style={{flex:1}}
+            onPress={() => this.props.navigation.navigate('DemoMode')}
+            >
+        <Image source={require('../../public/images/CryptoClash-Back-Arrow.png')}
+        style={localStyles.backButton}/>
+        </TouchableHighlight>
       </View>)
   }
 
@@ -121,13 +133,16 @@ export default class ParachuteGame extends Component {
 const options = {
   container: {
     position: 'absolute',
-    top: 10,
+    top: -155,
     padding: 5,
     width: 240,
   },
   text: {
     fontSize: 36,
-    color: '#ffa028'
+    color: '#ffa028',
+    textShadowColor: 'black',
+    textShadowOffset:{width: 2, height:2},
+    textShadowRadius: 1
   }
 };
 
@@ -146,10 +161,12 @@ var localStyles = StyleSheet.create({
   },
   backButton : {
     position:'absolute',
-    top:5, 
-    left:5, 
-    width:50, 
-    height:50
+    top:-50, 
+    left:10, 
+    width:30, 
+    height:30,
+    opacity:0.5,
+    zIndex:-1
   },
   cameraButton : {
     position:'absolute',
@@ -171,8 +188,9 @@ var localStyles = StyleSheet.create({
     height:50
   },
   bottomHud: {
-    backgroundColor:'black',
-    height:150
+    backgroundColor:'transparent',
+    height:0,
+    opacity:0.8
   },
   wave : {
    backgroundColor:'transparent',
@@ -185,22 +203,17 @@ var localStyles = StyleSheet.create({
     width: 80,
     height: 80,
     right:30,
-    top:15
+    top:-135
   },
   score : {
     position: 'absolute',
     right: 48,
-    top: 95,
-    fontSize: 36,
-    fontWeight: 'bold',
-    color: '#ffa028'
-  },
-  timer: {
-    position: 'absolute',
+    top: -55,
     fontSize: 36,
     fontWeight: 'bold',
     color: '#ffa028',
-    top: 10,
-    left: 10
-  }
+    textShadowColor: 'black',
+    textShadowOffset:{width: 2, height:2},
+    textShadowRadius: 1
+  },
 });

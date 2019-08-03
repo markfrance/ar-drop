@@ -12,6 +12,10 @@ import ParachuteGame from './js/pages/ParachuteGame.js';
 import WalletScreen from './js/pages/Wallet.js';
 import LeaderboardScreen from './js/pages/Leaderboard.js';
 import PreGameScreen from './js/pages/PreGameScreen.js';
+import DemoModeSelectionScreen from './js/pages/DemoModeSelectionScreen.js';
+import DemoEndScreen from './js/pages/DemoEndScreen.js';
+import DemoHowToScreen from './js/pages/DemoHowToScreen.js';
+import DemoCryptoSelectionScreen from './js/pages/DemoCryptoSelectionScreen.js';
 
 import { createStackNavigator, 
   createMaterialTopTabNavigator,
@@ -32,7 +36,6 @@ const TabNavigator = createMaterialTopTabNavigator({
   }
 },
 {
-
   tabBarOptions: {
     activeBackgroundColor: '#3b3b3b',
     activeTintColor: '#ffa028',
@@ -65,10 +68,14 @@ const RootStack = createSwitchNavigator(
    // Portal: PortalGame,
     Parachute: ParachuteGame,
     Leaderboard: LeaderboardScreen,
-    PreGame: PreGameScreen
+    PreGame: PreGameScreen,
+    DemoMode: DemoModeSelectionScreen,
+    DemoEnd: DemoEndScreen,
+    DemoHowTo: DemoHowToScreen,
+    DemoCrypto: DemoCryptoSelectionScreen
   },
   {
-    initialRouteName: 'PreGame'
+    initialRouteName: 'DemoHowTo'
   }
 );
 

@@ -22,3 +22,7 @@
           
           </TouchableHighlight>
 
+
+
+ <Image source={require('../../public/images/CryptoClash-Wave.png')}
+        style={localStyles.wave}/>

@@ -46,7 +46,7 @@ export default class AirdropListItem extends Component {
 			<TouchableHighlight style={localStyles.buttons}
             onPress={() => this.props.navigation.navigate('Parachute')}
              >
-        <View >
+        <View style={localStyles.container}>
 
           <Text style={localStyles.buttonText}> {this.props.airdropItem.value} {this.props.airdropItem.tokenName}</Text>
     
@@ -123,6 +123,9 @@ var localStyles = StyleSheet.create({
     backgroundColor:'#f86e00',
     borderWidth: 1,
     borderColor: '#fff'
+  },
+  container: {
+    backgroundColor:'#3b3b3b'
   },
   clockIcon : {
   	position:'absolute', 

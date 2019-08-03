@@ -1,0 +1,30 @@
+[
+    {
+        "place": "1", 
+        "mode": "180",
+        "crypto": "CLASH",
+        "time":"01:03:52",
+        "isHighlighted":false
+    },
+    {
+        "place": "2", 
+        "mode": "360",
+        "crypto": "ETH",
+        "time":"01:03:53",
+        "isHighlighted":true
+    },
+    {
+        "place": "3", 
+        "mode": "360",
+        "crypto": "BTC",
+        "time":"01:03:54",
+        "isHighlighted":false
+    },
+    {
+        "place": "4", 
+        "mode": "360",
+        "crypto": "ETH",
+        "time":"01:04:52",
+        "isHighlighted":false
+    },
+]
