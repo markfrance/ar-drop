@@ -26,7 +26,7 @@ export default class CoinExplosion extends Component {
             source={require("../../../public/sounds/coins.mp3")} />
           <ViroParticleEmitter
             position={[0, 0, 0]}
-            duration={1000}
+            duration={2000}
             visible={true}
             delay={0}
             run={true}
@@ -43,18 +43,20 @@ export default class CoinExplosion extends Component {
             spawnBehavior={{
               particleLifetime:[1000,1000],
               emissionRatePerSecond:[150, 200], 
+              emissionBurst:[
+                {time:1, min:300, max:550, cycles:1}],
               spawnVolume:{
-                shape:"box", 
-                params:[20, 1, 20], 
+                shape:"sphere", 
+                params:[10, 10, 10], 
                 spawnOnSurface:false
               },
-              maxParticles:800
+              maxParticles:100
             }}
 
             particleAppearance={{
               opacity:{
                 initialRange:[0, 0],
-                factor:"time",
+                factor:"Time",
                 interpolation:[
                   {endValue:0.5, interval:[0,500]},
                   {endValue:1.0, interval:[4000,5000]}
@@ -79,10 +81,11 @@ export default class CoinExplosion extends Component {
               },
             }}
             
-            particlePhysics={{
-              velocity:{
-              initialRange:[[-2,-.5,0], [2,-3.5,0]]}
-            }}
+           particlePhysics={{
+                explosiveImpulse:{impulse:0.12 * 10,
+                  position:[0,0,0],
+                  decelerationPeriod:1.0}
+              }}
           />
         </ViroNode>
 

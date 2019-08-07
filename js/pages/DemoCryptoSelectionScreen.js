@@ -4,16 +4,17 @@ import {
 	Image, 
 	Text,
 	StyleSheet, 
-	TouchableHighlight
+	TouchableHighlight,
+  TouchableOpacity
 } from 'react-native';
 
 export default class DemoCryptoSelectionScreen extends Component {
 
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 
 		this.state = {
-
+      mode: props.navigation.state.params.mode
     	}
 	}
 
@@ -21,21 +22,24 @@ export default class DemoCryptoSelectionScreen extends Component {
 		return(
 			<View style={localStyles.main}>
 				<Text style={localStyles.header}>Select A Cryptocurrency</Text>
-          <TouchableHighlight
-  				  onPress={() => this.props.navigation.navigate('Parachute')}>
+          <TouchableOpacity
+  				  onPress={() => this.props.navigation.navigate('Parachute',
+            {mode: this.state.mode, crypto:'BTC'})}>
               <Image style={localStyles.button} 
                	source={require('../../public/images/BitcoinSelection.png')}/>
-          </TouchableHighlight>
-          <TouchableHighlight
-				  onPress={() => this.props.navigation.navigate('Parachute')}>
+          </TouchableOpacity>
+          <TouchableOpacity
+				  onPress={() => this.props.navigation.navigate('Parachute',
+          {mode: this.state.mode, crypto:'ETH'})}>
             <Image style={localStyles.button} 
              source={require('../../public/images/EthereumSelection.png')}/>
-          </TouchableHighlight>
-          <TouchableHighlight
-          onPress={() => this.props.navigation.navigate('Parachute')}>
+          </TouchableOpacity>
+          <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('Parachute',
+          {mode: this.state.mode, crypto:'CLASH'})}>
             <Image style={localStyles.button} 
              source={require('../../public/images/ClashSelection.png')}/>
-          </TouchableHighlight>
+          </TouchableOpacity>
 			</View>);
 	}
 

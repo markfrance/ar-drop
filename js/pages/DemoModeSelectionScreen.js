@@ -4,7 +4,8 @@ import {
 	Image, 
 	Text,
 	StyleSheet, 
-	TouchableHighlight
+	TouchableHighlight,
+  TouchableOpacity
 } from 'react-native';
 
 export default class DemoModeSelectionScreen extends Component {
@@ -22,21 +23,20 @@ export default class DemoModeSelectionScreen extends Component {
 			<View style={localStyles.main}>
 				<Text style={localStyles.header}>Select A Game To Practise</Text>
 				<View style={localStyles.item}>
-          <TouchableHighlight
-  				  onPress={() => this.props.navigation.navigate('DemoCrypto')}>
+          <TouchableOpacity
+  				  onPress={() => this.props.navigation.navigate('DemoCrypto', {mode:'180'})}>
               <Image style={localStyles.button} 
                	source={require('../../public/images/Icons/ParachuteIcon.png')}/>
-          </TouchableHighlight>
+          </TouchableOpacity>
           <Text style={localStyles.degreesText}> 180</Text>
           <Text style={localStyles.description}> 180° Mode </Text>
-         
         </View>
         <View style={localStyles.item}>
-          <TouchableHighlight
-				  onPress={() => this.props.navigation.navigate('DemoCrypto')}>
+          <TouchableOpacity
+				  onPress={() => this.props.navigation.navigate('DemoCrypto', {mode:'360'})}>
             <Image style={localStyles.button} 
              source={require('../../public/images/Icons/ParachuteIcon.png')}/>
-          </TouchableHighlight>
+          </TouchableOpacity>
           <Text style={localStyles.degreesText}> 360</Text>
         
           <Text style={localStyles.description}> 360° Mode </Text>

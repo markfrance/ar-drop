@@ -5,10 +5,12 @@ import {View,
   StyleSheet, 
   StatusBar, 
   TouchableHighlight,  
-  Animated,
-  NativeEventEmitter,
-  DeviceEventEmitter} from 'react-native';
-import {ViroARSceneNavigator} from 'react-viro';
+  TouchableOpacity,
+  Animated } from 'react-native';
+
+import {
+  ViroARSceneNavigator,
+  ViroConstants} from 'react-viro';
 import {Timer, Stopwatch } from 'react-native-stopwatch-timer';
 
 import { BezierCurve } from './components/BezierCurve';
@@ -21,14 +23,17 @@ var sharedProps = {
 
 export default class ParachuteGame extends Component {
   
-  constructor() {
-      super();
+  constructor(props) {
+      super(props);
 
     this.state = {
       sharedProps : sharedProps,
       score: 0,
       stopwatchStart: false,
-      stopwatchReset: false
+      stopwatchReset: false,
+      mode:props.navigation.state.params.mode,
+      crypto:props.navigation.state.params.crypto,
+      hasEnded: false
     }
 
     this._msToTime = this._msToTime.bind(this);
@@ -36,20 +41,17 @@ export default class ParachuteGame extends Component {
     this._startStopwatch = this._startStopwatch.bind(this);
     this._stopStopwatch = this._stopStopwatch.bind(this);
     this._resetStopwatch = this._resetStopwatch.bind(this);
-   
-  }
-
-  componentDidMount() {
-    this._startStopwatch();
+    this._parachuteInfo = this._parachuteInfo.bind(this);
+    this._renderParachuteData = this._renderParachuteData.bind(this);
   }
 
   componentDidUpdate() {
-    let hasEnded = false
-    if(this.state.score == 9 && !hasEnded) {
-      hasEnded = true;
+    if(this.state.score >= 10 && !this.state.hasEnded) {
+      
       this._stopStopwatch();
-      setTimeout(() => this.props.navigation.navigate('Leaderboard'),
+      setTimeout(() => this.props.navigation.navigate('DemoLeaderboard'),
         2000);
+      this.setState({hasEnded:true});
     }
   }
   
@@ -82,40 +84,57 @@ export default class ParachuteGame extends Component {
     this.setState({stopwatchStart: false, stopwatchReset: true});
   }
 
+  _parachuteInfo(parachutes) {
+    this.setState({
+      parachuteData: parachutes
+    })
+  }
+
   render() {
 
-  return (
+    return (
       <View style={localStyles.viroContainer} transparent={true} >
-      <StatusBar hidden={true} />
+        <StatusBar hidden={true} />
 
         <ViroARSceneNavigator {...this.state.sharedProps}
         initialScene={{scene: ParachuteARScene}}
          style={localStyles.viroContainer} 
-         viroAppProps={{updateScore:this._updateScore}}/>
+         viroAppProps={{updateScore:this._updateScore,
+          stopwatchStart:this._startStopwatch,
+          crypto:this.state.crypto,
+          mode:this.state.mode
+          }}/>
 
-         {this._renderHUD()}
+          {this._renderHUD()}
       </View>
-    );
+      );
+  }
+  
+  _renderParachuteData() {
+    if(this.state.parachuteData) 
+      return(this.state.parachuteData[0]);
   }
 
   _renderHUD() {
     return(
       <View style={localStyles.bottomHud}>
-      <Stopwatch msecs start={this.state.stopwatchStart}
+      
+        <Stopwatch msecs start={this.state.stopwatchStart}
           reset={this.state.stopwatchReset}
           options={options}
           getTime={this._msToTime} />
-       <BezierCurve scrollAmount={new Animated.Value(0)} />
-        
-        <Image source={require('../../public/images/CryptoClash-App-Icon-Android.png')}
+        <BezierCurve scrollAmount={new Animated.Value(0)} />
+
+        <Image source={require('../../public/images/ETHLogo.png')}
         style={localStyles.cryptoLogo}/>
         <Text style={localStyles.score}> {this.state.score} </Text>
-        <TouchableHighlight style={{flex:1}}
+        
+        <TouchableOpacity style={{flex:1}}
             onPress={() => this.props.navigation.navigate('DemoMode')}
             >
-        <Image source={require('../../public/images/CryptoClash-Back-Arrow.png')}
-        style={localStyles.backButton}/>
-        </TouchableHighlight>
+          <Image source={require('../../public/images/CryptoClash-Back-Arrow.png')}
+          style={localStyles.backButton}/>
+        </TouchableOpacity>
       </View>)
   }
 
@@ -216,4 +235,23 @@ var localStyles = StyleSheet.create({
     textShadowOffset:{width: 2, height:2},
     textShadowRadius: 1
   },
+  debugText:{
+    position:'absolute',
+    top:-220,
+    color:'white'
+  },
+  loadingScreen: {
+    textAlign:'center',
+    backgroundColor:'#3b3b3b',
+    fontFamily:'Medel',
+    color:'#ffffff',
+    alignItems:'center',
+    paddingBottom:100,
+    height:1000
+  },
+  trackingText: {
+    fontSize:20,
+    color:'#f86e00',
+    marginTop:20
+  }
 });

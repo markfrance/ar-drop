@@ -19,6 +19,11 @@ export default class BombExplosion extends Component {
 
   	render() {
   		return(
+
+        <ViroNode position={[0,0,0]}>
+         <ViroSound paused={false} muted={false} loop={false}
+            source={require("../../../public/sounds/explosion.mp3")}
+            volume={1.0} />
             <ViroParticleEmitter
               position={[0, 4.5, 0]}
               duration={2000}
@@ -30,8 +35,8 @@ export default class BombExplosion extends Component {
 
               image={{
                 source:require("../../../public/images/particle_fire.png"),                 
-                height:0.1,
-                width:0.1,
+                height:0.5,
+                width:0.5,
                 bloomThreshold:1.0
               }}
 
@@ -39,30 +44,22 @@ export default class BombExplosion extends Component {
                 particleLifetime:[4000,4000],
                 emissionRatePerSecond:[150, 200], 
                 emissionBurst:[
-                {time:0, min:300, max:350, cycles:1}],
+                {time:1, min:100, max:350, cycles:1}],
                 spawnVolume:{
                   shape:"sphere", 
-                  params:[20, 1, 20], 
+                  params:[10, 10, 10], 
                   spawnOnSurface:false
                 },
-                maxParticles:700
+                maxParticles:100
               }}
 
               particleAppearance={{
                 opacity:{
                   initialRange:[0, 0],
-                  factor:"time",
+                  factor:"Time",
                   interpolation:[
-                    {endValue:0.5, interval:[0,500]},
+                    {endValue:0.0, interval:[0,500]},
                     {endValue:1.0, interval:[4000,5000]}
-                  ]
-                },
-
-                rotation:{
-                  initialRange:[0, 360],
-                  factor:"time",
-                  interpolation:[
-                    {endValue:1080, interval:[0,5000]},
                   ]
                 },
 
@@ -78,11 +75,13 @@ export default class BombExplosion extends Component {
               }}
               
               particlePhysics={{
-                explosiveImpulse:{impulse:0.12 * 8,
+                explosiveImpulse:{impulse:0.12 * 10,
                   position:[0,0,0],
                   decelerationPeriod:1.0}
               }}
             />
+
+        </ViroNode>
 
       		);
   	}

@@ -4,26 +4,13 @@ import FireworkEmitter from '../FireworkEmitter.js';
 
 import {
   ViroSceneNavigator,
-  ViroAnimatedImage,
-  ViroARPlaneSelector,
   ViroScene,
-  ViroARCamera,
   ViroCamera,
   ViroText,
   ViroARScene,
   ViroAmbientLight,
   ViroDirectionalLight,
-  Viro360Video,
-  Viro360Image,
-  ViroImage,
-  ViroUtils,
-  ViroPortal,
-  ViroPortalScene,
-  Viro3DObject,
-  ViroMaterials,
-  ViroPolygon,
-  ViroSpinner,
-  ViroNode
+  ViroConstants
 } from 'react-viro';
 
 import Parachute from '../pages/components/Parachute.js'
@@ -38,23 +25,33 @@ export default class ParachuteScene extends Component {
       yPos: 10,
       speed: 10,
       score: 0,
-      degrees: 360,
+      degrees: this.props.sceneNavigator.viroAppProps.mode,
+      crypto: this.props.sceneNavigator.viroAppProps.crypto,
       created: false,
-      parachutes:[]
+      parachutes:[],
+      totalValue: 100,
+      amount: 10,
+      hasStarted:false
     };
 
    this._updateScore = this._updateScore.bind(this);
    this._createAllParachutes = this._createAllParachutes.bind(this);
    this._createParachutes = this._createParachutes.bind(this);
+   this._getValues = this._getValues.bind(this);
+   this._onTrackingUpdated = this._onTrackingUpdated.bind(this);
   }
 
   componentDidMount() {
-    let parachuteItems = this._createParachutes(10, 10);
+    let parachuteItems = this._createAllParachutes(
+      this.state.amount, 
+      this.state.totalValue, 
+      10);
 
     this.setState({
       parachutes: parachuteItems
     });
-  }
+
+   }
 
   _updateScore(value) {
     this.props.sceneNavigator.viroAppProps.updateScore(value);
@@ -76,19 +73,41 @@ export default class ParachuteScene extends Component {
     let bombValue = Math.floor(totalValue / bombRatio);
     
     parachutes.push(
-      this._createParachutes(parachuteAmount, totalValue, false));
+      this._createParachutes(9, totalValue, false));
     parachutes.push(
-      this._createParachutes(bombAmount, bombValue, true));
+      this._createParachutes(1, bombValue, true));
       
     return parachutes;
+  }
+
+  _getValues(amount, totalValue) {
+
+    let values = [];
+    let currentSum = 0;
+    for(let i=0; i<amount; i++) {
+      values.push(Math.random());
+      currentSum += values[i];
+    }
+
+    for(let i=0; i<values.length; i++) {
+      values[i] = values[i] / currentSum * totalValue;
+    }
+
+    return values;
   }
 
   _createParachutes(amount, totalValue, isBomb) {
 
     const MIN_SPEED = 0.1;
+    const SPEED_RATIO = 5;
+    const PARACHUTES_ON_SCREEN = 10;
+
+    let lives = Math.floor(PARACHUTES_ON_SCREEN / amount);
 
     let parachuteValue = totalValue / amount;
     let items = [];
+    let parachuteData = [];
+    let values = this._getValues(amount, totalValue);
     for(let i=0; i<amount; i++) {
 
       let angle = Math.random()*Math.PI*2;
@@ -96,58 +115,57 @@ export default class ParachuteScene extends Component {
       //180 degree mode
       if(this.state.degrees === 180) {
         angle = Math.random()*Math.PI;
-       }
+      }
 
-      let speed = Math.random() + MIN_SPEED;
+      //let speed = (Math.random() + MIN_SPEED) / SPEED_RATIO;
+
+      let xPosition = Math.cos(angle)*8;
+      let zPosition = Math.sin(angle)*8;
+      let speed = 0.3;
 
       items.push(<Parachute
-        xPos={Math.cos(angle)*8}
-        zPos={Math.sin(angle)*8}
+        xPos={xPosition}
+        zPos={zPosition}
         initialSpeed={speed}
         isBomb={isBomb}
-        value={parachuteValue}
+        value={1}//values[i]
+        crypto={this.state.crypto}
+        lives={10}
+        updateScore={this.props.sceneNavigator.viroAppProps.updateScore}
       />);
 
-      return items;
+      //For debug mode
+      parachuteData.push("xPos:" + xPosition.toFixed(2) + 
+        " zPos:" + zPosition.toFixed(2) + "value:" + values[i]);
 
-      /*
-      {
-        xPos:Math.cos(angle)*8,
-        zPos:Math.sin(angle)*8,
-        initialSpeed:speed,
-        isBomb: isBomb,
-        value: parachuteValue
+    }
+
+     // this.props.sceneNavigator.viroAppProps.parachuteInfo(parachuteData);
+      return items;
+  }
+
+
+  _onTrackingUpdated(state, reason) {
+    if (state == ViroConstants.TRACKING_NORMAL){
+      if(!this.state.hasStarted) {
+        this.props.sceneNavigator.viroAppProps.stopwatchStart();
+        this.setState({hasStarted: true});
       }
-      */
+    } else {
+      // TODO: pause game? show reason
     }
   }
 
   render() {
     
     return (
-      <ViroARScene>
-        <ViroAmbientLight color="#ffffff" intensity={100}/>
-        <ViroDirectionalLight
-          color="#ffffff"
-          direction={[0, -1, 0]}
-        />
+      <ViroARScene onTrackingUpdated={this._onTrackingUpdated}>
+        <ViroAmbientLight color="#ffffff"/>
 
         {this.state.parachutes}
       </ViroARScene>
     );
   }
 }
-
-var localStyles = StyleSheet.create({
-  cryptoLogo: {
-    width:100,
-    height:100,
-    right:0,
-    bottom:0
-  },
-  score : {
-    fontSize: 20
-  }
-  });
 
 module.exports = ParachuteScene;
