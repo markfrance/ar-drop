@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
-import {View, 
+import {
+  View, 
   Image, 
   Text, 
   StyleSheet, 
   StatusBar, 
   TouchableHighlight,  
   TouchableOpacity,
+  Dimensions,
   Animated } from 'react-native';
+import moment from 'moment';
 
 import {
   ViroARSceneNavigator,
   ViroConstants} from 'react-viro';
-import {Timer, Stopwatch } from 'react-native-stopwatch-timer';
 
 import { BezierCurve } from './components/BezierCurve';
+
+import Svg, { Path } from 'react-native-svg';
 
 var ParachuteARScene = require('../arScenes/ParachuteScene.js');
 
@@ -29,37 +33,37 @@ export default class ParachuteGame extends Component {
     this.state = {
       sharedProps : sharedProps,
       score: 0,
-      stopwatchStart: false,
-      stopwatchReset: false,
+      start:0,
       mode:props.navigation.state.params.mode,
       crypto:props.navigation.state.params.crypto,
-      hasEnded: false
+      hasEnded: false,
+      hasStarted: false
     }
 
-    this._msToTime = this._msToTime.bind(this);
     this._updateScore = this._updateScore.bind(this);
     this._startStopwatch = this._startStopwatch.bind(this);
     this._stopStopwatch = this._stopStopwatch.bind(this);
-    this._resetStopwatch = this._resetStopwatch.bind(this);
     this._parachuteInfo = this._parachuteInfo.bind(this);
     this._renderParachuteData = this._renderParachuteData.bind(this);
+    this._renderTimer = this._renderTimer.bind(this);
   }
 
   componentDidUpdate() {
-    if(this.state.score >= 10 && !this.state.hasEnded) {
+    if(this.state.score >= 1 && !this.state.hasEnded) {
       
       this._stopStopwatch();
-      setTimeout(() => this.props.navigation.navigate('DemoLeaderboard'),
+
+      const endTime = this.state.now - this.state.start;
+      setTimeout(() => this.props.navigation.navigate('DemoLeaderboard',
+        {mode:this.state.mode, crypto:this.state.crypto,
+          time: endTime}),
         2000);
       this.setState({hasEnded:true});
     }
   }
-  
-  _msToTime(duration) {
-    var time = new Date(duration);
-    return time.getMinutes() + ':' +
-      time.getSeconds() + ':' +
-      time.getMilliseconds().toFixed(2);
+
+  componentWillUnmount() {
+    this._stopStopwatch();
   }
 
   _updateScore(value){
@@ -72,22 +76,60 @@ export default class ParachuteGame extends Component {
 
   }
 
+  _renderTimer() {
+
+    if(!this.state.hasStarted){
+      return null;
+    }
+
+    const time = this.state.now - this.state.start;
+    const pad = (n) => n >= 10 ? n : '0' + n;
+
+    const duration = moment.duration(time);
+    const centiseconds = Math.floor(duration.milliseconds() / 10);
+
+    return(
+      <Text style={localStyles.timerText}>
+      {pad(duration.minutes())}:{pad(duration.seconds())}:{pad(centiseconds)}
+      
+      </Text>
+      );
+  }
+
   _startStopwatch() {
-    this.setState({stopwatchStart: true, stopwatchReset: false});
+    const now = new Date().getTime();
+
+    this.setState({
+      start: now,
+      hasStarted: true
+    });
+
+    this.timer = setInterval(() => 
+      this.setState({
+        now: new Date().getTime()
+      }), 100);
   }
 
   _stopStopwatch() {
-    this.setState({stopwatchStart: false, stopwatchReset: false});
+    clearInterval(this.timer);
   }
-
-  _resetStopwatch() {
-    this.setState({stopwatchStart: false, stopwatchReset: true});
-  }
-
+ 
   _parachuteInfo(parachutes) {
     this.setState({
       parachuteData: parachutes
     })
+  }
+
+  _getCryptoLogo() {
+    if(this.state.crypto === "BTC"){
+      return require('../../public/images/BitcoinLogo.png')
+    }
+    if(this.state.crypto === "ETH") {
+      return require('../../public/images/ETHLogo.png')
+    }
+    else {
+      return require('../../public/images/Icons/android/Icon-96.png')
+    }
   }
 
   render() {
@@ -105,7 +147,9 @@ export default class ParachuteGame extends Component {
           mode:this.state.mode
           }}/>
 
-          {this._renderHUD()}
+          
+      {this._renderHUD()}
+
       </View>
       );
   }
@@ -119,13 +163,23 @@ export default class ParachuteGame extends Component {
     return(
       <View style={localStyles.bottomHud}>
       
-        <Stopwatch msecs start={this.state.stopwatchStart}
-          reset={this.state.stopwatchReset}
-          options={options}
-          getTime={this._msToTime} />
-        <BezierCurve scrollAmount={new Animated.Value(0)} />
+        {this._renderTimer()}
+        <View style={localStyles.wave}>
+        <Svg
+        width={Dimensions.get('window').width}
+        height={160}
 
-        <Image source={require('../../public/images/ETHLogo.png')}
+        viewBox="0 0 825 300"
+      >
+        <Path
+          d="M0 181.615c3.252.4 6.48.974 9.67 1.72 43.07 12.29 86 25.23 129.2 36.86 30.4 8.17 61.16 15.17 92 21.59 21.54 4.49 43.4 7.75 65.25 10.36a546.99 546.99 0 0 0 57 3.92c26.83.36 50.57-8 70.64-26.92 16.1-15.19 29.17-32.62 41.72-50.54 17.91-25.56 34.87-51.8 53.31-77 13.39-18.28 27-36.49 44.42-51.53 25.67-22.08 54.66-37.19 87.67-44.89a195.85 195.85 0 0 1 58.39-4.71c35 2.44 67.68 12.82 97 32.56 6.17 4.15 11.84 9 17.74 13.58v262H0v-127z"
+          fill="#ffa028"
+        />
+        <Path d="M0 308h824v1200H0V308z" fill="#ffa028" />
+      </Svg>
+      </View>
+
+        <Image source={this._getCryptoLogo()}
         style={localStyles.cryptoLogo}/>
         <Text style={localStyles.score}> {this.state.score} </Text>
         
@@ -194,14 +248,6 @@ var localStyles = StyleSheet.create({
     width:50, 
     height:50
   },
-  bottomText : {
-    fontSize:25, 
-    color:'#fff', 
-    textAlign:'center', 
-    marginTop:12, 
-    height:60, 
-    flex:1
-  },
   smallIcon : {
     width:50,
     height:50
@@ -211,11 +257,11 @@ var localStyles = StyleSheet.create({
     height:0,
     opacity:0.8
   },
-  wave : {
-   backgroundColor:'transparent',
-   flex:1,
-   width:'100%',
-   height:150
+  wave: {
+    backgroundColor:'transparent',
+    position:'absolute',
+    top:-160,
+    width:200
   },
   cryptoLogo : {
     position: 'absolute',
@@ -253,5 +299,21 @@ var localStyles = StyleSheet.create({
     fontSize:20,
     color:'#f86e00',
     marginTop:20
+  },
+  timerContainer:{
+    position: 'absolute',
+    top: -155,
+    padding: 5,
+    width: 240,
+  },
+   timerText: {
+    position: 'absolute',
+    top: -125,
+    marginLeft:30,
+    fontSize: 36,
+    color: '#ffa028',
+    textShadowColor: 'black',
+    textShadowOffset:{width: 2, height:2},
+    textShadowRadius: 1
   }
 });

@@ -8,6 +8,8 @@ import {
 	Modal
 } from 'react-native';
 
+import moment from 'moment';
+
 export default class DemoLeaderboardListItem extends Component {
 
 	constructor() {
@@ -17,44 +19,55 @@ export default class DemoLeaderboardListItem extends Component {
     }
   }
 
+  _toTime(milliseconds) {
+    const duration = moment.duration(milliseconds);
+
+    const pad = (n) => n >= 10 ? n : '0' + n;
+    
+    return pad(duration.minutes()) + ':' +
+    pad(duration.seconds()) + ':' +
+    pad(Math.floor(duration.milliseconds() / 10));
+  }
+
 	render() {
     
      return(
-			<TouchableHighlight
-            onPress={() => this.props.navigation.navigate('Airdrop')}
-             >
-      <View style={this.props.leaderboardItem.isHighlighted == true ? localStyles.highlightedRow : localStyles.row}>
 
-        <Text style={localStyles.rowText}>{this.props.leaderboardItem.place} </Text>
+      <View style={localStyles.row}>
+
+        <Text style={localStyles.rowText}>{this.props.position + 1} </Text>
 
         <Text style={localStyles.rowText}>{this.props.leaderboardItem.mode} </Text>
 
         <Text style={localStyles.rowText}>{this.props.leaderboardItem.crypto} </Text>
 
-        <Text style={localStyles.rowText}>{this.props.leaderboardItem.time} </Text>
+        <Text style={localStyles.rowText}>{this._toTime(this.props.leaderboardItem.time)} </Text>
         
       </View>
-           
-  </TouchableHighlight>);
+           );
 	}
 }
 
 var localStyles = StyleSheet.create({
   row: {
+
     flex: 1, 
     alignSelf: 'stretch', 
     flexDirection: 'row',
-    margin:5
+    margin:2,
+    padding:2
   },
   highlightedRow : {
     flex: 1, 
     alignSelf: 'stretch', 
     flexDirection: 'row',
-    margin:5,
+    margin:2,
+    padding:2,
     backgroundColor: '#ffa028'
   },
   rowText : {
-    height:25,
+    height:18,
+    fontSize:18,
     flex: 1, 
     alignSelf: 'stretch',
     textAlign: 'center',

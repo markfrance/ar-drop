@@ -16,6 +16,7 @@ import DemoModeSelectionScreen from './js/pages/DemoModeSelectionScreen.js';
 import DemoEndScreen from './js/pages/DemoEndScreen.js';
 import DemoHowToScreen from './js/pages/DemoHowToScreen.js';
 import DemoCryptoSelectionScreen from './js/pages/DemoCryptoSelectionScreen.js';
+import DemoLeaderboardScreen from './js/pages/DemoLeaderboardScreen.js';
 
 import { createStackNavigator, 
   createMaterialTopTabNavigator,
@@ -69,13 +70,15 @@ const RootStack = createSwitchNavigator(
     Parachute: ParachuteGame,
     Leaderboard: LeaderboardScreen,
     PreGame: PreGameScreen,
+
     DemoMode: DemoModeSelectionScreen,
     DemoEnd: DemoEndScreen,
     DemoHowTo: DemoHowToScreen,
-    DemoCrypto: DemoCryptoSelectionScreen
+    DemoCrypto: DemoCryptoSelectionScreen,
+    DemoLeaderboard: DemoLeaderboardScreen
   },
   {
-    initialRouteName: 'DemoHowTo'
+    initialRouteName: 'DemoMode'
   }
 );
 

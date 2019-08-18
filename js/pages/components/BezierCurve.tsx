@@ -13,7 +13,7 @@ export const BezierCurve = ({ scrollAmount }: Props) => {
         position: 'absolute',
         bottom: -790,
         left: 0,
-        opacity: 0.5,
+        opacity: 0.8,
         zIndex: -1,
         transform: [
           {

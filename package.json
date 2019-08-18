@@ -8,7 +8,9 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.6.1",
     "jslint": "^0.12.1",
+    "moment": "^2.24.0",
     "react": "16.8.3",
     "react-native": "^0.59.3",
     "react-native-elements": "^1.1.0",

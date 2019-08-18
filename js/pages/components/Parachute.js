@@ -47,22 +47,81 @@ export default class Parachute extends Component {
       this._coinHitsGround = this._coinHitsGround.bind(this);
       this._bombHitsGround = this._bombHitsGround.bind(this);
       this._restart = this._restart.bind(this);
-
-     // this._setParachuteModel = this._setParachuteModel.bind(this);
-     // this._setBombModel = this._setBombModel.bind(this);
+      this._loadParachuteModel = this._loadParachuteModel.bind(this);
+      this._loadBombModel = this._loadBombModel.bind(this);
+      this._loadResources = this._loadResources.bind(this);
   	}
 
+
+    componentWillMount() {
+      this._loadResources();
+
+      if(this.props.isBomb) {
+        this._loadBombModel()
+      } else {
+        this._loadParachuteModel();
+      }
+    }
+
   	componentDidMount() {
-     // this._setParachuteModel();
-      //this._setBombModel();
 
       //randomise short delay before falling
       let delay = Math.random() * 10000;
-      setTimeout(
+      this.timeout = setTimeout(
          () => this._startFalling(),
          delay);
+      
   	}
 
+    componentWillUnmount() {
+      clearInterval(this.interval);
+      clearTimeout(this.timeout);
+    }
+
+    _loadResources() {
+
+      this.setState({resources:[require('../../../public/models/b_difuse.png'),
+          require('../../../public/models/box_gradient_2.png'),
+          require('../../../public/models/boxgradient_1.png'),
+          require('../../../public/models/clash_opacity.png'),
+          require('../../../public/models/parachute_gradient_1.png'),
+          require('../../../public/models/string_gradient_1.png'),
+          require('../../../public/models/clash_difuse.jpg'),
+          require('../../../public/models/stripes_orange.jpg'),
+          require('../../../public/models/white.jpg')]
+        });
+    }
+
+    _loadParachuteModel() {
+
+      let parachute;
+      
+      if(this.state.crypto === "BTC")  {
+        parachute = require('../../../public/models/BTCParachuteLowPoly.vrx');
+      } else if (this.state.crypto === "ETH") {
+        parachute = require('../../../public/models/ETHParachuteLowPoly.vrx')
+      } else {
+        parachute = require('../../../public/models/CLASHParachuteLowPoly.vrx')
+      }
+      this.setState({
+        parachuteModel:parachute
+      });
+    }
+
+    _loadBombModel() {
+      let bomb;
+      
+      if(this.state.crypto === "BTC")  {
+        bomb = require('../../../public/models/BTCParachuteLowPoly.vrx');
+      } else if (this.state.crypto === "ETH") {
+        bomb = require('../../../public/models/ETHParachuteLowPoly.vrx')
+      } else {
+        bomb = require('../../../public/models/CLASHParachuteLowPoly.vrx')
+      }
+      this.setState({
+        bombModel:bomb
+      });
+    }
 
   	_startFalling() {
       this.setState({
@@ -74,23 +133,13 @@ export default class Parachute extends Component {
 
   		this.interval = setInterval(
 	    () => this.setState({ 
-        yPos: this.state.yPos-this.state.speed,
+        yPos: this.state.yPos-(this.state.speed / 10),
         yRotation: this.state.yRotation+0.5 }),
-	    100
+	    16
 	    );
   	}
 
   	componentDidUpdate() {
-  		
-  		//Open parachute
-  		/*if(this.state.yPos >= 10 && 
-      this.state.yPos <= 11 && 
-      this.state.parachuteOpened == false) {
-  		  this.setState({
-  		  	parachuteOpened: true, 
-          pauseParachuteSound: false
-  		  })
-  		}*/
   		
   		//Parachute hits ground
 	    if(this.state.yPos <= -8 && 
@@ -112,11 +161,11 @@ export default class Parachute extends Component {
         return;
 
       clearInterval(this.interval);
-        
-      setTimeout(() => this._startFalling(), 1000);
+      this.interval = setTimeout(() => 
+        this._startFalling(), 1000);
     }
 
-    _coinClick() {
+    _coinClick = () => {
       this.props.updateScore(this.props.value);
       this.setState( {
         lives: this.state.lives--,
@@ -125,7 +174,7 @@ export default class Parachute extends Component {
       this._restart();
     }
 
-    _bombClick() {
+    _bombClick = () => {
       this.setState( { 
         currentState: parachuteState.bombExplosion
       });
@@ -174,136 +223,29 @@ export default class Parachute extends Component {
     }
 
     _renderParachute() {
-      if(this.state.crypto === 'BTC') {
       return(
         <Viro3DObject
-          source={require('../../../public/models/BTCParachuteLowPoly.vrx')}
-          resources={[require('../../../public/models/b_difuse.png'),
-          require('../../../public/models/box_gradient_2.png'),
-          require('../../../public/models/boxgradient_1.png'),
-          require('../../../public/models/clash_opacity.png'),
-          require('../../../public/models/parachute_gradient_1.png'),
-          require('../../../public/models/string_gradient_1.png'),
-          require('../../../public/models/clash_difuse.jpg'),
-          require('../../../public/models/stripes_orange.jpg'),
-          require('../../../public/models/white.jpg')]}
-          highAccuracyEvents={true}
+          source={this.state.parachuteModel}
+          resources={this.state.resources}
           position={[0,0,0]}
-          scale={[4, 4, 4]}
+          scale={[3, 3, 3]}
           rotation={[0, 0, 0]}
           type="VRX"
-
-          onClick={() => this._coinClick()}
+          onClick={this._coinClick}
             />);
-        }
-      if(this.state.crypto === 'ETH') {
-      return(
-        <Viro3DObject
-          source={require('../../../public/models/ETHParachuteLowPoly.vrx')}
-          resources={[require('../../../public/models/b_difuse.png'),
-          require('../../../public/models/box_gradient_2.png'),
-          require('../../../public/models/boxgradient_1.png'),
-          require('../../../public/models/clash_opacity.png'),
-          require('../../../public/models/parachute_gradient_1.png'),
-          require('../../../public/models/string_gradient_1.png'),
-          require('../../../public/models/clash_difuse.jpg'),
-          require('../../../public/models/stripes_orange.jpg'),
-          require('../../../public/models/white.jpg')]}
-          highAccuracyEvents={true}
-          position={[0,0,0]}
-          scale={[4, 4, 4]}
-          rotation={[0, 0, 0]}
-          type="VRX"
-
-          onClick={() => this._coinClick()}
-            />);
-        }
-      else {
-      return(
-        <Viro3DObject
-          source={require('../../../public/models/CLASHParachuteLowPoly.vrx')}
-          resources={[require('../../../public/models/b_difuse.png'),
-          require('../../../public/models/box_gradient_2.png'),
-          require('../../../public/models/boxgradient_1.png'),
-          require('../../../public/models/clash_opacity.png'),
-          require('../../../public/models/parachute_gradient_1.png'),
-          require('../../../public/models/string_gradient_1.png'),
-          require('../../../public/models/clash_difuse.jpg'),
-          require('../../../public/models/stripes_orange.jpg'),
-          require('../../../public/models/white.jpg')]}
-          highAccuracyEvents={true}
-          position={[0,0,0]}
-          scale={[4, 4, 4]}
-          rotation={[0, 0, 0]}
-          type="VRX"
-          onClick={() => this._coinClick()}
-            />);
-        }
     }
 
     _renderParachuteBomb() {
-      if(this.state.crypto === 'BTC') {
       return(
          <Viro3DObject
-          source={require('../../../public/models/BTCParachuteBombLowPoly.vrx')}
-          resources={[require('../../../public/models/b_difuse.png'),
-          require('../../../public/models/box_gradient_2.png'),
-          require('../../../public/models/boxgradient_1.png'),
-          require('../../../public/models/clash_opacity.png'),
-          require('../../../public/models/parachute_gradient_1.png'),
-          require('../../../public/models/string_gradient_1.png'),
-          require('../../../public/models/clash_difuse.jpg'),
-          require('../../../public/models/white.jpg')]}
-          highAccuracyEvents={true}
+          source={this.state.bombModel}
+          resources={this.state.resources}
           position={[0,0,0]}
-          scale={[4, 4, 4]}
+          scale={[3, 3, 3]}
           rotation={[0, 0, 0]}
           type="VRX"
-
-          onClick={() => this._bombClick()}
+          onClick={this._bombClick}
             />);
-        }
-
-       if(this.state.crypto === 'ETH') {
-      return(
-         <Viro3DObject
-          source={require('../../../public/models/ETHParachuteBombLowPoly.vrx')}
-          resources={[require('../../../public/models/b_difuse.png'),
-          require('../../../public/models/box_gradient_2.png'),
-          require('../../../public/models/boxgradient_1.png'),
-          require('../../../public/models/clash_opacity.png'),
-          require('../../../public/models/parachute_gradient_1.png'),
-          require('../../../public/models/string_gradient_1.png'),
-          require('../../../public/models/clash_difuse.jpg'),
-          require('../../../public/models/white.jpg')]}
-          highAccuracyEvents={true}
-          position={[0,0,0]}
-          scale={[4, 4, 4]}
-          rotation={[0, 0, 0]}
-          type="VRX"
-          onClick={() => this._bombClick()}
-            />);
-        }
-      else {
-      return(
-         <Viro3DObject
-          source={require('../../../public/models/CLASHParachuteBombLowPoly.vrx')}
-          resources={[require('../../../public/models/b_difuse.png'),
-          require('../../../public/models/box_gradient_2.png'),
-          require('../../../public/models/boxgradient_1.png'),
-          require('../../../public/models/clash_opacity.png'),
-          require('../../../public/models/parachute_gradient_1.png'),
-          require('../../../public/models/string_gradient_1.png'),
-          require('../../../public/models/clash_difuse.jpg'),
-          require('../../../public/models/white.jpg')]}
-          highAccuracyEvents={true}
-          position={[0,0,0]}
-          scale={[4, 4, 4]}
-          rotation={[0, 0, 0]}
-          type="VRX"
-          onClick={() => this._bombClick()}
-            />);
-        }
     }
 
     _onFinishSound() {
@@ -320,7 +262,7 @@ export default class Parachute extends Component {
   		return(
         <ViroNode
         position={[this.props.xPos, this.state.yPos, this.props.zPos]}
-        scale={[1,1,1]} 
+        
           >
          <ViroAmbientLight color="#ffffff"/>
 

@@ -44,13 +44,15 @@ var localStyles = StyleSheet.create({
     flex: 1, 
     alignSelf: 'stretch', 
     flexDirection: 'row',
-    margin:5
+    margin:2,
+    padding:2
   },
   highlightedRow : {
     flex: 1, 
     alignSelf: 'stretch', 
     flexDirection: 'row',
-    margin:5,
+    margin:2,
+    padding:2,
     backgroundColor: '#ffa028'
   },
   rowText : {

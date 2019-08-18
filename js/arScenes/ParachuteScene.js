@@ -101,6 +101,7 @@ export default class ParachuteScene extends Component {
     const MIN_SPEED = 0.1;
     const SPEED_RATIO = 5;
     const PARACHUTES_ON_SCREEN = 10;
+    const DISTANCE = 6;
 
     let lives = Math.floor(PARACHUTES_ON_SCREEN / amount);
 
@@ -119,9 +120,9 @@ export default class ParachuteScene extends Component {
 
       //let speed = (Math.random() + MIN_SPEED) / SPEED_RATIO;
 
-      let xPosition = Math.cos(angle)*8;
-      let zPosition = Math.sin(angle)*8;
-      let speed = 0.3;
+      let xPosition = Math.cos(angle)*DISTANCE;
+      let zPosition = Math.sin(angle)*DISTANCE;
+      let speed = 1.5;
 
       items.push(<Parachute
         xPos={xPosition}
@@ -159,7 +160,11 @@ export default class ParachuteScene extends Component {
   render() {
     
     return (
-      <ViroARScene onTrackingUpdated={this._onTrackingUpdated}>
+      <ViroARScene onTrackingUpdated={this._onTrackingUpdated}
+      physicsWorld={{
+        gravity:[0,5,0],
+        drawBounds:true
+      }}>
         <ViroAmbientLight color="#ffffff"/>
 
         {this.state.parachutes}

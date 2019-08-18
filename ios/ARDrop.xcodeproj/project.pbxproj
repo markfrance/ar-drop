@@ -101,6 +101,7 @@
 		BD07C9CA86C14857B3BE81F5 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B1CFB6990E5457FADC6BE63 /* Ionicons.ttf */; };
 		C0C580DACCF44CBFAEEB47E1 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AC9C282EAE13425991EE2C63 /* EvilIcons.ttf */; };
 		D514563F228D2BC000EA1855 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D514560B228D2BBF00EA1855 /* JavaScriptCore.framework */; };
+		D552A3092301959100BF379C /* libRNCAsyncStorage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D552A303230194CE00BF379C /* libRNCAsyncStorage.a */; };
 		D55CB44422D5588E000B7FBD /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D55CB42522D5586E000B7FBD /* libRCTPushNotification.a */; };
 		D57AD22522661CA0004015E2 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D57AD22422661C98004015E2 /* libBVLinearGradient.a */; };
 		D5B2A51E22F35589008BEB5E /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B2A51B22F35526008BEB5E /* libRNSVG.a */; };
@@ -411,6 +412,13 @@
 			remoteGlobalIDString = ED296FEE214C9CF800B7C4FE;
 			remoteInfo = "jsiexecutor-tvOS";
 		};
+		D552A302230194CE00BF379C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D552A2D4230194CE00BF379C /* RNCAsyncStorage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNCAsyncStorage;
+		};
 		D55CB42422D5586E000B7FBD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D55CB41022D5586E000B7FBD /* RCTPushNotification.xcodeproj */;
@@ -594,6 +602,7 @@
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		CA3796892D80A273E9F9AE37 /* Pods-arDrop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-arDrop.debug.xcconfig"; path = "Pods/Target Support Files/Pods-arDrop/Pods-arDrop.debug.xcconfig"; sourceTree = "<group>"; };
 		D514560B228D2BBF00EA1855 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		D552A2D4230194CE00BF379C /* RNCAsyncStorage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCAsyncStorage.xcodeproj; path = "../node_modules/@react-native-community/async-storage/ios/RNCAsyncStorage.xcodeproj"; sourceTree = "<group>"; };
 		D55CB41022D5586E000B7FBD /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		D57AD21C22661C8E004015E2 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		D5B2A4E822F35517008BEB5E /* RNSVG.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSVG.xcodeproj; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; };
@@ -616,6 +625,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D552A3092301959100BF379C /* libRNCAsyncStorage.a in Frameworks */,
 				D5B2A51E22F35589008BEB5E /* libRNSVG.a in Frameworks */,
 				D514563F228D2BC000EA1855 /* JavaScriptCore.framework in Frameworks */,
 				0115DD05222E638A00106411 /* libRNGestureHandler.a in Frameworks */,
@@ -976,6 +986,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				D552A2D4230194CE00BF379C /* RNCAsyncStorage.xcodeproj */,
 				D5B2A4E822F35517008BEB5E /* RNSVG.xcodeproj */,
 				D55CB41022D5586E000B7FBD /* RCTPushNotification.xcodeproj */,
 				D57AD21C22661C8E004015E2 /* BVLinearGradient.xcodeproj */,
@@ -1041,6 +1052,14 @@
 			children = (
 				ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */,
 				2D16E6721FA4F8DC00B85C8A /* libRCTBlob-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D552A2D5230194CE00BF379C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D552A303230194CE00BF379C /* libRNCAsyncStorage.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1262,6 +1281,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = D552A2D5230194CE00BF379C /* Products */;
+					ProjectRef = D552A2D4230194CE00BF379C /* RNCAsyncStorage.xcodeproj */;
 				},
 				{
 					ProductGroup = 0115DCD6222E637A00106411 /* Products */;
@@ -1572,6 +1595,13 @@
 			fileType = archive.ar;
 			path = "libjsiexecutor-tvOS.a";
 			remoteRef = D514563A228D2BC000EA1855 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D552A303230194CE00BF379C /* libRNCAsyncStorage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNCAsyncStorage.a;
+			remoteRef = D552A302230194CE00BF379C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D55CB42522D5586E000B7FBD /* libRCTPushNotification.a */ = {

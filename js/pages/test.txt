@@ -1,0 +1,91 @@
+ <Image 
+            source={require("../../public/images/CryptoClash-Leaderboard-Wave.png")}
+            style={localStyles.waveImage} />
+          <Text style={localStyles.yourPosition}> Your Position </Text>
+          <Text style={localStyles.positionText}> 3rd </Text>
+
+          <TouchableHighlight style={localStyles.playAgain}
+            onPress={() => this.props.navigation.navigate('Airdrop')}
+             >
+             <Image source={require("../../public/images/CryptoClash-Leaderboard-Play-Again-Button.png")}
+              style={localStyles.playAgainButton}
+               />
+              
+          
+          </TouchableHighlight>
+           <TouchableHighlight
+           style={localStyles.backArrow} 
+            onPress={() => this.props.navigation.navigate('Airdrop')}
+             >
+             <Image source={require("../../public/images/CryptoClash-Back-Arrow.png")}
+              style={localStyles.backArrowButton} />
+          
+          </TouchableHighlight>
+
+
+
+ <Image source={require('../../public/images/CryptoClash-Wave.png')}
+        style={localStyles.wave}/>
+
+
+        /*
+        render parachute data
+        Play sound when created
+        parachutes delay before generated
+        add lives to each parachute
+        bomb minus score and explodes when clicked (no life lost)
+        bomb explodes and regenerates when hits floor (-1 life)
+        coin plus score and explode when clicked (-1 life)
+        coin explodes and regenerates when hits floor
+        change score decimals based on total value
+
+
+        fix clash parachute models
+        create bitcoin parachute models
+        create eth parachute models
+
+
+        Leaderboard
+
+        add tracking UI, pause game when lose tracking
+
+        */
+
+        <Text style={localStyles.debugText}>
+      Mode: {this.state.mode} - Crypto: {this.state.crypto} --
+
+      {this._renderParachuteData()}
+      </Text>
+
+
+      if(this.state.trackingState === ViroConstants.TRACKING_UNAVAILABLE) {
+      return(
+        <View style={localStyles.loadingScreen}>
+          <Text style={localStyles.trackingText}> Loading </Text>
+          <Text style={localStyles.trackingText}> Calibrating AR tracking: this could be because 
+          the camera does not contain enough distinguishable features or the device is moving too fast.</Text>
+          <Text style={localStyles.trackingText}> Timer will not restart until tracking is normal </Text>
+        </View>
+        );
+    } else {
+
+
+
+    password: XLPSNc[Vhk-K
+
+Email set up
+
+Username: mark@clash.company
+Password: Use the email account’s password.
+Incoming Server: n3plcpnl0150.prod.ams3.secureserver.net
+IMAP Port: 993 POP3 Port: 995
+Outgoing Server: n3plcpnl0150.prod.ams3.secureserver.net
+SMTP Port: 465
+IMAP, POP3, and SMTP require authentication.
+
+
+ <Stopwatch msecs start={this.state.stopwatchStart}
+          reset={this.state.stopwatchReset}
+          options={options}
+          getTime={this._msToTime} />
+       

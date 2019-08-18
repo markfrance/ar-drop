@@ -40,7 +40,6 @@ export default class Leaderboard extends Component {
         />
         <View style={localStyles.waveFooter}>
           <BezierCurve scrollAmount={new Animated.Value(0)} />
-        
         </View>
       
       </View>
