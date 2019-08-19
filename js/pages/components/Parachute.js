@@ -212,7 +212,7 @@ export default class Parachute extends Component {
 
   	_renderCoinExplosion() {
   		return(
-        <CoinExplosion />
+        <CoinExplosion crypto={this.state.crypto}/>
       );
   	}
 

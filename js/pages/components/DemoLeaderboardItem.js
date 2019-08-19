@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 
 import moment from 'moment';
+import {getLatestScore} from '../../LocalLeaderboardStorage.js';
+
 
 export default class DemoLeaderboardListItem extends Component {
 
@@ -16,6 +18,18 @@ export default class DemoLeaderboardListItem extends Component {
     	super();
 
     this.state = {
+      isHighlighted: false
+    }
+  }
+
+  componentWillMount() {
+    let recentItem = getLatestScore();
+    if(this.props.leaderboardItem.time == recentItem.time
+      && this.props.leaderboardItem.mode == recentItem.mode
+      && this.props.crypto == recentItem.crypto){
+      this.setState({
+        isHighlighted: true
+      });
     }
   }
 
@@ -33,7 +47,7 @@ export default class DemoLeaderboardListItem extends Component {
     
      return(
 
-      <View style={localStyles.row}>
+      <View style={this.state.isHighlighted ? localStyles.highlightedRow : localStyles.row}>
 
         <Text style={localStyles.rowText}>{this.props.position + 1} </Text>
 
@@ -50,7 +64,6 @@ export default class DemoLeaderboardListItem extends Component {
 
 var localStyles = StyleSheet.create({
   row: {
-
     flex: 1, 
     alignSelf: 'stretch', 
     flexDirection: 'row',

@@ -30,8 +30,21 @@ export const getAllLeaderboardData = async () => {
 
   let values = records.map(function(x) {return x[1];});
 
-  //Alert.alert(values);
-  return values;
+  values.sort((a, b) => (a.time < b.time) ? 1 : -1);
+
+  return values.join(", ");
+}
+
+export const getLatestScore = async () => {
+
+  let keys;
+  key = await AsyncStorage.getAllKeys();
+
+  keys.sort((a,b) => a > b ? 1 : -1);
+
+  item = await AsyncStorage.getItem(keys[0]);
+
+  return item;
 }
 
 
@@ -44,21 +57,3 @@ export const clearLeaderboard = async () => {
 
   Alert.alert('Cleared Leaderboard.')
 }
-
-
-function compare( a, b ) {
-  if ( a.time < b.time ){
-    return -1;
-  }
-  if ( a.time > b.time ){
-    return 1;
-  }
-  return 0;
-}
-
-function sortByTime(items) {
-	items.sort( compare );
-}
-
-
-

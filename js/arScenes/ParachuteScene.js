@@ -73,7 +73,7 @@ export default class ParachuteScene extends Component {
     let bombValue = Math.floor(totalValue / bombRatio);
     
     parachutes.push(
-      this._createParachutes(9, totalValue, false));
+      this._createParachutes(10, totalValue, false));
     parachutes.push(
       this._createParachutes(1, bombValue, true));
       
@@ -122,7 +122,7 @@ export default class ParachuteScene extends Component {
 
       let xPosition = Math.cos(angle)*DISTANCE;
       let zPosition = Math.sin(angle)*DISTANCE;
-      let speed = 1.5;
+      let speed = 2.5;
 
       items.push(<Parachute
         xPos={xPosition}

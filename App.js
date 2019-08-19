@@ -78,7 +78,7 @@ const RootStack = createSwitchNavigator(
     DemoLeaderboard: DemoLeaderboardScreen
   },
   {
-    initialRouteName: 'DemoMode'
+    initialRouteName: 'DemoHowTo'
   }
 );
 

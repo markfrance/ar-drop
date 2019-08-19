@@ -16,7 +16,12 @@ export default class CoinExplosion extends Component {
 	     crypto: props.crypto
       };
 
+      this._loadParticleImage = this._loadParticleImage.bind(this);
 	}
+
+  componentWillMount() {
+    this._loadParticleImage();
+  }
 
   _loadParticleImage() {
      let image;
@@ -31,7 +36,7 @@ export default class CoinExplosion extends Component {
       this.setState({
         particleImage:image
       });
-    }
+  }
 
   	render() {
       let particle = this.state.particleImage;
@@ -41,7 +46,7 @@ export default class CoinExplosion extends Component {
             source={require("../../../public/sounds/coins.mp3")} />
           <ViroParticleEmitter
             position={[0, 0, 0]}
-            duration={3000}
+            duration={4000}
             visible={true}
             delay={0}
             run={true}
@@ -49,17 +54,17 @@ export default class CoinExplosion extends Component {
             fixedToEmitter={true}
 
             image={{
-              source:{particle},                 
+              source:particle,                 
               height:0.05,
               width:0.05,
-              bloomThreshold:0.2
+              bloomThreshold:0
             }}
 
             spawnBehavior={{
-              particleLifetime:[1000,1000],
+              particleLifetime:[1000,3000],
               emissionRatePerSecond:[150, 200], 
               emissionBurst:[
-                {time:1, min:300, max:550, cycles:1}],
+                {time:0, min:300, max:550, cycles:1}],
               spawnVolume:{
                 shape:"sphere", 
                 params:[3, 1, 3], 

@@ -1197,7 +1197,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = VJ7Z98W2BC;
+						DevelopmentTeam = X6VVD44A8B;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -2021,7 +2021,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = VJ7Z98W2BC;
+				DEVELOPMENT_TEAM = X6VVD44A8B;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -2045,13 +2045,14 @@
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/AirMaps",
 				);
 				INFOPLIST_FILE = arDrop/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = io.cryptoclash.cryptoclash;
 				PRODUCT_NAME = arDrop;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -2065,7 +2066,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = VJ7Z98W2BC;
+				DEVELOPMENT_TEAM = X6VVD44A8B;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -2089,6 +2090,7 @@
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/AirMaps",
 				);
 				INFOPLIST_FILE = arDrop/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
@@ -2096,7 +2098,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = io.cryptoclash.cryptoclash;
 				PRODUCT_NAME = arDrop;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

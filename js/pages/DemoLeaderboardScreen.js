@@ -35,17 +35,18 @@ export default class DemoLeaderboardScreen extends Component {
 
   componentDidMount() {
 
-     addNewTime([{
+     addNewTime({
       "mode": this.state.mode,
         "crypto": this.state.crypto,
         "time":this.state.time
-    }]);
+    });
 
 
     getAllLeaderboardData().then((data) => {
       
     this.setState({
-      leaderboardData: JSON.parse(data)
+      leaderboardData: JSON.parse("["+data+"]"),
+      test: data
       //leaderboardData: LeaderboardData
     })});
     
@@ -54,7 +55,6 @@ export default class DemoLeaderboardScreen extends Component {
 	render() {
     return (
       <View style={localStyles.leaderboard}>
-      
         <Text style={localStyles.headerText}> YOUR FASTEST TIMES</Text>
         <View style={localStyles.row}>
           <Text style={localStyles.rowText}> PLACE </Text>

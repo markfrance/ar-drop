@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import {
   View, 
   Image, 
@@ -9,6 +10,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Animated } from 'react-native';
+
 import moment from 'moment';
 
 import {
@@ -49,8 +51,8 @@ export default class ParachuteGame extends Component {
   }
 
   componentDidUpdate() {
-    if(this.state.score >= 1 && !this.state.hasEnded) {
-      
+    if(this.state.score >= 100 && !this.state.hasEnded) {
+
       this._stopStopwatch();
 
       const endTime = this.state.now - this.state.start;
@@ -149,6 +151,7 @@ export default class ParachuteGame extends Component {
 
           
       {this._renderHUD()}
+      
 
       </View>
       );
