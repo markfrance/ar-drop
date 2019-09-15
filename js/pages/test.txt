@@ -88,4 +88,14 @@ IMAP, POP3, and SMTP require authentication.
           reset={this.state.stopwatchReset}
           options={options}
           getTime={this._msToTime} />
+
+
+
+
+          ref={this._setParachuteRef}
+                   animation={{name:'fall', 
+                   run:false, 
+                   loop:true,
+                   interruptible: true,
+                   onFinish:this._hitGround}} 
        

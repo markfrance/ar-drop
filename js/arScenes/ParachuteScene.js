@@ -96,12 +96,19 @@ export default class ParachuteScene extends Component {
     return values;
   }
 
+  /*
+  Generates random distance between near and far distances
+  */
+  _getDistance(near, far) {
+    return Math.random() * (far - near) + near;
+  }
+
   _createParachutes(amount, totalValue, isBomb) {
 
     const MIN_SPEED = 0.1;
     const SPEED_RATIO = 5;
     const PARACHUTES_ON_SCREEN = 10;
-    const DISTANCE = 6;
+    let DISTANCE = this._getDistance(6, 15);
 
     let lives = Math.floor(PARACHUTES_ON_SCREEN / amount);
 
@@ -109,20 +116,21 @@ export default class ParachuteScene extends Component {
     let items = [];
     let parachuteData = [];
     let values = this._getValues(amount, totalValue);
+
     for(let i=0; i<amount; i++) {
 
       let angle = Math.random()*Math.PI*2;
 
       //180 degree mode
       if(this.state.degrees === 180) {
-        angle = Math.random()*Math.PI;
+        angle = Math.random()*(Math.PI / 1.4);
       }
 
       //let speed = (Math.random() + MIN_SPEED) / SPEED_RATIO;
 
       let xPosition = Math.cos(angle)*DISTANCE;
       let zPosition = Math.sin(angle)*DISTANCE;
-      let speed = 2.5;
+      let speed = 3.5;
 
       items.push(<Parachute
         xPos={xPosition}
@@ -134,10 +142,6 @@ export default class ParachuteScene extends Component {
         lives={10}
         updateScore={this.props.sceneNavigator.viroAppProps.updateScore}
       />);
-
-      //For debug mode
-      parachuteData.push("xPos:" + xPosition.toFixed(2) + 
-        " zPos:" + zPosition.toFixed(2) + "value:" + values[i]);
 
     }
 
@@ -162,10 +166,9 @@ export default class ParachuteScene extends Component {
     return (
       <ViroARScene onTrackingUpdated={this._onTrackingUpdated}
       physicsWorld={{
-        gravity:[0,5,0],
-        drawBounds:true
+        gravity:[0,5,0]
       }}>
-        <ViroAmbientLight color="#ffffff"/>
+        <ViroAmbientLight color="#ffffff" intensity={500}/>
 
         {this.state.parachutes}
       </ViroARScene>

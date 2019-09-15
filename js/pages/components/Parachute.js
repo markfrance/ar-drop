@@ -7,7 +7,8 @@ import {
   Viro3DObject,
   ViroMaterials,
   ViroNode,
-  ViroSound
+  ViroSound,
+  ViroAnimations
 } from 'react-viro';
 
 import renderIf from '../../renderif';
@@ -21,20 +22,26 @@ const parachuteState = {
 		collected: 4
 	};
 
+const START_Y_POSITION = 22;
+const PARACHUTE_OPEN_Y = 15;
+const FLOOR = -10;
+
 export default class Parachute extends Component {
 
 	constructor(props) {
       super(props);
 
 	    this.state = {
-	      yPos: 20,
+	      yPos: START_Y_POSITION,
         yRotation:0,
 	      parachuteOpened: false,
 	      speed: props.initialSpeed,
 	      currentState: parachuteState.parachute,
         pauseParachuteSound: true,
         crypto: props.crypto,
-        lives: props.lives
+        lives: props.lives,
+        falling: false,
+        currentAnimation:'fall'
 	    };
 
 	    this._startFalling = this._startFalling.bind(this);
@@ -50,6 +57,9 @@ export default class Parachute extends Component {
       this._loadParachuteModel = this._loadParachuteModel.bind(this);
       this._loadBombModel = this._loadBombModel.bind(this);
       this._loadResources = this._loadResources.bind(this);
+      this._setParachuteRef = this._setParachuteRef.bind(this);
+      this._hitGround = this._hitGround.bind(this);
+      this._fallAnimation = this._fallAnimation.bind(this);
   	}
 
 
@@ -71,11 +81,19 @@ export default class Parachute extends Component {
          () => this._startFalling(),
          delay);
       
+     /* this.interval = setInterval(() =>
+        this.state.parachuteRef.getTransformAsync()
+        .then((transform) =>
+          this.setState({yPos:transform.position[1]})
+        ), 
+        500);
+        */
   	}
 
     componentWillUnmount() {
-      clearInterval(this.interval);
+    //  clearInterval(this.interval);
       clearTimeout(this.timeout);
+      cancelAnimationFrame(this.animation);
     }
 
     _loadResources() {
@@ -97,7 +115,7 @@ export default class Parachute extends Component {
       let parachute;
       
       if(this.state.crypto === "BTC")  {
-        parachute = require('../../../public/models/BTCParachuteLowPoly.vrx');
+        parachute = require('../../../public/models/BTCParachuteLowPoly.vrx')
       } else if (this.state.crypto === "ETH") {
         parachute = require('../../../public/models/ETHParachuteLowPoly.vrx')
       } else {
@@ -112,39 +130,115 @@ export default class Parachute extends Component {
       let bomb;
       
       if(this.state.crypto === "BTC")  {
-        bomb = require('../../../public/models/BTCParachuteLowPoly.vrx');
+        bomb = require('../../../public/models/BTCParachuteBombLowPoly.vrx')
       } else if (this.state.crypto === "ETH") {
-        bomb = require('../../../public/models/ETHParachuteLowPoly.vrx')
+        bomb = require('../../../public/models/ETHParachuteBombLowPoly.vrx')
       } else {
-        bomb = require('../../../public/models/CLASHParachuteLowPoly.vrx')
+        bomb = require('../../../public/models/CLASHParachuteBombLowPoly.vrx')
       }
       this.setState({
         bombModel:bomb
       });
     }
 
+    componentDidUpdate() {
+      if(this.state.yPos <= FLOOR && 
+        this.state.currentState === parachuteState.parachute) {
+          this._hitGround();
+      }
+    }
+
   	_startFalling() {
       this.setState({
         currentState: parachuteState.parachute,
-        pauseParachuteSound:false,
+        pauseParachuteSound: false,
+        parachuteOpened: false,
         speed: this.props.initialSpeed,
-        yPos: 20
+        yPos: START_Y_POSITION,
+        falling: false,
+        currentAnimation:'fall'
       });
 
-  		this.interval = setInterval(
-	    () => this.setState({ 
-        yPos: this.state.yPos-(this.state.speed / 10),
-        yRotation: this.state.yRotation+0.5 }),
-	    16
-	    );
+      this.animation = requestAnimationFrame(this._fallAnimation);
   	}
 
-  	componentDidUpdate() {
-  		
-  		//Parachute hits ground
-	    if(this.state.yPos <= -8 && 
-        this.state.currentState === parachuteState.parachute) {
-	   
+    _fallAnimation() {
+      this.setState({
+          yPos: this.state.yPos - 0.05
+        });
+      requestAnimationFrame(this._fallAnimation);
+    }
+
+    _restart() {
+     /* if(this.state.lives === 0)
+        return;
+*/
+      this.state.parachuteRef.setNativeProps({
+        position : [this.props.xPos, 
+        START_Y_POSITION, 
+        this.props.zPos]
+      });
+      
+     // clearInterval(this.interval);
+     cancelAnimationFrame(this.animation);
+      this.timeout = setTimeout(() => 
+        this._startFalling(), 1000);
+    }
+
+    _coinClick = () => {
+
+      if(this.state.yPos <= PARACHUTE_OPEN_Y) {
+
+     cancelAnimationFrame(this.animation);
+        this.props.updateScore(this.props.value);
+        this.setState( {
+          falling: false,
+          lives: this.state.lives--,
+          currentState: parachuteState.coinExplosion
+        });
+        this._restart();
+      }
+    }
+
+    _bombClick = () => {
+
+      if(this.state.yPos <= PARACHUTE_OPEN_Y) {
+
+     cancelAnimationFrame(this.animation);
+        this.setState( { 
+          falling: false,
+          currentState: parachuteState.bombExplosion
+        });
+        this.props.updateScore(-this.props.value);
+        this._restart();
+      }
+    }
+
+    _bombHitsGround() {
+
+      this.setState( {
+        falling: false,
+        lives: this.state.lives--,
+        currentState: parachuteState.bombExplosion
+      });
+      this._restart();
+    }
+
+    _coinHitsGround() {
+
+      this.setState( { 
+        falling: false,
+        currentState: parachuteState.bombExplosion
+      });
+      this.props.updateScore(-this.props.value);
+      this._restart();
+    }
+
+    _hitGround() {
+      if(this.state.currentState === parachuteState.parachute) {
+     
+
+     cancelAnimationFrame(this.animation);
         if(this.props.isBomb) {
           this._bombHitsGround();
         }
@@ -153,49 +247,8 @@ export default class Parachute extends Component {
         }
         
         this._restart();
-	    }
-  	}
+      }
 
-    _restart() {
-      if(this.state.lives === 0)
-        return;
-
-      clearInterval(this.interval);
-      this.interval = setTimeout(() => 
-        this._startFalling(), 1000);
-    }
-
-    _coinClick = () => {
-      this.props.updateScore(this.props.value);
-      this.setState( {
-        lives: this.state.lives--,
-        currentState: parachuteState.coinExplosion
-      });
-      this._restart();
-    }
-
-    _bombClick = () => {
-      this.setState( { 
-        currentState: parachuteState.bombExplosion
-      });
-      this.props.updateScore(-this.props.value);
-      this._restart();
-    }
-
-    _bombHitsGround() {
-      this.setState( {
-        lives: this.state.lives--,
-        currentState: parachuteState.bombExplosion
-      });
-      this._restart();
-    }
-
-    _coinHitsGround() {
-      this.setState( { 
-        currentState: parachuteState.bombExplosion
-      });
-      this.props.updateScore(-this.props.value);
-      this._restart();
     }
 
   	_renderValueText(value) {
@@ -254,17 +307,23 @@ export default class Parachute extends Component {
       });
     }
 
+    _setParachuteRef(component) {
+      this.setState({
+        parachuteRef: component
+      })
+    }
+
   	render() {
-      if(this.props.lives === 0) {
-        return (null);
-      }
+  
+      let isFalling = this.state.falling;
+      let current = this.state.currentAnimation;
 
   		return(
         <ViroNode
         position={[this.props.xPos, this.state.yPos, this.props.zPos]}
-        
+       
           >
-         <ViroAmbientLight color="#ffffff"/>
+         <ViroAmbientLight color="#ffffff" intensity={300}/>
 
          <ViroSound paused={this.state.pauseParachuteSound}
            muted={this.state.pauseParachuteSound}
@@ -298,5 +357,12 @@ export default class Parachute extends Component {
       );
   	}
 }
+
+ ViroAnimations.registerAnimations({
+    fall:{properties:{positionY:-10.0},
+                  easing:"Linear", 
+                  duration: 8000}
+});
+
 
 module.exports = Parachute;
