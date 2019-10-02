@@ -1,7 +1,4 @@
 PODS:
-  - AWSCore (2.6.7)
-  - AWSDynamoDB (2.6.7):
-    - AWSCore (= 2.6.7)
   - GoogleMaps (2.7.0):
     - GoogleMaps/Maps (= 2.7.0)
   - GoogleMaps/Base (2.7.0)
@@ -9,55 +6,32 @@ PODS:
     - GoogleMaps/Base
   - GooglePlaces (2.7.0):
     - GoogleMaps/Base (= 2.7.0)
-  - GoogleToolboxForMac/Defines (2.1.0)
-  - GoogleToolboxForMac/Logger (2.1.0):
-    - GoogleToolboxForMac/Defines (= 2.1.0)
-  - GTMSessionFetcher/Core (1.1.6)
-  - GVRAudioSDK (1.120.0)
-  - GVRSDK (1.120.0):
-    - GoogleToolboxForMac/Logger (= 2.1.0)
-    - GTMSessionFetcher/Core (= 1.1.6)
-  - ViroKit (1.0):
-    - AWSDynamoDB (= 2.6.7)
-    - GVRAudioSDK (= 1.120.0)
-    - GVRSDK (= 1.120.0)
+  - ViroKit_static_lib (1.0)
   - ViroReact (1.0)
 
 DEPENDENCIES:
   - GoogleMaps
   - GooglePlaces
-  - ViroKit (from `../node_modules/react-viro/ios/dist/ViroRenderer/`)
+  - ViroKit_static_lib (from `../node_modules/react-viro/ios/dist/ViroRenderer/static_lib`)
   - ViroReact (from `../node_modules/react-viro/ios/`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - AWSCore
-    - AWSDynamoDB
     - GoogleMaps
     - GooglePlaces
-    - GoogleToolboxForMac
-    - GTMSessionFetcher
-    - GVRAudioSDK
-    - GVRSDK
 
 EXTERNAL SOURCES:
-  ViroKit:
-    :path: "../node_modules/react-viro/ios/dist/ViroRenderer/"
+  ViroKit_static_lib:
+    :path: "../node_modules/react-viro/ios/dist/ViroRenderer/static_lib"
   ViroReact:
     :path: "../node_modules/react-viro/ios/"
 
 SPEC CHECKSUMS:
-  AWSCore: a5ff5fb202342b922eb9036af9ecc3bc28a032eb
-  AWSDynamoDB: ea3631a84c0c4a19ef4cb4ec32d3348d3ae9d47c
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   GooglePlaces: 3d06e6c99654545b4738ce49648745779c25f2ef
-  GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
-  GTMSessionFetcher: 6aacd0ab48ddf0c3633ab2642d792abfcad1b08a
-  GVRAudioSDK: 302f0a8f190d855868ea07f246ce4f9b44c392ae
-  GVRSDK: 0cb9d0ce06a84d698e61e3db9509766022dcf815
-  ViroKit: b59a8004b4a180fe255356b9d0388173dff0fbdf
-  ViroReact: 5520f26ac4654e361786c82da3b29ce0402c3c00
+  ViroKit_static_lib: ae9c112ac4b128f8d4466fc581c7b07a0264754d
+  ViroReact: 7ec32276dcd1883662b4587eaedfff67f7fc3625
 
-PODFILE CHECKSUM: d4514b6c2c5f9b34e17507622c2b703b039a7303
+PODFILE CHECKSUM: cd823d13facd2c4d15d9b01ff716dbd5825ff267
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.7.5

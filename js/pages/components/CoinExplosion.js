@@ -55,8 +55,8 @@ export default class CoinExplosion extends Component {
 
             image={{
               source:particle,                 
-              height:0.06,
-              width:0.06,
+              height:0.05,
+              width:0.05,
               bloomThreshold:0
             }}
 

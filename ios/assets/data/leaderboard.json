@@ -1,0 +1,184 @@
+[
+    {
+        "player": "Meningitis", 
+        "time": "01:03:52",
+        "attempts": 4,
+        "prize":"1.5 ETH",
+        "isHighlighted":false
+    },
+    {
+        "player": "JA876", 
+        "time": "01:03:52",
+        "attempts": 54,
+        "prize":"0.5 ETH",
+        "isHighlighted":false
+    },
+    {
+        "player": "Mark", 
+        "time": "01:03:52",
+        "attempts": 32,
+        "prize":"0.25 ETH",
+        "isHighlighted":true
+    },
+    {
+        "player": "Benny", 
+        "time": "01:03:52",
+        "attempts": 32,
+        "prize":"0.125 ETH",
+        "isHighlighted":false
+    },
+    {
+        "player": "JanAnt", 
+        "time": "01:03:52",
+        "attempts": 2,
+        "prize":"0.05 ETH",
+        "isHighlighted":false
+    },
+    {
+        "player": "MikeyDee", 
+        "time": "01:03:52",
+        "attempts": 76,
+        "prize":"0.025 ETH",
+        "isHighlighted":false
+    },
+    {
+        "player": "Meningitis", 
+        "time": "01:03:52",
+        "attempts": 12,
+        "prize":"0.02 ETH",
+        "isHighlighted":false
+    },
+    {
+        "player": "Kai62", 
+        "time": "01:03:52",
+        "attempts": 4,
+        "prize":"0.015 ETH",
+        "isHighlighted":false
+    },
+    {
+        "player": "Seesey", 
+        "time": "01:03:52",
+        "attempts": 1,
+        "prize":"0.01 ETH",
+        "isHighlighted":false
+    },
+    {
+        "player": "NoWay36", 
+        "time": "01:03:52",
+        "attempts": 2,
+        "prize":"0.005 ETH",
+        "isHighlighted":false
+    },
+    {
+        "player": "SuperSam", 
+        "time": "01:03:52",
+        "attempts": 654,
+        "prize":"-",
+        "isHighlighted":false
+    },
+    {
+        "player": "ChrisMartin", 
+        "time": "01:03:52",
+        "attempts": 234,
+        "prize":"-",
+        "isHighlighted":false
+    },
+    {
+        "player": "AnnMouse", 
+        "time": "01:03:52",
+        "attempts": 654,
+        "prize":"-",
+        "isHighlighted":false
+    },
+    {
+        "player": "JammyJ", 
+        "time": "01:03:52",
+        "attempts": 77777,
+        "prize":"-",
+        "isHighlighted":false
+    },
+    {
+        "player": "FlyBoy21", 
+        "time": "01:03:52",
+        "attempts": 4,
+        "prize":"-",
+        "isHighlighted":false
+    },
+    {
+        "player": "NeverOUt", 
+        "time": "01:03:52",
+        "attempts": 32,
+        "prize":"-",
+        "isHighlighted":false
+    },
+    {
+        "player": "ClashKing", 
+        "time": "01:03:52",
+        "attempts": 44,
+        "prize":"-",
+        "isHighlighted":false
+    },
+    {
+        "player": "WHYME", 
+        "time": "01:03:52",
+        "attempts": 63,
+        "prize":"-",
+        "isHighlighted":false
+    },
+    {
+        "player": "OldSchool", 
+        "time": "01:03:52",
+        "attempts": 77,
+        "prize":"-",
+        "isHighlighted":false
+    },
+    {
+        "player": "ARGaemr", 
+        "time": "01:03:52",
+        "attempts": 3,
+        "prize":"-",
+        "isHighlighted":false
+    }, 
+    {
+        "player": "DappLige3", 
+        "time": "01:03:52",
+        "attempts": 3,
+        "prize":"-",
+        "isHighlighted":false
+    },
+     {
+        "player": "AirdropHunter", 
+        "time": "01:03:52",
+        "attempts": 3,
+        "prize":"-",
+        "isHighlighted":false
+    },
+    {
+        "player": "ReggaeBoy", 
+        "time": "01:03:52",
+        "attempts": 3,
+        "prize":"-",
+        "isHighlighted":false
+    },
+    {
+        "player": "MillitantMike", 
+        "time": "01:03:52",
+        "attempts": 3,
+        "prize":"-",
+        "isHighlighted":false
+    },
+    {
+        "player": "JamesMay", 
+        "time": "01:03:52",
+        "attempts": 3,
+        "prize":"-",
+        "isHighlighted":false
+    },
+    {
+        "player": "YptoUser", 
+        "time": "01:03:52",
+        "attempts": 3,
+        "prize":"-",
+        "isHighlighted":false
+    }
+]

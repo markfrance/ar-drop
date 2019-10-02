@@ -73,9 +73,8 @@ export default class ParachuteScene extends Component {
     let bombValue = Math.floor(totalValue / bombRatio);
     
     parachutes.push(
-      this._createParachutes(10, totalValue, false));
-    parachutes.push(
-      this._createParachutes(1, bombValue, true));
+      this._createParachutes(10, totalValue));
+    
       
     return parachutes;
   }
@@ -103,12 +102,12 @@ export default class ParachuteScene extends Component {
     return Math.random() * (far - near) + near;
   }
 
-  _createParachutes(amount, totalValue, isBomb) {
+  _createParachutes(amount, totalValue) {
 
     const MIN_SPEED = 0.1;
     const SPEED_RATIO = 5;
     const PARACHUTES_ON_SCREEN = 10;
-    let DISTANCE = this._getDistance(6, 15);
+    let DISTANCE = 12;
 
     let lives = Math.floor(PARACHUTES_ON_SCREEN / amount);
 
@@ -117,16 +116,18 @@ export default class ParachuteScene extends Component {
     let parachuteData = [];
     let values = this._getValues(amount, totalValue);
 
+    let bombAngle = Math.floor(Math.random() * PARACHUTES_ON_SCREEN);
+
     for(let i=0; i<amount; i++) {
 
-      let angle = Math.random()*Math.PI*2;
+      let isBomb = bombAngle === i;
+
+      let angle = ((Math.PI*2) / PARACHUTES_ON_SCREEN) * i;
 
       //180 degree mode
-      if(this.state.degrees === 180) {
-        angle = Math.random()*(Math.PI / 1.4);
+      if(this.state.degrees === '180') {
+        angle = ((Math.PI / PARACHUTES_ON_SCREEN) * i) - (Math.PI);
       }
-
-      //let speed = (Math.random() + MIN_SPEED) / SPEED_RATIO;
 
       let xPosition = Math.cos(angle)*DISTANCE;
       let zPosition = Math.sin(angle)*DISTANCE;
@@ -144,8 +145,6 @@ export default class ParachuteScene extends Component {
       />);
 
     }
-
-     // this.props.sceneNavigator.viroAppProps.parachuteInfo(parachuteData);
       return items;
   }
 

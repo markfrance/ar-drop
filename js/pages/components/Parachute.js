@@ -16,35 +16,32 @@ import CoinExplosion from './CoinExplosion.js';
 import BombExplosion from './BombExplosion.js';
 
 const parachuteState = {
-		parachute: 1,
-		coinExplosion: 2,
-		bombExplosion: 3,
-		collected: 4
-	};
+    parachute: 1,
+    coinExplosion: 2,
+    bombExplosion: 3,
+    collected: 4
+  };
 
 const START_Y_POSITION = 22;
-const PARACHUTE_OPEN_Y = 15;
-const FLOOR = -10;
+const PARACHUTE_OPEN_Y = 10;
+const FLOOR = -15;
 
 export default class Parachute extends Component {
 
-	constructor(props) {
+  constructor(props) {
       super(props);
 
-	    this.state = {
-	      yPos: START_Y_POSITION,
+      this.state = {
+        yPos: START_Y_POSITION,
         yRotation:0,
-	      parachuteOpened: false,
-	      speed: props.initialSpeed,
-	      currentState: parachuteState.parachute,
+        parachuteOpened: false,
+        speed: props.initialSpeed,
+        currentState: parachuteState.parachute,
         pauseParachuteSound: true,
-        crypto: props.crypto,
-        lives: props.lives,
-        falling: false,
-        currentAnimation:'fall'
-	    };
+        crypto: props.crypto
+      };
 
-	    this._startFalling = this._startFalling.bind(this);
+      this._startFalling = this._startFalling.bind(this);
       this._renderParachute = this._renderParachute.bind(this);
       this._renderCoinExplosion = this._renderCoinExplosion.bind(this);
       this._renderBombExplosion = this._renderBombExplosion.bind(this);
@@ -60,7 +57,7 @@ export default class Parachute extends Component {
       this._setParachuteRef = this._setParachuteRef.bind(this);
       this._hitGround = this._hitGround.bind(this);
       this._fallAnimation = this._fallAnimation.bind(this);
-  	}
+    }
 
 
     componentWillMount() {
@@ -73,41 +70,70 @@ export default class Parachute extends Component {
       }
     }
 
-  	componentDidMount() {
+    componentDidMount() {
 
       //randomise short delay before falling
-      let delay = Math.random() * 10000;
+      let delay = Math.random() * 3000;
       this.timeout = setTimeout(
          () => this._startFalling(),
          delay);
-      
-     /* this.interval = setInterval(() =>
-        this.state.parachuteRef.getTransformAsync()
-        .then((transform) =>
-          this.setState({yPos:transform.position[1]})
-        ), 
-        500);
-        */
-  	}
+        
+    }
 
     componentWillUnmount() {
-    //  clearInterval(this.interval);
+      clearInterval(this.interval);
       clearTimeout(this.timeout);
-      cancelAnimationFrame(this.animation);
+    //  cancelAnimationFrame(this.animation);
     }
 
     _loadResources() {
 
-      this.setState({resources:[require('../../../public/models/b_difuse.png'),
-          require('../../../public/models/box_gradient_2.png'),
-          require('../../../public/models/boxgradient_1.png'),
-          require('../../../public/models/clash_opacity.png'),
+      let res;
+      
+      if(this.props.isBomb) {
+        if(this.state.crypto === "BTC")  {
+          res = [require('../../../public/models/bitcoin_bomb.jpg'),
+          require('../../../public/models/b_difuse.png'),
           require('../../../public/models/parachute_gradient_1.png'),
-          require('../../../public/models/string_gradient_1.png'),
-          require('../../../public/models/clash_difuse.jpg'),
-          require('../../../public/models/stripes_orange.jpg'),
-          require('../../../public/models/white.jpg')]
-        });
+          require('../../../public/models/string_gradient_1.png')
+          ]
+        } else if (this.state.crypto === "ETH") {
+          res = [require('../../../public/models/aetherium bomb.jpg'),
+          require('../../../public/models/grey baked.jpg'),
+          require('../../../public/models/parachute_gradient_1.png'),
+          require('../../../public/models/string_gradient_1.png')
+          ]
+        } else {
+          res = [require('../../../public/models/clash bomb.jpg'),
+          require('../../../public/models/clash_box_color.jpg'),
+          require('../../../public/models/parachute_gradient_1.png'),
+          require('../../../public/models/string_gradient_1.png')
+          ]
+        }
+      }
+      else {
+        if(this.state.crypto === "BTC")  {
+          res = [require('../../../public/models/b_difuse.png'),
+          require('../../../public/models/parachute_gradient_1.png'),
+          require('../../../public/models/string_gradient_1.png')
+          ];
+        } else if (this.state.crypto === "ETH") {
+          res = [ require('../../../public/models/grey baked.jpg'),
+          require('../../../public/models/parachute_gradient_1.png'),
+          require('../../../public/models/string_gradient_1.png')
+         ]
+        } else {
+          res = [require('../../../public/models/clash_box_color.jpg'),
+           require('../../../public/models/parachute_gradient_1.png'),
+          require('../../../public/models/string_gradient_1.png')
+          ]
+        }
+      }
+
+      this.setState({
+        resources:res
+      });
+
     }
 
     _loadParachuteModel() {
@@ -115,11 +141,11 @@ export default class Parachute extends Component {
       let parachute;
       
       if(this.state.crypto === "BTC")  {
-        parachute = require('../../../public/models/BTCParachuteLowPoly.vrx')
+        parachute = require('../../../public/models/Bitcoin_Parachute.vrx')
       } else if (this.state.crypto === "ETH") {
-        parachute = require('../../../public/models/ETHParachuteLowPoly.vrx')
+        parachute = require('../../../public/models/Ethereum_Parachute.vrx')
       } else {
-        parachute = require('../../../public/models/CLASHParachuteLowPoly.vrx')
+        parachute = require('../../../public/models/Clash_Parachute.vrx')
       }
       this.setState({
         parachuteModel:parachute
@@ -130,11 +156,11 @@ export default class Parachute extends Component {
       let bomb;
       
       if(this.state.crypto === "BTC")  {
-        bomb = require('../../../public/models/BTCParachuteBombLowPoly.vrx')
+        bomb = require('../../../public/models/Bomb_Bitcoin.vrx')
       } else if (this.state.crypto === "ETH") {
-        bomb = require('../../../public/models/ETHParachuteBombLowPoly.vrx')
+        bomb = require('../../../public/models/Bomb_Etherum.vrx')
       } else {
-        bomb = require('../../../public/models/CLASHParachuteBombLowPoly.vrx')
+        bomb = require('../../../public/models/Bomb_Clash.vrx')
       }
       this.setState({
         bombModel:bomb
@@ -142,45 +168,43 @@ export default class Parachute extends Component {
     }
 
     componentDidUpdate() {
-      if(this.state.yPos <= FLOOR && 
+      if(this.state.yPos < FLOOR && 
         this.state.currentState === parachuteState.parachute) {
           this._hitGround();
       }
+
+      if(this.state.yPos < PARACHUTE_OPEN_Y && !this.state.parachuteOpened) {
+        this.setState({
+          speed: this.props.initialSpeed / 45,
+          parachuteOpened: true,
+          pauseParachuteSound: false
+        });
+      }
+
     }
 
-  	_startFalling() {
+    _startFalling() {
       this.setState({
         currentState: parachuteState.parachute,
-        pauseParachuteSound: false,
+        pauseParachuteSound: true,
         parachuteOpened: false,
-        speed: this.props.initialSpeed,
-        yPos: START_Y_POSITION,
-        falling: false,
-        currentAnimation:'fall'
+        speed: this.props.initialSpeed / 10,
+        yPos: START_Y_POSITION
       });
 
-      this.animation = requestAnimationFrame(this._fallAnimation);
-  	}
+      this.interval = setInterval(this._fallAnimation, 14)
+    }
 
     _fallAnimation() {
       this.setState({
-          yPos: this.state.yPos - 0.05
+          yPos: this.state.yPos - this.state.speed
         });
-      requestAnimationFrame(this._fallAnimation);
     }
 
     _restart() {
-     /* if(this.state.lives === 0)
-        return;
-*/
-      this.state.parachuteRef.setNativeProps({
-        position : [this.props.xPos, 
-        START_Y_POSITION, 
-        this.props.zPos]
-      });
-      
-     // clearInterval(this.interval);
-     cancelAnimationFrame(this.animation);
+    
+      clearInterval(this.interval);
+     
       this.timeout = setTimeout(() => 
         this._startFalling(), 1000);
     }
@@ -189,11 +213,9 @@ export default class Parachute extends Component {
 
       if(this.state.yPos <= PARACHUTE_OPEN_Y) {
 
-     cancelAnimationFrame(this.animation);
         this.props.updateScore(this.props.value);
         this.setState( {
           falling: false,
-          lives: this.state.lives--,
           currentState: parachuteState.coinExplosion
         });
         this._restart();
@@ -204,7 +226,9 @@ export default class Parachute extends Component {
 
       if(this.state.yPos <= PARACHUTE_OPEN_Y) {
 
-     cancelAnimationFrame(this.animation);
+     //cancelAnimationFrame(this.animation);
+
+    //  clearInterval(this.interval);
         this.setState( { 
           falling: false,
           currentState: parachuteState.bombExplosion
@@ -218,7 +242,6 @@ export default class Parachute extends Component {
 
       this.setState( {
         falling: false,
-        lives: this.state.lives--,
         currentState: parachuteState.bombExplosion
       });
       this._restart();
@@ -237,8 +260,6 @@ export default class Parachute extends Component {
     _hitGround() {
       if(this.state.currentState === parachuteState.parachute) {
      
-
-     cancelAnimationFrame(this.animation);
         if(this.props.isBomb) {
           this._bombHitsGround();
         }
@@ -251,23 +272,23 @@ export default class Parachute extends Component {
 
     }
 
-  	_renderValueText(value) {
-  		return(
-  			<ViroText
+    _renderValueText(value) {
+      return(
+        <ViroText
           text={value}
           color="#ff0000"
           width={2} height={2}
           style={{fontFamily:"Arial", fontSize:20, fontStyle:"italic", color:"#0000FF"}}
           position={[0,0,0]}
         />
-  			)
-  	}
+        )
+    }
 
-  	_renderCoinExplosion() {
-  		return(
+    _renderCoinExplosion() {
+      return(
         <CoinExplosion crypto={this.state.crypto}/>
       );
-  	}
+    }
 
     _renderBombExplosion() {
       return(
@@ -281,8 +302,8 @@ export default class Parachute extends Component {
           source={this.state.parachuteModel}
           resources={this.state.resources}
           position={[0,0,0]}
-          scale={[3, 3, 3]}
-          rotation={[0, 0, 0]}
+          scale={[0.05, 0.05, 0.05]}
+          rotation={[-90, 0, 0]}
           type="VRX"
           onClick={this._coinClick}
             />);
@@ -294,8 +315,8 @@ export default class Parachute extends Component {
           source={this.state.bombModel}
           resources={this.state.resources}
           position={[0,0,0]}
-          scale={[3, 3, 3]}
-          rotation={[0, 0, 0]}
+          scale={[0.05, 0.05, 0.05]}
+          rotation={[-90, 0, 0]}
           type="VRX"
           onClick={this._bombClick}
             />);
@@ -313,24 +334,25 @@ export default class Parachute extends Component {
       })
     }
 
-  	render() {
+    render() {
   
       let isFalling = this.state.falling;
       let current = this.state.currentAnimation;
 
-  		return(
+      return(
         <ViroNode
         position={[this.props.xPos, this.state.yPos, this.props.zPos]}
-       
+        ref={this._setParachuteRef}
+                  
+
           >
          <ViroAmbientLight color="#ffffff" intensity={300}/>
 
          <ViroSound paused={this.state.pauseParachuteSound}
-           muted={this.state.pauseParachuteSound}
+      
            source={require('../../../public/sounds/parachuteopening.mp3')}
-           loop={false}
-           volume={1.0}
-           onFinish={this.onFinishSound}/>
+           loop={true}
+           volume={1.0}/>
           
           {renderIf(this.props.isBomb === false &&
             this.state.currentState === parachuteState.parachute,
@@ -355,13 +377,18 @@ export default class Parachute extends Component {
         </ViroNode>
       
       );
-  	}
+    }
 }
 
  ViroAnimations.registerAnimations({
-    fall:{properties:{positionY:-10.0},
+    fall:{properties:{positionY:-15.0},
                   easing:"Linear", 
-                  duration: 8000}
+                  duration: 6000},
+    restart:{properties:{
+      positionY:22},
+      easing:"linear",
+      duration:1},
+      fallRestart:[["fall","restart"],]
 });
 
 

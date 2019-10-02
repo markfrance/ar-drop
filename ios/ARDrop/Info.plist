@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>15</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -40,9 +40,13 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Camera is used to scan the QR code of your VR headset.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Location will be used in future for coin hunt game</string>
 	<key>NSMainNibFile</key>
 	<string>LaunchScreen</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Microphone will be used in future to record gameplay videos</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Photo library will be used in future to upload videos</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Medel.ttf</string>

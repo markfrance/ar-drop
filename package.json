@@ -8,16 +8,14 @@
     "test": "jest"
   },
   "dependencies": {
-    "@react-native-community/async-storage": "^1.6.1",
+    "@react-native-community/async-storage": "^1.6.2",
     "jslint": "^0.12.1",
     "moment": "^2.24.0",
     "react": "16.8.3",
-    "react-native": "^0.59.3",
+    "react-native": "^0.60.5",
     "react-native-elements": "^1.1.0",
     "react-native-geolocation-service": "^2.0.0",
     "react-native-gesture-handler": "^1.1.0",
-    "react-native-linear-gradient": "react-native-community/react-native-linear-gradient",
-    "react-native-map": "0.0.1",
     "react-native-maps": "^0.23.0",
     "react-native-reanimated": "^1.0.0",
     "react-native-sensors": "^5.1.7",
@@ -43,10 +41,5 @@
   },
   "jest": {
     "preset": "react-native"
-  },
-  "rnpm": {
-    "assets": [
-      "./public/fonts/"
-    ]
   }
 }

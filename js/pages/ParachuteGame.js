@@ -243,7 +243,6 @@ var localStyles = StyleSheet.create({
     left:10, 
     width:30, 
     height:30,
-    opacity:0.5,
     zIndex:-1
   },
   cameraButton : {
@@ -260,7 +259,7 @@ var localStyles = StyleSheet.create({
   bottomHud: {
     backgroundColor:'transparent',
     height:0,
-    opacity:0.8
+    opacity:0.5
   },
   wave: {
     backgroundColor:'transparent',
