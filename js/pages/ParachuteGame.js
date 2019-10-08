@@ -12,6 +12,7 @@ import {
   Animated } from 'react-native';
 
 import moment from 'moment';
+import renderIf from '../renderif';
 
 import {
   ViroARSceneNavigator,
@@ -40,6 +41,7 @@ export default class ParachuteGame extends Component {
       mode:props.navigation.state.params.mode,
       crypto:props.navigation.state.params.crypto,
       hasEnded: false,
+      gameHasLoaded:false,
       hasStarted: false
     }
 
@@ -49,6 +51,10 @@ export default class ParachuteGame extends Component {
     this._parachuteInfo = this._parachuteInfo.bind(this);
     this._renderParachuteData = this._renderParachuteData.bind(this);
     this._renderTimer = this._renderTimer.bind(this);
+    this._updateTrackingMessages = this._updateTrackingMessages.bind(this);
+    this._renderTrackingMessages = this._renderTrackingMessages.bind(this);
+    this._getTrackingStatus = this._getTrackingStatus.bind(this);
+    this._getTrackingReason = this._getTrackingReason.bind(this);
   }
 
   componentDidUpdate() {
@@ -62,8 +68,10 @@ export default class ParachuteGame extends Component {
         {mode:this.state.mode, crypto:this.state.crypto,
           time: endTime}),
         2000);
+
       this.setState({hasEnded:true});
     }
+    
   }
 
   componentWillUnmount() {
@@ -83,14 +91,24 @@ export default class ParachuteGame extends Component {
   _renderTimer() {
 
     if(!this.state.hasStarted){
-      return null;
+      return (
+        <Text style={localStyles.timerText}>
+        GET READY!
+        </Text>);
     }
 
     const time = this.state.now - this.state.start;
+
     const pad = (n) => n >= 10 ? n : '0' + n;
 
     const duration = moment.duration(time);
+
     const centiseconds = Math.floor(duration.milliseconds() / 10);
+
+    if(centiseconds == NaN){
+      return null;
+    }
+
 
     return(
       <Text style={localStyles.timerText}>
@@ -136,9 +154,59 @@ export default class ParachuteGame extends Component {
     }
   }
 
+  _updateTrackingMessages(state, reason) {
+    this.setState({
+        trackingStatus: state,
+        trackingReason: reason
+      })
+  }
+
+  _getTrackingStatus(status){
+    if(status == 1){
+      return "Tracking is unavailable"
+    }
+    if(status == 2) {
+      return "Tracking is available, but may be inaccurate"
+    }
+    if(status == 3) {
+      return "NORMAL"
+    }
+  
+  }
+
+  _getTrackingReason(reason) {
+    if(reason == 2) {
+      return "The device is moving too fast for accurate position tracking."
+    }
+    if(reason == 3) {
+      return "Not enough distinguishable features for optimal position tracking."
+    }
+  }
+
+  _renderTrackingMessages() {
+    return(
+    <View style={localStyles.topHud}>
+    <Text> Tracking Status </Text>
+      <Text>{this._getTrackingStatus(this.state.trackingStatus)} </Text>
+      <Text>{this._getTrackingReason(this.state.trackingReason)} </Text>
+    </View>
+    )
+  }
+
+   _renderLoadingScreen() {
+    return(
+      <View>
+        <Text> LOADING </Text>
+        <Text> {this.state.parachutesLoaded} of 12 parachutes Loaded </Text>
+      </View>)
+  }
+
+
   render() {
 
     return (
+    
+
       <View style={localStyles.viroContainer} transparent={true} >
         <StatusBar hidden={true} />
 
@@ -147,16 +215,18 @@ export default class ParachuteGame extends Component {
          style={localStyles.viroContainer} 
          viroAppProps={{updateScore:this._updateScore,
           stopwatchStart:this._startStopwatch,
+          updateTrackingMessages:this._updateTrackingMessages,
           crypto:this.state.crypto,
           mode:this.state.mode
           }}/>
-
           
+        {this._renderTrackingMessages()}
       {this._renderHUD()}
       
 
       </View>
       );
+   
   }
   
   _renderParachuteData() {
@@ -188,13 +258,14 @@ export default class ParachuteGame extends Component {
         style={localStyles.cryptoLogo}/>
         <Text style={localStyles.score}> {this.state.score} / {this.state.maxScore} </Text>
         
-        <TouchableOpacity style={{flex:1}}
+        <TouchableOpacity
             onPress={() => this.props.navigation.navigate('DemoMode')}
             >
           <Image source={require('../../public/images/CryptoClash-Back-Arrow.png')}
           style={localStyles.backButton}/>
         </TouchableOpacity>
-      </View>)
+       </View>
+      )
   }
 
 
@@ -230,7 +301,9 @@ var localStyles = StyleSheet.create({
   },
   mainView : {
     alignItems:'center', 
-    backgroundColor:'transparent'
+    backgroundColor:'transparent',
+    fontFamily:'Medel-Regular'
+
   },
   ARDLogo : {
     width: 300, 
@@ -243,7 +316,7 @@ var localStyles = StyleSheet.create({
     left:10, 
     width:30, 
     height:30,
-    zIndex:-1
+    opacity:1
   },
   cameraButton : {
     position:'absolute',
@@ -256,10 +329,17 @@ var localStyles = StyleSheet.create({
     width:50,
     height:50
   },
+  topHud:{
+    position:'absolute',
+    backgroundColor:'transparent',
+    width:300,
+    fontSize: 20,
+    color: '#ffa028',
+  },
   bottomHud: {
     backgroundColor:'transparent',
     height:0,
-    opacity:0.5
+    opacity:0.6
   },
   wave: {
     backgroundColor:'transparent',

@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {Alert} from 'react-native';
 
 export const addNewTime = async (LeaderboardData) => {
-      const now = new Date().getTime();
+      const now = new Date().getTime().toString();
 
   try {
     await AsyncStorage.setItem(now, JSON.stringify(LeaderboardData));
@@ -23,7 +23,7 @@ export const getAllLeaderboardData = async () => {
 
   let records
   try {
-    records = await AsyncStorage.multiGet(keys)
+    records = await AsyncStorage.multiGet(keys);
   } catch(e) {
     Alert.alert('Error getting leaderboard records' + e);
   }

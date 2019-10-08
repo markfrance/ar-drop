@@ -50,7 +50,7 @@ export default class Leaderboard extends Component {
 var localStyles = StyleSheet.create({
   leaderboard: {
     backgroundColor: '#3b3b3b',
-    fontFamily:'Medel'
+    fontFamily:'Medel-Regular'
   },
   headerText: {
     fontSize: 30,

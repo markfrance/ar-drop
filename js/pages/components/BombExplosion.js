@@ -21,7 +21,7 @@ export default class BombExplosion extends Component {
 
         <ViroNode position={[0,0,0]}>
          <ViroSound paused={false} muted={false} loop={false}
-            source={require("../../../public/sounds/explosion.wav")}
+            source={this.props.sound}
             volume={1.0} />
             <ViroParticleEmitter
               position={[0, 4.5, 0]}
@@ -33,9 +33,9 @@ export default class BombExplosion extends Component {
               fixedToEmitter={true}
 
               image={{
-                source:require("../../../public/images/particle_fire.png"),                 
-                height:1,
-                width:1,
+                source:this.props.particle,                 
+                height:0.5,
+                width:0.5,
                 bloomThreshold:0.8
               }}
 
@@ -43,13 +43,13 @@ export default class BombExplosion extends Component {
                 particleLifetime:[2000,4000],
                 emissionRatePerSecond:[150, 200], 
                 emissionBurst:[
-                {time:0, min:300, max:350, cycles:1}],
+                {time:0, min:30, max:350, cycles:1}],
                 spawnVolume:{
                   shape:"sphere", 
                   params:[3, 1, 3], 
                   spawnOnSurface:false
                 },
-                maxParticles:600
+                maxParticles:100
               }}
 
               particleAppearance={{

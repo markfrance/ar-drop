@@ -85,7 +85,7 @@ export default class PreGameScreen extends Component {
 var localStyles = StyleSheet.create({
 	main:{
     	backgroundColor: '#3b3b3b',
-    	fontFamily:'Medel',
+    	fontFamily:'Medel-Regular',
     	color:'#fff'
 	},
 	header: {

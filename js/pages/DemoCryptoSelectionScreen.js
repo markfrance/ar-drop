@@ -50,7 +50,7 @@ var localStyles = StyleSheet.create({
   main: {
   	textAlign:'center',
     backgroundColor:'#3b3b3b',
-    fontFamily:'Medel',
+    fontFamily:'Medel-Regular',
     color:'#ffffff',
     alignItems:'center',
     paddingBottom:100

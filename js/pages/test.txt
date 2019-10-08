@@ -88,4 +88,11 @@ IMAP, POP3, and SMTP require authentication.
           reset={this.state.stopwatchReset}
           options={options}
           getTime={this._msToTime} />
+
+
+           displayPointCloud={{
+    imageSource : require("../../public/images/ClashParticle.png"),
+    imageScale : [.005,.005,.005],
+    maxPoints : 100 }}
+     
        

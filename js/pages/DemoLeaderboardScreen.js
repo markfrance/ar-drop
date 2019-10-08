@@ -111,7 +111,7 @@ export default class DemoLeaderboardScreen extends Component {
 var localStyles = StyleSheet.create({
   leaderboard: {
     backgroundColor: '#3b3b3b',
-    fontFamily:'Medel',
+    fontFamily:'Medel-Regular',
     flex:1
   },
   headerText: {
